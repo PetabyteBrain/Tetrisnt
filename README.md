@@ -2,7 +2,7 @@
 ## Project game, tetris clone coded in C#
 This Project is based on the Tetris Nes version.
 
-## Goal
+## Goal / Task
 
 Each Student in our Class got the challenge / Task of programing their own game in C# without the use of a Game Engine.
 I chose to use WinForms and Visual Studio for my Project as I thought it would be practical to use for this Project and good to learn. The Goal of this Project is to learn the practical aspect to programing a game, to experiment and expand our knowledge on it.
