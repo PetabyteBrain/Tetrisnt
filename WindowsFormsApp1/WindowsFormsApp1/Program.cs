@@ -348,7 +348,7 @@ namespace WindowsFormsApp1
                     }
                     break;
                 case Keys.Down:
-                    if (starty < BoardHeight)
+                    if (starty < BoardHeight - 2)
                     {
                         placeblockcheck();
                         clearblock();

@@ -8,3 +8,13 @@ C:\Users\BWD Spyros\OneDrive - gibb Berufsfachschule Bern\Anlagen\Freitag Nachmi
 C:\Users\BWD Spyros\OneDrive - gibb Berufsfachschule Bern\Anlagen\Freitag Nachmittag(Website)\Praxistraining2 Tetris\Code\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\Users\BWD Spyros\OneDrive - gibb Berufsfachschule Bern\Anlagen\Freitag Nachmittag(Website)\Praxistraining2 Tetris\Code\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
 C:\Users\BWD Spyros\OneDrive - gibb Berufsfachschule Bern\Anlagen\Freitag Nachmittag(Website)\Praxistraining2 Tetris\Code\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form1.resources
+C:\Users\BWD Spyros\OneDrive - bwd 365\Dokumente\GitHub\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.AssemblyReference.cache
+C:\Users\BWD Spyros\OneDrive - bwd 365\Dokumente\GitHub\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form1.resources
+C:\Users\BWD Spyros\OneDrive - bwd 365\Dokumente\GitHub\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+C:\Users\BWD Spyros\OneDrive - bwd 365\Dokumente\GitHub\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.cache
+C:\Users\BWD Spyros\OneDrive - bwd 365\Dokumente\GitHub\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
+C:\Users\BWD Spyros\OneDrive - bwd 365\Dokumente\GitHub\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+C:\Users\BWD Spyros\OneDrive - bwd 365\Dokumente\GitHub\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\BWD Spyros\OneDrive - bwd 365\Dokumente\GitHub\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
+C:\Users\BWD Spyros\OneDrive - bwd 365\Dokumente\GitHub\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+C:\Users\BWD Spyros\OneDrive - bwd 365\Dokumente\GitHub\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
