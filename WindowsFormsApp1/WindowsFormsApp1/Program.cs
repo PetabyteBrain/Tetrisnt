@@ -445,7 +445,7 @@ namespace WindowsFormsApp1
         }
         private void placeblockcheck()
         {
-            if (starty >= BoardHeight - 1)
+            if (starty >= BoardHeight - 2)
             {
                 placeblock();
                 UpdateScore();
@@ -460,8 +460,8 @@ namespace WindowsFormsApp1
             {
                 switch (rotation)
                 {
-                    default:
-                        for (int y = starty + 1; y <= starty + 1; y++)
+                    default: // -- works
+                        for (int y = starty + 1; y <= starty + 2; y++)
                         {
                             for (int x = startx; x <= startx + 1; x++)
                             {
@@ -480,8 +480,8 @@ namespace WindowsFormsApp1
                 switch (rotation)
                 {
                     case 2:
-                        //90
-                        for (int y = starty + 1; y <= starty + 2; y++)
+                        //90 -- works
+                        for (int y = starty + 1; y <= starty + 3; y++)
                         {
                             for (int x = startx; x <= startx + 1; x++)
                             {
@@ -494,8 +494,8 @@ namespace WindowsFormsApp1
                         }
                         break;
                     case 3:
-                        //180
-                        for (int y = starty + 1; y <= starty + 1; y++)
+                        //180 
+                        for (int y = starty + 1; y <= starty + 3; y++)
                         {
                             for (int x = startx; x <= startx + 2; x++)
                             {
@@ -508,8 +508,8 @@ namespace WindowsFormsApp1
                         }
                         break;
                     case 4:
-                        //270
-                        for (int y = starty + 1; y <= starty + 2; y++)
+                        //270 -- works kinda (bugs around corners)
+                        for (int y = starty + 1; y <= starty + 3; y++)
                         {
                             for (int x = startx; x <= startx + 1; x++)
                             {
@@ -522,8 +522,8 @@ namespace WindowsFormsApp1
                         }
                         break;
                     default:
-                        //0
-                        for (int y = starty + 1; y <= starty + 1; y++)
+                        //0 -- works
+                        for (int y = starty + 1; y <= starty + 2; y++)
                         {
                             for (int x = startx; x <= startx + 2; x++)
                             {
@@ -542,8 +542,8 @@ namespace WindowsFormsApp1
                 switch (rotation)
                 {
                     case 2:
-                        //90
-                        for (int y = starty + 1; y <= starty + 2; y++)
+                        //90 -- works
+                        for (int y = starty + 1; y <= starty + 3; y++)
                         {
                             for (int x = startx; x <= startx + 1; x++)
                             {
@@ -556,8 +556,8 @@ namespace WindowsFormsApp1
                         }
                         break;
                     case 3:
-                        //180
-                        for (int y = starty + 1; y <= starty + 1; y++)
+                        //180 -- works
+                        for (int y = starty + 1; y <= starty + 3; y++)
                         {
                             for (int x = startx; x <= startx + 2; x++)
                             {
@@ -584,7 +584,7 @@ namespace WindowsFormsApp1
                         }
                         break;
                     default:
-                        //0
+                        //0 -- works
                         for (int y = starty + 1; y <= starty + 1; y++)
                         {
                             for (int x = startx; x <= startx + 2; x++)
@@ -605,7 +605,7 @@ namespace WindowsFormsApp1
                 {
                     case 2:
                         //90
-                        for (int y = starty + 1; y <= starty + 3; y++)
+                        for (int y = starty + 1; y <= starty + 2; y++)
                         {
                             for (int x = startx; x <= startx ; x++)
                             {
@@ -618,8 +618,8 @@ namespace WindowsFormsApp1
                         }
                         break;
                     case 3:
-                        //180
-                        for (int y = starty + 1; y <= starty ; y++)
+                        //180 -- works
+                        for (int y = starty + 1; y <= starty + 3; y++)
                         {
                             for (int x = startx; x <= startx + 3; x++)
                             {
@@ -633,7 +633,7 @@ namespace WindowsFormsApp1
                         break;
                     case 4:
                         //270
-                        for (int y = starty + 1; y <= starty + 3; y++)
+                        for (int y = starty + 1; y <= starty + 2; y++)
                         {
                             for (int x = startx; x <= startx ; x++)
                             {
@@ -646,8 +646,8 @@ namespace WindowsFormsApp1
                         }
                         break;
                     default:
-                        //0
-                        for (int y = starty + 1; y <= starty ; y++)
+                        //0 -- works
+                        for (int y = starty + 1; y <= starty + 2; y++)
                         {
                             for (int x = startx; x <= startx + 3; x++)
                             {
@@ -666,8 +666,8 @@ namespace WindowsFormsApp1
                 switch (rotation)
                 {
                     case 2:
-                        //90
-                        for (int y = starty + 1; y <= starty + 2; y++)
+                        //90 -- works
+                        for (int y = starty + 1; y <= starty + 3; y++)
                         {
                             for (int x = startx; x <= startx + 1; x++)
                             {
@@ -680,8 +680,8 @@ namespace WindowsFormsApp1
                         }
                         break;
                     case 3:
-                        //180
-                        for (int y = starty + 1; y <= starty + 1; y++)
+                        //180 -- works
+                        for (int y = starty + 1; y <= starty + 2; y++)
                         {
                             for (int x = startx; x <= startx + 2; x++)
                             {
@@ -694,7 +694,7 @@ namespace WindowsFormsApp1
                         }
                         break;
                     case 4:
-                        //270
+                        //270 -- works
                         for (int y = starty + 1; y <= starty + 2; y++)
                         {
                             for (int x = startx; x <= startx + 1; x++)
@@ -708,8 +708,8 @@ namespace WindowsFormsApp1
                         }
                         break;
                     default:
-                        //0
-                        for (int y = starty + 1; y <= starty + 1; y++)
+                        //0 -- works
+                        for (int y = starty + 1; y <= starty + 2; y++)
                         {
                             for (int x = startx; x <= startx + 2; x++)
                             {
