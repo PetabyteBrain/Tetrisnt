@@ -17,7 +17,7 @@ Tetris is a very recognised game and beloved by Generations, alot of people grew
 
 - Fix Block Rotation
 - Fix Block Placement (Broke because of Rotation)
-- Add missing Blocks
+- Add missing Blocks (Sblock and Zblock)
 - Add **Start** screen and ***Death** screen.
 - Add Start, Restart and Exit Buttons
 - Add Level System
