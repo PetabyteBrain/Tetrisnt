@@ -24,8 +24,8 @@ namespace WindowsFormsApp1
     }
     public partial class Form1 : Form
     {
-        private const int BoardWidth = 10;
-        private const int BoardHeight = 22;
+        private const int BoardWidth = 12;
+        private const int BoardHeight = 23;
         private const int CellSize = 20;
         private int[,] tempGameBoard = new int[BoardWidth, BoardHeight];
         private int[,] permanentGameBoard = new int[BoardWidth, BoardHeight];
@@ -293,6 +293,10 @@ namespace WindowsFormsApp1
         {
             int blockSizeX = 0;
             int blockSizeY = 0;
+            // Calculate the maximum x and y values for the current block
+            int maxX = BoardWidth - blockSizeX;
+            int maxY = BoardHeight - blockSizeY;
+            int minX = BoardWidth - blockSizeX;
 
             if (chosenblock == Tblock)
             {
@@ -311,78 +315,98 @@ namespace WindowsFormsApp1
             }
             else if (chosenblock == Iblock)
             {
-                blockSizeX = Iblock.GetLength(1);
-                blockSizeY = Iblock.GetLength(0);
+                switch (rotation)
+                {
+                    case 2:
+                        //90
+                        blockSizeX = Iblock90.GetLength(1) - 1;
+                        blockSizeY = Iblock90.GetLength(0);
+                        break;
+                    case 3:
+                        //180
+                        blockSizeX = Iblock180.GetLength(1);
+                        blockSizeY = Iblock180.GetLength(0);
+                        break;
+                    case 4:
+                        //270
+                        blockSizeX = Iblock270.GetLength(1);
+                        blockSizeY = Iblock270.GetLength(0);
+                        break;
+                    default:
+                        //0
+                        blockSizeX = Iblock.GetLength(1);
+                        blockSizeY = Iblock.GetLength(0);
+                        break;
+                }
             }
             else if (chosenblock == Oblock)
             {
                 blockSizeX = Oblock.GetLength(1);
                 blockSizeY = Oblock.GetLength(0);
+
+                switch (e.KeyCode)
+                {
+                    case Keys.Right:
+                        if (startx < maxX)
+                        {
+                            clearblock();
+                            startx += 1;
+                            drawblock(startx, starty);
+                            placeblockcheck();
+                            UpdateGameBoard();
+                        }
+                        break;
+                    case Keys.Left:
+                        if (startx > 2)
+                        {
+                            clearblock();
+                            startx -= 1;
+                            drawblock(startx, starty);
+                            placeblockcheck();
+                            UpdateGameBoard();
+                        }
+                        break;
+                    case Keys.Down:
+                        if (starty < BoardHeight - 3)
+                        {
+                            placeblockcheck();
+                            clearblock();
+                            starty += 1;
+                            drawblock(startx, starty);
+                            placeblockcheck();
+                            UpdateGameBoard();
+                        }
+                        break;
+                    case Keys.Y:
+                        if (starty < maxY)
+                        {
+                            clearblock();
+                            rotation += 1;
+                            Rotate();
+                            clearblock();
+                            drawblock(startx, starty);
+                            UpdateGameBoard();
+                            clearblock();
+                        }
+                        break;
+                    case Keys.X:
+                        if (starty < maxY)
+                        {
+                            clearblock();
+                            rotation -= 1;
+                            Rotate();
+                            clearblock();
+                            drawblock(startx, starty);
+                            UpdateGameBoard();
+                            clearblock();
+                        }
+                        break;
+                }
             }
 
-            // Calculate the maximum x and y values for the current block
-            int maxX = BoardWidth - blockSizeX;
-            int maxY = BoardHeight - blockSizeY;
+            
 
-            // Move the block according to the key pressed
-            switch (e.KeyCode)
-            {
-                case Keys.Right:
-                    if (startx < maxX)
-                    {
-                        clearblock();
-                        startx += 1;
-                        drawblock(startx, starty);
-                        placeblockcheck();
-                        UpdateGameBoard();
-                    }
-                    break;
-                case Keys.Left:
-                    if (startx > 0)
-                    {
-                        clearblock();
-                        startx -= 1;
-                        drawblock(startx, starty);
-                        placeblockcheck();
-                        UpdateGameBoard();
-                    }
-                    break;
-                case Keys.Down:
-                    if (starty < BoardHeight - 2)
-                    {
-                        placeblockcheck();
-                        clearblock();
-                        starty += 1;
-                        drawblock(startx, starty);
-                        placeblockcheck();
-                        UpdateGameBoard();
-                    }
-                    break;
-                case Keys.Y:
-                    if (starty < maxY)
-                    {
-                        clearblock();
-                        rotation += 1;
-                        Rotate();
-                        clearblock();
-                        drawblock(startx, starty);
-                        UpdateGameBoard();
-                        clearblock();
-                    }
-                    break;
-                case Keys.X:
-                    if (starty < maxY)
-                    {
-                        clearblock();
-                        rotation -= 1;
-                        Rotate();
-                        clearblock();
-                        drawblock(startx, starty);
-                        UpdateGameBoard();
-                        clearblock();
-                    }
-                    break;
-            }
+            
 
         }
         int rotation = 5;
@@ -445,7 +469,7 @@ namespace WindowsFormsApp1
         }
         private void placeblockcheck()
         {
-            if (starty >= BoardHeight - 2)
+            if (starty >= BoardHeight - 3)
             {
                 placeblock();
                 UpdateScore();
