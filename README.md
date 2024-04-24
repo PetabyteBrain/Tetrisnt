@@ -13,16 +13,23 @@ I chose to make a Game like Tetris as I always liked playing it myself and I wan
 
 Tetris is a very recognised game and beloved by Generations, alot of people grew up with Tetris.
 
+## Game Explanation
+### ..
+...
+...
+
 ## To do ...
 
-- Fix Block Rotation
-- Fix Block Placement (Broke because of Rotation)
+### Important
+- Fix Block Placement On/beside other BLocks(Broke because of Rotation)
+- Fix accidental BLOCK placemenr on Walls
 - Add missing Blocks (Sblock and Zblock)
-- Add **Start** screen and ***Death** screen.
+- Add **Start** screen and **Death** screen.
 - Add Start, Restart and Exit Buttons
 - Add Level System
-- Fix Highscore System
+- Add feature so that the Highscore System saves it's Value after closing
 
+### Extra
 - Add Textures (BLock Texture and Colours / Background)
 - Maybe add Animations
 
