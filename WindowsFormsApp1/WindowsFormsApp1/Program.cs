@@ -172,6 +172,7 @@ namespace WindowsFormsApp1
             UpdateScore();
 
             // beginning of game
+            PlaceSideBlocks();
             blockpicker();
             this.KeyDown += Form1_KeyDown;
             UpdateGameBoard();
@@ -1354,7 +1355,7 @@ namespace WindowsFormsApp1
                 switch (e.KeyCode)
                 {
                     case Keys.Right:
-                        if (startx < maxX)
+                        if (startx < maxX - 4)
                         {
                             clearblock();
                             startx += 1;
@@ -2442,9 +2443,21 @@ namespace WindowsFormsApp1
                 UpdateGameBoard();
             }
         }
+        private void PlaceSideBlocks()
+        {
+            for (int t = 0;t < BoardHeight - 1; t++)
+            {
+                tempGameBoard[0, t] = 1;
+                tempGameBoard[1, t] = 1;
+                tempGameBoard[13, t] = 1;
+                tempGameBoard[12, t] = 1;
+            }
+            
+        }
 
         private void CheckCompletedRows()
         {
+            PlaceSideBlocks();
             for (int y = BoardHeight - 1; y >= 0; y--)
             {
                 bool rowCompleted = true;
