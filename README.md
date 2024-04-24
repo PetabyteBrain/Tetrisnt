@@ -22,7 +22,7 @@ Tetris is a very recognised game and beloved by Generations, alot of people grew
 
 ### Important
 - Fix Block Placement On/beside other BLocks(Broke because of Rotation)
-- Fix accidental BLOCK placemenr on Walls
+- Fix accidental BLOCK placement on Walls(**Solution:** add new BLock State 0, 1, ...)
 - Add missing Blocks (Sblock and Zblock)
 - Add **Start** screen and **Death** screen.
 - Add Start, Restart and Exit Buttons
