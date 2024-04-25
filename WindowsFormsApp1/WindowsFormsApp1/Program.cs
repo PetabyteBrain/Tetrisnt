@@ -172,7 +172,6 @@ namespace WindowsFormsApp1
             UpdateScore();
 
             // beginning of game
-            PlaceSideBlocks();
             blockpicker();
             this.KeyDown += Form1_KeyDown;
             UpdateGameBoard();
@@ -202,7 +201,7 @@ namespace WindowsFormsApp1
         private void InitializeScore()
         {
 
-            scoreboard.Location = new Point(270, 120);
+            scoreboard.Location = new Point(370, 120);
             scoreboard.AutoSize = true;
             scoreboard.Font = new Font("Calibri", 18);
             scoreboard.ForeColor = Color.Black;
@@ -222,7 +221,7 @@ namespace WindowsFormsApp1
         }
         private void Initializehighscore()
         {
-            highscore.Location = new Point(270, 50);
+            highscore.Location = new Point(370, 50);
             highscore.AutoSize = true;
             highscore.Font = new Font("Calibri", 18);
             highscore.ForeColor = Color.Black;
@@ -239,7 +238,7 @@ namespace WindowsFormsApp1
         private void InitializeLinecount()
         {
             //completedlines
-            linecount.Location = new Point(270, 0);
+            linecount.Location = new Point(370, 0);
             linecount.AutoSize = true;
             linecount.Font = new Font("Calibri", 18);
             linecount.ForeColor = Color.Black;
@@ -258,6 +257,13 @@ namespace WindowsFormsApp1
         {
             if (tempGameBoard[x, y] == 1 || permanentGameBoard[x, y] == 1)
                 return System.Drawing.Color.Black;
+            if (tempGameBoard[x, y] == 2 || permanentGameBoard[x, y] == 2)
+                return System.Drawing.Color.Yellow;
+            if (tempGameBoard[x, y] == 3 || permanentGameBoard[x, y] == 3)
+                return System.Drawing.Color.Blue;
+            //Edge Pieces
+            if (tempGameBoard[x, y] == 8 || permanentGameBoard[x, y] == 8)
+                return System.Drawing.Color.Red;
             else
                 return System.Drawing.Color.White;
         }
@@ -2443,25 +2449,13 @@ namespace WindowsFormsApp1
                 UpdateGameBoard();
             }
         }
-        private void PlaceSideBlocks()
-        {
-            for (int t = 0;t < BoardHeight - 1; t++)
-            {
-                tempGameBoard[0, t] = 1;
-                tempGameBoard[1, t] = 1;
-                tempGameBoard[13, t] = 1;
-                tempGameBoard[12, t] = 1;
-            }
-            
-        }
 
         private void CheckCompletedRows()
         {
-            PlaceSideBlocks();
             for (int y = BoardHeight - 1; y >= 0; y--)
             {
                 bool rowCompleted = true;
-                for (int x = 0; x < BoardWidth; x++)
+                for (int x = 2; x < BoardWidth - 2; x++)
                 {
                     if (permanentGameBoard[x, y] == 0)
                     {
