@@ -1459,9 +1459,9 @@ namespace WindowsFormsApp1
         private void blockpicker()
         {
             Random rnd = new Random();
-            //int blocktype = rnd.Next(1, 6);
+            int blocktype = rnd.Next(1, 6);
             // Block type Lock:
-            int blocktype = 5;
+            //int  blocktype = 5;
 
             switch (blocktype)
             {
