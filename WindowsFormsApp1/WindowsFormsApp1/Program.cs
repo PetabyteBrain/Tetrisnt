@@ -1459,7 +1459,9 @@ namespace WindowsFormsApp1
         private void blockpicker()
         {
             Random rnd = new Random();
-            int blocktype = rnd.Next(1, 6);
+            //int blocktype = rnd.Next(1, 6);
+            // Block type Lock:
+            int blocktype = 5;
 
             switch (blocktype)
             {
@@ -1483,13 +1485,196 @@ namespace WindowsFormsApp1
         }
         private void placeblockcheck()
         {
-            if (starty >= BoardHeight - 3)
+            if (chosenblock == Tblock)
+            {
+                switch (rotation)
+                {
+                    case 2:
+                        //90
+                        if(starty >= BoardHeight - 4)
+                        {
+                            placeblock();
+                            UpdateScore();
+                            return;
+                        }
+                        break;
+                    case 3:
+                        //180
+                        if (starty >= BoardHeight - 4)
+                        {
+                            placeblock();
+                            UpdateScore();
+                            return;
+                        }
+                        break;
+                    case 4:
+                        //270
+                        if (starty >= BoardHeight - 4)
+                        {
+                            placeblock();
+                            UpdateScore();
+                            return;
+                        }
+                        break;
+                    default:
+                        //0
+                        if (starty >= BoardHeight - 3)
+                        {
+                            placeblock();
+                            UpdateScore();
+                            return;
+                        }
+                        break;
+
+                }
+            }
+            if (chosenblock == Lblock)
+            {
+                switch (rotation)
+                {
+                    case 2:
+                        //90
+                        if (starty >= BoardHeight - 4)
+                        {
+                            placeblock();
+                            UpdateScore();
+                            return;
+                        }
+                        break;
+                    case 3:
+                        //180
+                        if (starty >= BoardHeight - 4)
+                        {
+                            placeblock();
+                            UpdateScore();
+                            return;
+                        }
+                        break;
+                    case 4:
+                        //270
+                        if (starty >= BoardHeight - 4)
+                        {
+                            placeblock();
+                            UpdateScore();
+                            return;
+                        }
+                        break;
+                    default:
+                        //0
+                        if (starty >= BoardHeight - 3)
+                        {
+                            placeblock();
+                            UpdateScore();
+                            return;
+                        }
+                        break;
+
+                }
+            }
+            if (chosenblock == Jblock)
+            {
+                switch (rotation)
+                {
+                    case 2:
+                        //90
+                        if (starty >= BoardHeight - 4)
+                        {
+                            placeblock();
+                            UpdateScore();
+                            return;
+                        }
+                        break;
+                    case 3:
+                        //180
+                        if (starty >= BoardHeight - 4)
+                        {
+                            placeblock();
+                            UpdateScore();
+                            return;
+                        }
+                        break;
+                    case 4:
+                        //270
+                        if (starty >= BoardHeight - 4)
+                        {
+                            placeblock();
+                            UpdateScore();
+                            return;
+                        }
+                        break;
+                    default:
+                        //0
+                        if (starty >= BoardHeight - 3)
+                        {
+                            placeblock();
+                            UpdateScore();
+                            return;
+                        }
+                        break;
+
+                }
+            }
+            if (chosenblock == Iblock)
+            {
+                switch (rotation)
+                {
+                    case 2:
+                        //90
+                        if (starty >= BoardHeight - 5)
+                        {
+                            placeblock();
+                            UpdateScore();
+                            return;
+                        }
+                        break;
+                    case 3:
+                        //180
+                        if (starty >= BoardHeight - 4)
+                        {
+                            placeblock();
+                            UpdateScore();
+                            return;
+                        }
+                        break;
+                    case 4:
+                        //270
+                        if (starty >= BoardHeight - 5)
+                        {
+                            placeblock();
+                            UpdateScore();
+                            return;
+                        }
+                        break;
+                    default:
+                        //0
+                        if (starty >= BoardHeight - 3)
+                        {
+                            placeblock();
+                            UpdateScore();
+                            return;
+                        }
+                        break;
+
+                }
+            }
+            if(chosenblock == Oblock)
+            {
+                if (starty >= BoardHeight - 3)
+                {
+                    placeblock();
+                    UpdateScore();
+                    return;
+                }
+            }
+
+
+            /*if (starty >= BoardHeight - 3)
             {
                 placeblock();
                 UpdateScore();
                 return;
 
-            }
+            }*/
 
             bool isBlocked = false;
 
@@ -1519,9 +1704,9 @@ namespace WindowsFormsApp1
                 {
                     case 2:
                         //90 -- works
-                        for (int y = starty + 1; y <= starty + 3; y++)
+                        for (int y = starty + 1; y <= starty + 2; y++)
                         {
-                            for (int x = startx; x <= startx + 1; x++)
+                            for (int x = startx + 1; x <= startx + 1; x++)
                             {
                                 if (permanentGameBoard[x, y] != 0)
                                 {
@@ -1533,7 +1718,7 @@ namespace WindowsFormsApp1
                         break;
                     case 3:
                         //180 
-                        for (int y = starty + 1; y <= starty + 3; y++)
+                        for (int y = starty + 1; y <= starty + 1; y++)
                         {
                             for (int x = startx; x <= startx + 2; x++)
                             {
@@ -1547,7 +1732,7 @@ namespace WindowsFormsApp1
                         break;
                     case 4:
                         //270 -- works kinda (bugs around corners)
-                        for (int y = starty + 1; y <= starty + 3; y++)
+                        for (int y = starty + 1; y <= starty + 2; y++)
                         {
                             for (int x = startx; x <= startx + 1; x++)
                             {
@@ -1580,10 +1765,10 @@ namespace WindowsFormsApp1
                 switch (rotation)
                 {
                     case 2:
-                        //90 -- works
-                        for (int y = starty + 1; y <= starty + 3; y++)
+                        //90 
+                        for (int y = starty; y <= starty + 2; y++)
                         {
-                            for (int x = startx; x <= startx + 1; x++)
+                            for (int x = startx + 1; x <= startx + 2; x++)
                             {
                                 if (permanentGameBoard[x, y] != 0)
                                 {
@@ -1594,10 +1779,10 @@ namespace WindowsFormsApp1
                         }
                         break;
                     case 3:
-                        //180 -- works
-                        for (int y = starty + 1; y <= starty + 3; y++)
+                        //180 
+                        for (int y = starty; y <= starty + 3; y++)
                         {
-                            for (int x = startx; x <= startx + 2; x++)
+                            for (int x = startx + 1; x <= startx + 2; x++)
                             {
                                 if (permanentGameBoard[x, y] != 0)
                                 {
@@ -1608,8 +1793,8 @@ namespace WindowsFormsApp1
                         }
                         break;
                     case 4:
-                        //270
-                        for (int y = starty + 1; y <= starty + 2; y++)
+                        //270 -- works
+                        for (int y = starty; y <= starty + 3; y++)
                         {
                             for (int x = startx; x <= startx + 1; x++)
                             {
@@ -1623,7 +1808,7 @@ namespace WindowsFormsApp1
                         break;
                     default:
                         //0 -- works
-                        for (int y = starty + 1; y <= starty + 1; y++)
+                        for (int y = starty; y <= starty + 2; y++)
                         {
                             for (int x = startx; x <= startx + 2; x++)
                             {
@@ -1642,10 +1827,10 @@ namespace WindowsFormsApp1
                 switch (rotation)
                 {
                     case 2:
-                        //90
-                        for (int y = starty + 1; y <= starty + 2; y++)
+                        //90 -- Works
+                        for (int y = starty; y <= starty + 4; y++)
                         {
-                            for (int x = startx; x <= startx ; x++)
+                            for (int x = startx + 2; x <= startx + 2; x++)
                             {
                                 if (permanentGameBoard[x, y] != 0)
                                 {
@@ -1670,10 +1855,10 @@ namespace WindowsFormsApp1
                         }
                         break;
                     case 4:
-                        //270
-                        for (int y = starty + 1; y <= starty + 2; y++)
+                        //270 -- works
+                        for (int y = starty; y <= starty + 4; y++)
                         {
-                            for (int x = startx; x <= startx ; x++)
+                            for (int x = startx + 1; x <= startx + 1; x++)
                             {
                                 if (permanentGameBoard[x, y] != 0)
                                 {
