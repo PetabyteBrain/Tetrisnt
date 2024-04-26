@@ -245,6 +245,7 @@ namespace WindowsFormsApp1
                     System.Drawing.Color color = GetCombinedColor(x, y);
                     pictureBox.BackColor = color;
                     this.Controls.Add(pictureBox);
+                    this.DoubleBuffered = true;
                 }
             }
         }
@@ -2032,9 +2033,9 @@ namespace WindowsFormsApp1
         private void blockpicker()
         {
             Random rnd = new Random();
-            int blocktype = rnd.Next(1, 8);
+            //int blocktype = rnd.Next(1, 8);
             // Block type Lock:
-            //int  blocktype = 5;
+            int  blocktype = 6;
 
             switch (blocktype)
             {
@@ -2242,6 +2243,92 @@ namespace WindowsFormsApp1
                     placeblock();
                     UpdateScore();
                     return;
+                }
+            }
+            if (chosenblock == Sblock)
+            {
+                switch (rotation)
+                {
+                    case 2:
+                        //90
+                        if (starty >= BoardHeight - 4)
+                        {
+                            placeblock();
+                            UpdateScore();
+                            return;
+                        }
+                        break;
+                    case 3:
+                        //180
+                        if (starty >= BoardHeight - 4)
+                        {
+                            placeblock();
+                            UpdateScore();
+                            return;
+                        }
+                        break;
+                    case 4:
+                        //270
+                        if (starty >= BoardHeight - 4)
+                        {
+                            placeblock();
+                            UpdateScore();
+                            return;
+                        }
+                        break;
+                    default:
+                        //0
+                        if (starty >= BoardHeight - 3)
+                        {
+                            placeblock();
+                            UpdateScore();
+                            return;
+                        }
+                        break;
+
+                }
+            }
+            if (chosenblock == Zblock)
+            {
+                switch (rotation)
+                {
+                    case 2:
+                        //90
+                        if (starty >= BoardHeight - 4)
+                        {
+                            placeblock();
+                            UpdateScore();
+                            return;
+                        }
+                        break;
+                    case 3:
+                        //180
+                        if (starty >= BoardHeight - 4)
+                        {
+                            placeblock();
+                            UpdateScore();
+                            return;
+                        }
+                        break;
+                    case 4:
+                        //270
+                        if (starty >= BoardHeight - 4)
+                        {
+                            placeblock();
+                            UpdateScore();
+                            return;
+                        }
+                        break;
+                    default:
+                        //0
+                        if (starty >= BoardHeight - 3)
+                        {
+                            placeblock();
+                            UpdateScore();
+                            return;
+                        }
+                        break;
+
                 }
             }
 
@@ -2522,6 +2609,107 @@ namespace WindowsFormsApp1
                                 //}
 
                                 // Check if the current cell would hit a permanent block
+                                if (permanentGameBoard[x, y] != 0)
+                                {
+                                    isBlocked = true;
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+                }
+            }
+            //New Blocks
+            if (chosenblock == Sblock)
+            {
+                switch (rotation)
+                {
+                    case 2:
+                        //90 -- works
+                        if (permanentGameBoard[startx + 1, starty + 1] != 0 || permanentGameBoard[startx + 1, starty + 2] != 0 || permanentGameBoard[startx + 2, starty + 2] != 0 || permanentGameBoard[startx + 2, starty + 3] != 0)
+                        {
+                            isBlocked = true;
+                            break;
+                        }
+                        break;
+                    case 3:
+                        //180 -- works
+                        if (permanentGameBoard[startx + 1, starty + 2] != 0 || permanentGameBoard[startx + 2, starty + 2] != 0 || permanentGameBoard[startx, starty + 3] != 0 || permanentGameBoard[startx + 1, starty + 3] != 0)
+                        {
+                            isBlocked = true;
+                            break;
+                        }
+                        break;
+                    case 4:
+                        //270 -- works
+                        if (permanentGameBoard[startx, starty + 1] != 0 || permanentGameBoard[startx, starty + 2] != 0 || permanentGameBoard[startx + 1, starty + 2] != 0 || permanentGameBoard[startx + 1, starty + 3] != 0)
+                        {
+                            isBlocked = true;
+                            break;
+                        }
+                        break;
+                    default:
+                        //0 -- works
+                        if (permanentGameBoard[startx + 1, starty + 1] != 0 || permanentGameBoard[startx + 2, starty + 1] != 0 || permanentGameBoard[startx, starty + 2] != 0 || permanentGameBoard[startx + 1, starty + 2] != 0)
+                        {
+                            isBlocked = true;
+                            break;
+                        }
+                        break;
+                }
+            }
+            if (chosenblock == Zblock)
+            {
+                switch (rotation)
+                {
+                    case 2:
+                        //90 
+                        for (int y = starty; y <= starty + 2; y++)
+                        {
+                            for (int x = startx + 1; x <= startx + 2; x++)
+                            {
+                                if (permanentGameBoard[x, y] != 0)
+                                {
+                                    isBlocked = true;
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+                    case 3:
+                        //180 
+                        for (int y = starty; y <= starty + 3; y++)
+                        {
+                            for (int x = startx + 1; x <= startx + 2; x++)
+                            {
+                                if (permanentGameBoard[x, y] != 0)
+                                {
+                                    isBlocked = true;
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+                    case 4:
+                        //270 -- works
+                        for (int y = starty; y <= starty + 3; y++)
+                        {
+                            for (int x = startx; x <= startx + 1; x++)
+                            {
+                                if (permanentGameBoard[x, y] != 0)
+                                {
+                                    isBlocked = true;
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+                    default:
+                        //0 -- works
+                        for (int y = starty; y <= starty + 2; y++)
+                        {
+                            for (int x = startx; x <= startx + 2; x++)
+                            {
                                 if (permanentGameBoard[x, y] != 0)
                                 {
                                     isBlocked = true;

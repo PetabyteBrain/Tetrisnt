@@ -36,9 +36,10 @@
               "RelativeDocumentMoniker": "WindowsFormsApp1\\Form1.cs",
               "ToolTip": "C:\\Users\\BWD Spyros\\OneDrive - bwd 365\\Dokumente\\GitHub\\Tetrisnt\\WindowsFormsApp1\\WindowsFormsApp1\\Form1.cs [Entwurf]",
               "RelativeToolTip": "WindowsFormsApp1\\Form1.cs [Entwurf]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003525|",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-22T19:20:41.958Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": " [Entwurf]"
             },
             {
               "$type": "Document",
@@ -49,9 +50,10 @@
               "ToolTip": "C:\\Users\\BWD Spyros\\OneDrive - bwd 365\\Dokumente\\GitHub\\Tetrisnt\\WindowsFormsApp1\\WindowsFormsApp1\\Form1.cs",
               "RelativeToolTip": "WindowsFormsApp1\\Form1.cs",
               "ViewState": "AQIAADIAAAAAAAAAAAAYwEUAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003525|",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-22T19:20:41.823Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -61,7 +63,7 @@
               "RelativeDocumentMoniker": "WindowsFormsApp1\\Program.cs",
               "ToolTip": "C:\\Users\\BWD Spyros\\OneDrive - bwd 365\\Dokumente\\GitHub\\Tetrisnt\\WindowsFormsApp1\\WindowsFormsApp1\\Program.cs",
               "RelativeToolTip": "WindowsFormsApp1\\Program.cs",
-              "ViewState": "AQIAAOwHAAAAAAAAAAAYwPoHAAAaAAAA",
+              "ViewState": "AQIAADYKAAAAAAAAAAAgwEcKAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-22T19:20:41.889Z",
               "IsPinned": true,
@@ -76,8 +78,9 @@
               "ToolTip": "C:\\Users\\BWD Spyros\\OneDrive - bwd 365\\Dokumente\\GitHub\\Tetrisnt\\WindowsFormsApp1\\WindowsFormsApp1\\Form1.Designer.cs",
               "RelativeToolTip": "WindowsFormsApp1\\Form1.Designer.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001384|",
-              "WhenOpened": "2024-04-22T19:20:41.956Z"
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-22T19:20:41.956Z",
+              "EditorCaption": ""
             }
           ]
         }
