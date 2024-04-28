@@ -36,6 +36,11 @@ namespace WindowsFormsApp1
         Label scoreboard = new Label();
         Label highscore = new Label();
         Label linecount = new Label();
+        bool gameover = false;
+
+        Button startbutton = new Button();
+        Button quitbutton = new Button();
+        Button restartbutton = new Button();
 
         // BLOCKS
         // TBLOCK ORIENTATIONS
@@ -202,24 +207,30 @@ namespace WindowsFormsApp1
         public Form1()
         {
             //start
+
             start();
 
         }
         private void start()
         {
-            gameplay();
+            InitializeComponent();
+
+            InitializeStartScreen();
+            InitializeGameBoard();
+
+
         }
         private void gameplay()
         {
             // Initiate & Update
-            InitializeComponent();
-            InitializeGameBoard();
             InitializeScore();
             Initializehighscore();
             Updatehighscore();
             InitializeLinecount();
             UpdateLinecount();
             UpdateScore();
+
+            
 
             // beginning of game
             blockpicker();
@@ -229,6 +240,62 @@ namespace WindowsFormsApp1
             UpdateGameBoard();
 
         }
+        private void InitializeStartScreen()
+        {
+            //START BUTTON
+            this.Controls.Add(startbutton);
+            startbutton.Text = "Start";
+            startbutton.Location = new Point(100, 200);
+            startbutton.Size = new Size(100, 100);
+
+            startbutton.Click += startbutton_Click;
+
+            //QUIT BUTTON
+            this.Controls.Add(quitbutton);
+            quitbutton.Text = "quit";
+            quitbutton.Location = new Point(300, 200);
+            quitbutton.Size = new Size(100, 100);
+
+            quitbutton.Click += quitbutton_Click;
+        }
+        void startbutton_Click(object sender, EventArgs e)
+        {
+            this.Controls.Remove(startbutton);
+            this.Controls.Remove(quitbutton);
+            this.Controls.Remove(restartbutton);
+            ShowGameBoard();
+            gameplay();
+        }
+        void quitbutton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void ShowGameBoard()
+        {
+            // Set the visibility of each PictureBox in the game board to true
+            foreach (Control control in this.Controls)
+            {
+                if (control is PictureBox)
+                {
+                    control.Visible = true;
+                }
+            }
+        }
+        private void HideGameBoard()
+        {
+            foreach (Control control in this.Controls)
+            {
+                if (control is PictureBox)
+                {
+                    control.Visible = false;
+                }
+            }
+        }
+        private void InitializeGameOver()
+        {
+            HideGameBoard();
+        }
 
         private void InitializeGameBoard()
         {
@@ -236,16 +303,17 @@ namespace WindowsFormsApp1
             {
                 for (int x = 0; x < BoardWidth; x++)
                 {
-                    PictureBox pictureBox = new PictureBox();
-                    pictureBox.Width = CellSize;
-                    pictureBox.Height = CellSize;
-                    pictureBox.Left =80 + x * CellSize;
-                    pictureBox.Top = y * CellSize;
-                    pictureBox.BorderStyle = BorderStyle.FixedSingle;
+                    PictureBox pictureBox1 = new PictureBox();
+                    pictureBox1.Width = CellSize;
+                    pictureBox1.Height = CellSize;
+                    pictureBox1.Left =80 + x * CellSize;
+                    pictureBox1.Top = y * CellSize;
+                    pictureBox1.BorderStyle = BorderStyle.FixedSingle;
                     System.Drawing.Color color = GetCombinedColor(x, y);
-                    pictureBox.BackColor = color;
-                    this.Controls.Add(pictureBox);
+                    pictureBox1.BackColor = color;
+                    this.Controls.Add(pictureBox1);
                     this.DoubleBuffered = true;
+                    pictureBox1.Visible = false;
                 }
             }
         }
@@ -326,9 +394,12 @@ namespace WindowsFormsApp1
             {
                 for (int x = 0; x < BoardWidth; x++)
                 {
-                    PictureBox pictureBox = (PictureBox)this.Controls[y * BoardWidth + x];
-                    System.Drawing.Color color = GetCombinedColor(x, y);
-                    pictureBox.BackColor = color;
+                    Control control = this.Controls[y * BoardWidth + x];
+                    if (control is PictureBox pictureBox)
+                    {
+                        System.Drawing.Color color = GetCombinedColor(x, y);
+                        pictureBox.BackColor = color;
+                    }
                 }
             }
         }
@@ -2062,8 +2133,25 @@ namespace WindowsFormsApp1
                     break;
             }
         }
+        private void gameovercheck()
+        {
+
+            for (int x = 0; x < BoardWidth; x++)
+            {
+                if (permanentGameBoard[x, 4] == 1)
+                {
+                    gameover = true;
+                }
+            }
+            if(gameover)
+            {
+                InitializeGameOver();
+            }
+        }
         private void placeblockcheck()
         {
+            gameovercheck();
+
             if (chosenblock == Tblock)
             {
                 switch (rotation)
@@ -2332,14 +2420,6 @@ namespace WindowsFormsApp1
                 }
             }
 
-
-            /*if (starty >= BoardHeight - 3)
-            {
-                placeblock();
-                UpdateScore();
-                return;
-
-            }*/
 
             bool isBlocked = false;
 
