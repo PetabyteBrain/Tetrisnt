@@ -2033,9 +2033,9 @@ namespace WindowsFormsApp1
         private void blockpicker()
         {
             Random rnd = new Random();
-            //int blocktype = rnd.Next(1, 8);
+            int blocktype = rnd.Next(1, 8);
             // Block type Lock:
-            int  blocktype = 6;
+            //int  blocktype = 1;
 
             switch (blocktype)
             {
@@ -2369,58 +2369,34 @@ namespace WindowsFormsApp1
                 {
                     case 2:
                         //90 -- works
-                        for (int y = starty + 1; y <= starty + 2; y++)
+                        if (permanentGameBoard[startx + 1, starty + 1] != 0 || permanentGameBoard[startx + 1, starty + 2] != 0 || permanentGameBoard[startx + 1, starty + 3] != 0 || permanentGameBoard[startx + 2, starty + 3] != 0)
                         {
-                            for (int x = startx + 1; x <= startx + 1; x++)
-                            {
-                                if (permanentGameBoard[x, y] != 0)
-                                {
-                                    isBlocked = true;
-                                    break;
-                                }
-                            }
+                            isBlocked = true;
+                            break;
                         }
                         break;
                     case 3:
-                        //180 
-                        for (int y = starty + 1; y <= starty + 1; y++)
+                        //180 -- works
+                        if (permanentGameBoard[startx, starty + 2] != 0 || permanentGameBoard[startx + 1, starty + 2] != 0 || permanentGameBoard[startx + 2, starty + 2] != 0 || permanentGameBoard[startx, starty + 3] != 0)
                         {
-                            for (int x = startx; x <= startx + 2; x++)
-                            {
-                                if (permanentGameBoard[x, y] != 0)
-                                {
-                                    isBlocked = true;
-                                    break;
-                                }
-                            }
+                            isBlocked = true;
+                            break;
                         }
                         break;
                     case 4:
-                        //270 -- works kinda (bugs around corners)
-                        for (int y = starty + 1; y <= starty + 2; y++)
+                        //270 -- works
+                        if (permanentGameBoard[startx, starty + 1] != 0 || permanentGameBoard[startx + 1, starty + 1] != 0 || permanentGameBoard[startx + 1, starty + 2] != 0 || permanentGameBoard[startx + 1, starty + 3] != 0)
                         {
-                            for (int x = startx; x <= startx + 1; x++)
-                            {
-                                if (permanentGameBoard[x, y] != 0)
-                                {
-                                    isBlocked = true;
-                                    break;
-                                }
-                            }
+                            isBlocked = true;
+                            break;
                         }
                         break;
                     default:
                         //0 -- works
-                        for (int y = starty + 1; y <= starty + 2; y++)
+                        if (permanentGameBoard[startx + 2, starty + 1] != 0 || permanentGameBoard[startx, starty + 2] != 0 || permanentGameBoard[startx + 1, starty + 2] != 0 || permanentGameBoard[startx + 2, starty + 2] != 0)
                         {
-                            for (int x = startx; x <= startx + 2; x++)
-                            {
-                                if (permanentGameBoard[x, y] != 0)
-                                {
-                                    isBlocked = true;
-                                    break;
-                                }
-                            }
+                            isBlocked = true;
+                            break;
                         }
                         break;
                 }
@@ -2430,59 +2406,35 @@ namespace WindowsFormsApp1
                 switch (rotation)
                 {
                     case 2:
-                        //90 
-                        for (int y = starty; y <= starty + 2; y++)
+                        //90 -- works
+                        if (permanentGameBoard[startx + 1, starty + 1] != 0 || permanentGameBoard[startx + 2, starty + 1] != 0 || permanentGameBoard[startx + 1, starty + 2] != 0 || permanentGameBoard[startx + 1, starty + 3] != 0)
                         {
-                            for (int x = startx + 1; x <= startx + 2; x++)
-                            {
-                                if (permanentGameBoard[x, y] != 0)
-                                {
-                                    isBlocked = true;
-                                    break;
-                                }
-                            }
+                            isBlocked = true;
+                            break;
                         }
                         break;
                     case 3:
-                        //180 
-                        for (int y = starty; y <= starty + 3; y++)
+                        //180 -- works
+                        if (permanentGameBoard[startx, starty + 2] != 0 || permanentGameBoard[startx + 1, starty + 2] != 0 || permanentGameBoard[startx + 2, starty + 2] != 0 || permanentGameBoard[startx + 2, starty + 3] != 0)
                         {
-                            for (int x = startx + 1; x <= startx + 2; x++)
-                            {
-                                if (permanentGameBoard[x, y] != 0)
-                                {
-                                    isBlocked = true;
-                                    break;
-                                }
-                            }
+                            isBlocked = true;
+                            break;
                         }
                         break;
                     case 4:
                         //270 -- works
-                        for (int y = starty; y <= starty + 3; y++)
+                        if (permanentGameBoard[startx + 1, starty + 1] != 0 || permanentGameBoard[startx + 1, starty + 2] != 0 || permanentGameBoard[startx, starty + 3] != 0 || permanentGameBoard[startx + 1, starty + 3] != 0)
                         {
-                            for (int x = startx; x <= startx + 1; x++)
-                            {
-                                if (permanentGameBoard[x, y] != 0)
-                                {
-                                    isBlocked = true;
-                                    break;
-                                }
-                            }
+                            isBlocked = true;
+                            break;
                         }
                         break;
                     default:
                         //0 -- works
-                        for (int y = starty; y <= starty + 2; y++)
+                        if (permanentGameBoard[startx, starty + 1] != 0 || permanentGameBoard[startx, starty + 2] != 0 || permanentGameBoard[startx + 1, starty + 2] != 0 || permanentGameBoard[startx + 2, starty + 2] != 0)
                         {
-                            for (int x = startx; x <= startx + 2; x++)
-                            {
-                                if (permanentGameBoard[x, y] != 0)
-                                {
-                                    isBlocked = true;
-                                    break;
-                                }
-                            }
+                            isBlocked = true;
+                            break;
                         }
                         break;
                 }
@@ -2555,71 +2507,38 @@ namespace WindowsFormsApp1
                 {
                     case 2:
                         //90 -- works
-                        for (int y = starty + 1; y <= starty + 3; y++)
+                        if (permanentGameBoard[startx + 1, starty + 1] != 0 || permanentGameBoard[startx + 1, starty + 2] != 0 || permanentGameBoard[startx + 2, starty + 2] != 0 || permanentGameBoard[startx + 1, starty + 3] != 0)
                         {
-                            for (int x = startx; x <= startx + 1; x++)
-                            {
-                                if (permanentGameBoard[x, y] != 0)
-                                {
-                                    isBlocked = true;
-                                    break;
-                                }
-                            }
+                            isBlocked = true;
+                            break;
                         }
                         break;
                     case 3:
                         //180 -- works
-                        for (int y = starty + 1; y <= starty + 2; y++)
+                        if (permanentGameBoard[startx, starty + 2] != 0 || permanentGameBoard[startx + 1, starty + 2] != 0 || permanentGameBoard[startx + 2, starty + 2] != 0 || permanentGameBoard[startx + 1, starty + 3] != 0)
                         {
-                            for (int x = startx; x <= startx + 2; x++)
-                            {
-                                if (permanentGameBoard[x, y] != 0)
-                                {
-                                    isBlocked = true;
-                                    break;
-                                }
-                            }
+                            isBlocked = true;
+                            break;
                         }
                         break;
                     case 4:
                         //270 -- works
-                        for (int y = starty + 1; y <= starty + 2; y++)
+                        if (permanentGameBoard[startx + 1, starty + 1] != 0 || permanentGameBoard[startx, starty + 2] != 0 || permanentGameBoard[startx + 1, starty + 2] != 0 || permanentGameBoard[startx + 1, starty + 3] != 0)
                         {
-                            for (int x = startx; x <= startx + 1; x++)
-                            {
-                                if (permanentGameBoard[x, y] != 0)
-                                {
-                                    isBlocked = true;
-                                    break;
-                                }
-                            }
+                            isBlocked = true;
+                            break;
                         }
                         break;
                     default:
                         //0 -- works
-                        for (int y = starty + 1; y <= starty + 2; y++)
+                        if (permanentGameBoard[startx + 1, starty + 1] != 0 || permanentGameBoard[startx, starty + 2] != 0 || permanentGameBoard[startx + 1, starty + 2] != 0 || permanentGameBoard[startx + 2, starty + 2] != 0)
                         {
-                            for (int x = startx; x <= startx + 2; x++)
-                            {
-                                // Check if the current cell is outside the bounds of the game board
-                                //if (x < 0 || x >= BoardWidth || y >= BoardHeight)
-                                //{
-                                //    
-                                //    break;
-                                //}
-
-                                // Check if the current cell would hit a permanent block
-                                if (permanentGameBoard[x, y] != 0)
-                                {
-                                    isBlocked = true;
-                                    break;
-                                }
-                            }
+                            isBlocked = true;
+                            break;
                         }
                         break;
                 }
             }
-            //New Blocks
             if (chosenblock == Sblock)
             {
                 switch (rotation)
@@ -2663,59 +2582,35 @@ namespace WindowsFormsApp1
                 switch (rotation)
                 {
                     case 2:
-                        //90 
-                        for (int y = starty; y <= starty + 2; y++)
+                        //90 -- works
+                        if (permanentGameBoard[startx + 2, starty + 1] != 0 || permanentGameBoard[startx + 1, starty + 2] != 0 || permanentGameBoard[startx + 2, starty + 2] != 0 || permanentGameBoard[startx + 1, starty + 3] != 0)
                         {
-                            for (int x = startx + 1; x <= startx + 2; x++)
-                            {
-                                if (permanentGameBoard[x, y] != 0)
-                                {
-                                    isBlocked = true;
-                                    break;
-                                }
-                            }
+                            isBlocked = true;
+                            break;
                         }
                         break;
                     case 3:
-                        //180 
-                        for (int y = starty; y <= starty + 3; y++)
+                        //180 -- works
+                        if (permanentGameBoard[startx, starty + 2] != 0 || permanentGameBoard[startx + 1, starty + 2] != 0 || permanentGameBoard[startx + 1, starty + 3] != 0 || permanentGameBoard[startx + 2, starty + 3] != 0)
                         {
-                            for (int x = startx + 1; x <= startx + 2; x++)
-                            {
-                                if (permanentGameBoard[x, y] != 0)
-                                {
-                                    isBlocked = true;
-                                    break;
-                                }
-                            }
+                            isBlocked = true;
+                            break;
                         }
                         break;
                     case 4:
                         //270 -- works
-                        for (int y = starty; y <= starty + 3; y++)
+                        if (permanentGameBoard[startx + 1, starty + 1] != 0 || permanentGameBoard[startx, starty + 2] != 0 || permanentGameBoard[startx + 1, starty + 2] != 0 || permanentGameBoard[startx, starty + 3] != 0)
                         {
-                            for (int x = startx; x <= startx + 1; x++)
-                            {
-                                if (permanentGameBoard[x, y] != 0)
-                                {
-                                    isBlocked = true;
-                                    break;
-                                }
-                            }
+                            isBlocked = true;
+                            break;
                         }
                         break;
                     default:
                         //0 -- works
-                        for (int y = starty; y <= starty + 2; y++)
+                        if (permanentGameBoard[startx , starty + 1] != 0 || permanentGameBoard[startx + 1, starty + 1] != 0 || permanentGameBoard[startx + 1, starty + 2] != 0 || permanentGameBoard[startx + 2, starty + 2] != 0)
                         {
-                            for (int x = startx; x <= startx + 2; x++)
-                            {
-                                if (permanentGameBoard[x, y] != 0)
-                                {
-                                    isBlocked = true;
-                                    break;
-                                }
-                            }
+                            isBlocked = true;
+                            break;
                         }
                         break;
                 }

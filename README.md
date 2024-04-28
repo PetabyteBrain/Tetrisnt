@@ -21,8 +21,8 @@ Tetris is a very recognised game and beloved by Generations, alot of people grew
 ## To do ...
 
 ### Important
-- Fix Block Placement On/beside other BLocks(Broke because of Rotation)
 - Add Correct Movement / Rotation Limits for Sblock and Zblock 
+- Add Rotation block if Blocks shouldnt be able to Rotate in specific position
 - Add **Start** screen and **Death** screen.
 - Add Start, Restart and Exit Buttons
 - Add Level System
