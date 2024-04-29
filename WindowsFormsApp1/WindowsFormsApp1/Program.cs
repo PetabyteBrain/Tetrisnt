@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
@@ -37,12 +38,16 @@ namespace WindowsFormsApp1
         int FinalHighScore = 0;
 
         int Level = 0;
+        int onelevelup = 0;
         int completedlines = 0;
         Label scoreboard = new Label();
         Label highscore = new Label();
         Label linecount = new Label();
+        Label levelcount = new Label();
         bool gameover = false;
 
+        Label finalhighscorep = new Label();
+        Label finalscorep = new Label();
 
         Button startbutton = new Button();
         Button quitbutton = new Button();
@@ -223,8 +228,7 @@ namespace WindowsFormsApp1
 
             InitializeStartScreen();
             InitializeGameBoard();
-
-
+            this.KeyDown += Form1_KeyDown;
         }
         private void gameplay()
         {
@@ -234,13 +238,15 @@ namespace WindowsFormsApp1
             Updatehighscore();
             InitializeLinecount();
             UpdateLinecount();
+            InitializeLevel();
+            UpdateLevel();
             UpdateScore();
 
             
 
             // beginning of game
             blockpicker();
-            this.KeyDown += Form1_KeyDown;
+            
             UpdateGameBoard();
             drawblock(startx, starty);
             UpdateGameBoard();
@@ -252,7 +258,7 @@ namespace WindowsFormsApp1
             this.Controls.Add(startbutton);
             startbutton.Text = "Start";
             startbutton.Location = new Point(100, 200);
-            startbutton.Size = new Size(100, 100);
+            startbutton.Size = new Size(150, 75);
 
             startbutton.Click += startbutton_Click;
 
@@ -260,9 +266,19 @@ namespace WindowsFormsApp1
             this.Controls.Add(quitbutton);
             quitbutton.Text = "quit";
             quitbutton.Location = new Point(300, 200);
-            quitbutton.Size = new Size(100, 100);
+            quitbutton.Size = new Size(150, 75);
 
             quitbutton.Click += quitbutton_Click;
+
+            //Background Picture
+            PictureBox startscreenimage = new PictureBox();
+            startscreenimage.Location = new Point(10, 10);
+            startscreenimage.Size = new Size(100, 100);
+            Controls.Add(startscreenimage);
+            //startscreenimage.ImageLocation = @"..\Image\Homescreen.jpg";
+            //startscreenimage.ImageLocation = @"WindowsFormsApp1/Image/Homescreen.jpg";
+            startscreenimage.ImageLocation = @"Image\Homescreen.jpg";
+
         }
         void startbutton_Click(object sender, EventArgs e)
         {
@@ -277,6 +293,7 @@ namespace WindowsFormsApp1
             timer1.Stop();
             this.Close();
         }
+
 
         private void ShowGameBoard()
         {
@@ -306,14 +323,47 @@ namespace WindowsFormsApp1
 
             //Gameover Highscore
             Finalhighscorev();
+            // Generate Quit Button
+            this.Controls.Add(quitbutton);
 
-            
+            RestartButton();
+        }
+        private void RestartButton()
+        {
+            this.Controls.Add(restartbutton);
+            restartbutton.Text = "Restart";
+            restartbutton.Location = new Point(100, 200);
+            restartbutton.Size = new Size(150, 75);
+
+            restartbutton.Click += restartbutton_Click;
+        }
+        void restartbutton_Click(object sender, EventArgs e)
+        {
+            gameover = false;
+            Score = 0;
+            Highscore = 0;
+            for (int x = 0; x < BoardWidth; x++)
+            {
+                for (int y = 0; y < BoardHeight; y++)
+                {
+                    permanentGameBoard[x, y] = 0;
+                    tempGameBoard[x, y] = 0;
+                }
+            }
+            timer1.Start();
+            this.Controls.Remove(quitbutton);
+            this.Controls.Remove(restartbutton);
+            this.Controls.Remove(finalhighscorep);
+            this.Controls.Remove(finalscorep);
+            Level = 0;
+            completedlines = 0;
+            ShowGameBoard();
+            gameplay();
         }
         private void Finalhighscorev()
         {
             //Gameover Highscore
 
-            Label finalhighscorep = new Label();
             finalhighscorep.Visible = true;
             finalhighscorep.Location = new Point(150, 120);
             finalhighscorep.AutoSize = true;
@@ -330,7 +380,6 @@ namespace WindowsFormsApp1
         {
             //Gameover Score
 
-            Label finalscorep = new Label();
             finalscorep.Visible = true;
             finalscorep.Location = new Point(150, 60);
             finalscorep.AutoSize = true;
@@ -350,6 +399,7 @@ namespace WindowsFormsApp1
             this.Controls.Remove(scoreboard);
             this.Controls.Remove(highscore);
             this.Controls.Remove(linecount);
+            this.Controls.Remove(levelcount);
             FinalScore = Score;
             FinalHighScore = Highscore;
             ShowGameOverScreen();
@@ -413,6 +463,24 @@ namespace WindowsFormsApp1
             string finalhighscore = Highscore.ToString();
             highscore.Text = String.Format($"Highscore: {finalhighscore}");
         }
+        private void InitializeLevel()
+        {
+
+            levelcount.Location = new Point(370, 180);
+            levelcount.AutoSize = true;
+            levelcount.Font = new Font("Calibri", 18);
+            levelcount.ForeColor = Color.Black;
+            levelcount.Padding = new Padding(6);
+            this.Controls.Add(levelcount);
+            levelcount.Refresh();
+            levelcount.Visible = true;
+
+        }
+        private void UpdateLevel()
+        {
+            string Levelachieved = Level.ToString();
+            levelcount.Text = String.Format($"Level {Levelachieved}");
+        }
         private void InitializeLinecount()
         {
             //completedlines
@@ -423,6 +491,26 @@ namespace WindowsFormsApp1
             linecount.Padding = new Padding(6);
             this.Controls.Add(linecount);
             linecount.Refresh();
+        }
+        private void UpdateLevelcount()
+        {
+            
+            if(onelevelup >= 10)
+            {
+                Level += 1;
+                onelevelup = 0;
+            }
+            
+            UpdateTimerInterval();
+            UpdateLevel();
+        }
+        private void UpdateTimerInterval()
+        {
+            if(timer1.Interval > 0)
+            {
+                //Choose Speed
+                timer1.Interval = 1000 - (Level * 200);
+            }
         }
         private void UpdateLinecount()
         {
@@ -461,6 +549,7 @@ namespace WindowsFormsApp1
                     }
                 }
             }
+            UpdateLevelcount();
         }
 
 
@@ -474,7 +563,7 @@ namespace WindowsFormsApp1
         }
 
 
-        int startx = 4;
+        int startx = 5;
         int starty = 0;
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -3730,8 +3819,6 @@ namespace WindowsFormsApp1
                         }
                     }
                 }
-                Score += 40;
-
                 Array.Clear(tempGameBoard, 0, tempGameBoard.Length);
 
                 CheckCompletedRows();
@@ -3739,7 +3826,7 @@ namespace WindowsFormsApp1
 
                 rotation = 5;
                 blockpicker();
-                startx = 4;
+                startx = 5;
                 starty = 0;
                 drawblock(startx, starty);
                 UpdateGameBoard();
@@ -3765,6 +3852,9 @@ namespace WindowsFormsApp1
                     y++;
                 }
             }
+            
+            UpdateLevel();
+            
         }
         private void RemoveCompletedRow(int rowIndex)
         {
@@ -3775,9 +3865,12 @@ namespace WindowsFormsApp1
                     permanentGameBoard[x, y] = permanentGameBoard[x, y - 1];
                 }
             }
-            Score += 40 * (Level + 1);
+            Score += 40 + ((Level + 1) * 40);
             completedlines += 1;
             UpdateLinecount();
+            UpdateLevel();
+            onelevelup += 1;
+            UpdateLevel();
         }
     }
 }

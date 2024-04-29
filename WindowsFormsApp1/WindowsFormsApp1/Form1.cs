@@ -63,6 +63,7 @@ namespace WindowsFormsApp1
                     drawblock(startx, starty);
                     UpdateGameBoard();
                     placeblockcheck();
+                    UpdateLevel();
                 }
             }
             
