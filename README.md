@@ -21,12 +21,14 @@ Tetris is a very recognised game and beloved by Generations, alot of people grew
 ## To do ...
 
 ### Important
-- Add Correct Movement / Rotation Limits for Sblock and Zblock 
 - Add Rotation block if Blocks shouldnt be able to Rotate in specific position
 - Add **Start** screen and **Death** screen.
 - Add Start, Restart and Exit Buttons
 - Add Level System
-- Add feature so that the Highscore System saves it's Value after closing
+- Add feature so that the Highscore System saves it's Value after closing.
+- Show Next Block on right side.
+- Add Pause and Resume Button
+- 
 
 ### Extra
 - Add Textures (BLock Texture and Colours / Background)

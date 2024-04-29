@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using static System.Windows.Forms.AxHost;
@@ -31,12 +32,17 @@ namespace WindowsFormsApp1
         private int[,] permanentGameBoard = new int[BoardWidth, BoardHeight];
         int Score = 0;
         int Highscore = 0;
+
+        int FinalScore = 0;
+        int FinalHighScore = 0;
+
         int Level = 0;
         int completedlines = 0;
         Label scoreboard = new Label();
         Label highscore = new Label();
         Label linecount = new Label();
         bool gameover = false;
+
 
         Button startbutton = new Button();
         Button quitbutton = new Button();
@@ -268,6 +274,7 @@ namespace WindowsFormsApp1
         }
         void quitbutton_Click(object sender, EventArgs e)
         {
+            timer1.Stop();
             this.Close();
         }
 
@@ -292,9 +299,61 @@ namespace WindowsFormsApp1
                 }
             }
         }
+        private void ShowGameOverScreen()
+        {
+            //Gameover Score
+            Finalscorev();
+
+            //Gameover Highscore
+            Finalhighscorev();
+
+            
+        }
+        private void Finalhighscorev()
+        {
+            //Gameover Highscore
+
+            Label finalhighscorep = new Label();
+            finalhighscorep.Visible = true;
+            finalhighscorep.Location = new Point(150, 120);
+            finalhighscorep.AutoSize = true;
+            finalhighscorep.Font = new Font("Calibri", 25);
+            finalhighscorep.ForeColor = Color.Black;
+            finalhighscorep.Padding = new Padding(6);
+            this.Controls.Add(finalhighscorep);
+            string Endhighscore = FinalHighScore.ToString();
+            finalhighscorep.Text = String.Format($"Highscore: {Endhighscore}");
+            finalhighscorep.Refresh();
+            
+        }
+        private void Finalscorev()
+        {
+            //Gameover Score
+
+            Label finalscorep = new Label();
+            finalscorep.Visible = true;
+            finalscorep.Location = new Point(150, 60);
+            finalscorep.AutoSize = true;
+            finalscorep.Font = new Font("Calibri", 25);
+            finalscorep.ForeColor = Color.Black;
+            finalscorep.Padding = new Padding(6);
+            this.Controls.Add(finalscorep);
+            string Endscore = FinalScore.ToString();
+            finalscorep.Text = String.Format($"Score: {Endscore}");
+            finalscorep.Refresh();
+            
+        }
         private void InitializeGameOver()
         {
             HideGameBoard();
+            timer1.Stop();
+            this.Controls.Remove(scoreboard);
+            this.Controls.Remove(highscore);
+            this.Controls.Remove(linecount);
+            FinalScore = Score;
+            FinalHighScore = Highscore;
+            ShowGameOverScreen();
+
         }
 
         private void InitializeGameBoard()
@@ -426,1647 +485,1646 @@ namespace WindowsFormsApp1
             int maxX = BoardWidth - blockSizeX;
             int maxY = BoardHeight - blockSizeY;
             int minX = BoardWidth - blockSizeX;
-
-            if (chosenblock == Tblock)
+            if (gameover == false)
             {
-                switch (rotation)
+                if (chosenblock == Tblock)
                 {
-                    case 2:
-                        //90
-                        blockSizeX = Tblock90.GetLength(1);
-                        blockSizeY = Tblock90.GetLength(0);
+                    switch (rotation)
+                    {
+                        case 2:
+                            //90
+                            blockSizeX = Tblock90.GetLength(1);
+                            blockSizeY = Tblock90.GetLength(0);
 
-                        switch (e.KeyCode)
-                        {
-                            case Keys.Right:
-                                if (startx < maxX - 5)
-                                {
-                                    clearblock();
-                                    startx += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Left:
-                                if (startx > 1)
-                                {
-                                    clearblock();
-                                    startx -= 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Down:
-                                if (starty < BoardHeight - 3)
-                                {
-                                    placeblockcheck();
-                                    clearblock();
-                                    starty += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Y:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation += 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                            case Keys.X:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation -= 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                        }
-                        break;
-                    case 3:
-                        //180
-                        blockSizeX = Tblock180.GetLength(1);
-                        blockSizeY = Tblock180.GetLength(0);
+                            switch (e.KeyCode)
+                            {
+                                case Keys.Right:
+                                    if (startx < maxX - 5)
+                                    {
+                                        clearblock();
+                                        startx += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Left:
+                                    if (startx > 1)
+                                    {
+                                        clearblock();
+                                        startx -= 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Down:
+                                    if (starty < BoardHeight - 3)
+                                    {
+                                        placeblockcheck();
+                                        clearblock();
+                                        starty += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Y:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation += 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                                case Keys.X:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation -= 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                            }
+                            break;
+                        case 3:
+                            //180
+                            blockSizeX = Tblock180.GetLength(1);
+                            blockSizeY = Tblock180.GetLength(0);
 
-                        switch (e.KeyCode)
-                        {
-                            case Keys.Right:
-                                if (startx < maxX - 5)
-                                {
-                                    clearblock();
-                                    startx += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Left:
-                                if (startx > 2)
-                                {
-                                    clearblock();
-                                    startx -= 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Down:
-                                if (starty < BoardHeight - 3)
-                                {
-                                    placeblockcheck();
-                                    clearblock();
-                                    starty += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Y:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation += 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                            case Keys.X:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation -= 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                        }
-                        break;
-                    case 4:
-                        //270
-                        blockSizeX = Tblock270.GetLength(1);
-                        blockSizeY = Tblock270.GetLength(0);
+                            switch (e.KeyCode)
+                            {
+                                case Keys.Right:
+                                    if (startx < maxX - 5)
+                                    {
+                                        clearblock();
+                                        startx += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Left:
+                                    if (startx > 2)
+                                    {
+                                        clearblock();
+                                        startx -= 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Down:
+                                    if (starty < BoardHeight - 3)
+                                    {
+                                        placeblockcheck();
+                                        clearblock();
+                                        starty += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Y:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation += 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                                case Keys.X:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation -= 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                            }
+                            break;
+                        case 4:
+                            //270
+                            blockSizeX = Tblock270.GetLength(1);
+                            blockSizeY = Tblock270.GetLength(0);
 
-                        switch (e.KeyCode)
-                        {
-                            case Keys.Right:
-                                if (startx < maxX - 4)
-                                {
-                                    clearblock();
-                                    startx += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Left:
-                                if (startx > 2)
-                                {
-                                    clearblock();
-                                    startx -= 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Down:
-                                if (starty < BoardHeight - 3)
-                                {
-                                    placeblockcheck();
-                                    clearblock();
-                                    starty += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Y:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation += 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                            case Keys.X:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation -= 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                        }
-                        break;
-                    default:
-                        //0
-                        blockSizeX = Tblock.GetLength(1);
-                        blockSizeY = Tblock.GetLength(0);
+                            switch (e.KeyCode)
+                            {
+                                case Keys.Right:
+                                    if (startx < maxX - 4)
+                                    {
+                                        clearblock();
+                                        startx += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Left:
+                                    if (startx > 2)
+                                    {
+                                        clearblock();
+                                        startx -= 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Down:
+                                    if (starty < BoardHeight - 3)
+                                    {
+                                        placeblockcheck();
+                                        clearblock();
+                                        starty += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Y:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation += 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                                case Keys.X:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation -= 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                            }
+                            break;
+                        default:
+                            //0
+                            blockSizeX = Tblock.GetLength(1);
+                            blockSizeY = Tblock.GetLength(0);
 
-                        switch (e.KeyCode)
-                        {
-                            case Keys.Right:
-                                if (startx < maxX - 5)
-                                {
-                                    clearblock();
-                                    startx += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Left:
-                                if (startx > 2)
-                                {
-                                    clearblock();
-                                    startx -= 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Down:
-                                if (starty < BoardHeight - 3)
-                                {
-                                    placeblockcheck();
-                                    clearblock();
-                                    starty += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Y:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation += 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                            case Keys.X:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation -= 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                        }
-                        break;
+                            switch (e.KeyCode)
+                            {
+                                case Keys.Right:
+                                    if (startx < maxX - 5)
+                                    {
+                                        clearblock();
+                                        startx += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Left:
+                                    if (startx > 2)
+                                    {
+                                        clearblock();
+                                        startx -= 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Down:
+                                    if (starty < BoardHeight - 3)
+                                    {
+                                        placeblockcheck();
+                                        clearblock();
+                                        starty += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Y:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation += 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                                case Keys.X:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation -= 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                            }
+                            break;
+                    }
+                }
+                else if (chosenblock == Lblock)
+                {
+                    switch (rotation)
+                    {
+                        case 2:
+                            //90
+                            blockSizeX = Lblock90.GetLength(1);
+                            blockSizeY = Lblock90.GetLength(0);
+
+                            switch (e.KeyCode)
+                            {
+                                case Keys.Right:
+                                    if (startx < maxX - 5)
+                                    {
+                                        clearblock();
+                                        startx += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Left:
+                                    if (startx > 1)
+                                    {
+                                        clearblock();
+                                        startx -= 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Down:
+                                    if (starty < BoardHeight - 3)
+                                    {
+                                        placeblockcheck();
+                                        clearblock();
+                                        starty += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Y:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation += 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                                case Keys.X:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation -= 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                            }
+                            break;
+                        case 3:
+                            //180
+                            blockSizeX = Lblock180.GetLength(1);
+                            blockSizeY = Lblock180.GetLength(0);
+
+                            switch (e.KeyCode)
+                            {
+                                case Keys.Right:
+                                    if (startx < maxX - 5)
+                                    {
+                                        clearblock();
+                                        startx += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Left:
+                                    if (startx > 2)
+                                    {
+                                        clearblock();
+                                        startx -= 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Down:
+                                    if (starty < BoardHeight - 3)
+                                    {
+                                        placeblockcheck();
+                                        clearblock();
+                                        starty += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Y:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation += 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                                case Keys.X:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation -= 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                            }
+                            break;
+                        case 4:
+                            //270
+                            blockSizeX = Lblock270.GetLength(1);
+                            blockSizeY = Lblock270.GetLength(0);
+
+                            switch (e.KeyCode)
+                            {
+                                case Keys.Right:
+                                    if (startx < maxX - 4)
+                                    {
+                                        clearblock();
+                                        startx += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Left:
+                                    if (startx > 2)
+                                    {
+                                        clearblock();
+                                        startx -= 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Down:
+                                    if (starty < BoardHeight - 3)
+                                    {
+                                        placeblockcheck();
+                                        clearblock();
+                                        starty += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Y:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation += 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                                case Keys.X:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation -= 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                            }
+                            break;
+                        default:
+                            //0
+                            blockSizeX = Lblock.GetLength(1);
+                            blockSizeY = Lblock.GetLength(0);
+
+                            switch (e.KeyCode)
+                            {
+                                case Keys.Right:
+                                    if (startx < maxX - 5)
+                                    {
+                                        clearblock();
+                                        startx += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Left:
+                                    if (startx > 2)
+                                    {
+                                        clearblock();
+                                        startx -= 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Down:
+                                    if (starty < BoardHeight - 3)
+                                    {
+                                        placeblockcheck();
+                                        clearblock();
+                                        starty += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Y:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation += 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                                case Keys.X:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation -= 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                            }
+                            break;
+                    }
+                }
+                else if (chosenblock == Jblock)
+                {
+                    switch (rotation)
+                    {
+                        case 2:
+                            //90
+                            blockSizeX = Jblock90.GetLength(1);
+                            blockSizeY = Jblock90.GetLength(0);
+
+                            switch (e.KeyCode)
+                            {
+                                case Keys.Right:
+                                    if (startx < maxX - 5)
+                                    {
+                                        clearblock();
+                                        startx += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Left:
+                                    if (startx > 1)
+                                    {
+                                        clearblock();
+                                        startx -= 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Down:
+                                    if (starty < BoardHeight - 3)
+                                    {
+                                        placeblockcheck();
+                                        clearblock();
+                                        starty += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Y:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation += 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                                case Keys.X:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation -= 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                            }
+                            break;
+                        case 3:
+                            //180
+                            blockSizeX = Jblock180.GetLength(1);
+                            blockSizeY = Jblock180.GetLength(0);
+
+                            switch (e.KeyCode)
+                            {
+                                case Keys.Right:
+                                    if (startx < maxX - 5)
+                                    {
+                                        clearblock();
+                                        startx += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Left:
+                                    if (startx > 2)
+                                    {
+                                        clearblock();
+                                        startx -= 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Down:
+                                    if (starty < BoardHeight - 3)
+                                    {
+                                        placeblockcheck();
+                                        clearblock();
+                                        starty += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Y:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation += 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                                case Keys.X:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation -= 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                            }
+                            break;
+                        case 4:
+                            //270
+                            blockSizeX = Jblock270.GetLength(1);
+                            blockSizeY = Jblock270.GetLength(0);
+
+                            switch (e.KeyCode)
+                            {
+                                case Keys.Right:
+                                    if (startx < maxX - 4)
+                                    {
+                                        clearblock();
+                                        startx += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Left:
+                                    if (startx > 2)
+                                    {
+                                        clearblock();
+                                        startx -= 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Down:
+                                    if (starty < BoardHeight - 3)
+                                    {
+                                        placeblockcheck();
+                                        clearblock();
+                                        starty += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Y:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation += 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                                case Keys.X:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation -= 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                            }
+                            break;
+                        default:
+                            //0
+                            blockSizeX = Jblock.GetLength(1);
+                            blockSizeY = Jblock.GetLength(0);
+
+                            switch (e.KeyCode)
+                            {
+                                case Keys.Right:
+                                    if (startx < maxX - 5)
+                                    {
+                                        clearblock();
+                                        startx += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Left:
+                                    if (startx > 2)
+                                    {
+                                        clearblock();
+                                        startx -= 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Down:
+                                    if (starty < BoardHeight - 3)
+                                    {
+                                        placeblockcheck();
+                                        clearblock();
+                                        starty += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Y:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation += 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                                case Keys.X:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation -= 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                            }
+                            break;
+                    }
+                }
+                else if (chosenblock == Iblock)
+                {
+                    switch (rotation)
+                    {
+                        case 2:
+                            //90
+                            blockSizeX = Iblock90.GetLength(1);
+                            blockSizeY = Iblock90.GetLength(0);
+
+                            switch (e.KeyCode)
+                            {
+                                case Keys.Right:
+                                    if (startx < maxX - 5)
+                                    {
+                                        clearblock();
+                                        startx += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Left:
+                                    if (startx > 0)
+                                    {
+                                        clearblock();
+                                        startx -= 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Down:
+                                    if (starty < BoardHeight - 3)
+                                    {
+                                        placeblockcheck();
+                                        clearblock();
+                                        starty += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Y:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation += 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                                case Keys.X:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation -= 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                            }
+                            break;
+                        case 3:
+                            //180
+                            blockSizeX = Iblock180.GetLength(1);
+                            blockSizeY = Iblock180.GetLength(0);
+
+                            switch (e.KeyCode)
+                            {
+                                case Keys.Right:
+                                    if (startx < maxX - 6)
+                                    {
+                                        clearblock();
+                                        startx += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Left:
+                                    if (startx > 2)
+                                    {
+                                        clearblock();
+                                        startx -= 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Down:
+                                    if (starty < BoardHeight - 3)
+                                    {
+                                        placeblockcheck();
+                                        clearblock();
+                                        starty += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Y:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation += 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                                case Keys.X:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation -= 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                            }
+                            break;
+                        case 4:
+                            //270
+                            blockSizeX = Iblock270.GetLength(1);
+                            blockSizeY = Iblock270.GetLength(0);
+
+                            switch (e.KeyCode)
+                            {
+                                case Keys.Right:
+                                    if (startx < maxX - 4)
+                                    {
+                                        clearblock();
+                                        startx += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Left:
+                                    if (startx > 1)
+                                    {
+                                        clearblock();
+                                        startx -= 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Down:
+                                    if (starty < BoardHeight - 3)
+                                    {
+                                        placeblockcheck();
+                                        clearblock();
+                                        starty += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Y:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation += 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                                case Keys.X:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation -= 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                            }
+                            break;
+                        default:
+                            //0
+                            blockSizeX = Iblock.GetLength(1);
+                            blockSizeY = Iblock.GetLength(0);
+
+                            switch (e.KeyCode)
+                            {
+                                case Keys.Right:
+                                    if (startx < maxX - 6)
+                                    {
+                                        clearblock();
+                                        startx += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Left:
+                                    if (startx > 2)
+                                    {
+                                        clearblock();
+                                        startx -= 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Down:
+                                    if (starty < BoardHeight - 3)
+                                    {
+                                        placeblockcheck();
+                                        clearblock();
+                                        starty += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Y:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation += 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                                case Keys.X:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation -= 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                            }
+                            break;
+                    }
+                }
+                else if (chosenblock == Oblock)
+                {
+                    blockSizeX = Oblock.GetLength(1);
+                    blockSizeY = Oblock.GetLength(0);
+
+                    switch (e.KeyCode)
+                    {
+                        case Keys.Right:
+                            if (startx < maxX - 4)
+                            {
+                                clearblock();
+                                startx += 1;
+                                drawblock(startx, starty);
+                                placeblockcheck();
+                                UpdateGameBoard();
+                            }
+                            break;
+                        case Keys.Left:
+                            if (startx > 2)
+                            {
+                                clearblock();
+                                startx -= 1;
+                                drawblock(startx, starty);
+                                placeblockcheck();
+                                UpdateGameBoard();
+                            }
+                            break;
+                        case Keys.Down:
+                            if (starty < BoardHeight - 3)
+                            {
+                                placeblockcheck();
+                                clearblock();
+                                starty += 1;
+                                drawblock(startx, starty);
+                                placeblockcheck();
+                                UpdateGameBoard();
+                            }
+                            break;
+                        case Keys.Y:
+                            if (starty < maxY)
+                            {
+                                clearblock();
+                                rotation += 1;
+                                Rotate();
+                                clearblock();
+                                drawblock(startx, starty);
+                                UpdateGameBoard();
+                                clearblock();
+                            }
+                            break;
+                        case Keys.X:
+                            if (starty < maxY)
+                            {
+                                clearblock();
+                                rotation -= 1;
+                                Rotate();
+                                clearblock();
+                                drawblock(startx, starty);
+                                UpdateGameBoard();
+                                clearblock();
+                            }
+                            break;
+                    }
+                }
+                if (chosenblock == Sblock)
+                {
+                    switch (rotation)
+                    {
+                        case 2:
+                            //90
+                            blockSizeX = Sblock90.GetLength(1);
+                            blockSizeY = Sblock90.GetLength(0);
+
+                            switch (e.KeyCode)
+                            {
+                                case Keys.Right:
+                                    if (startx < maxX - 5)
+                                    {
+                                        clearblock();
+                                        startx += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Left:
+                                    if (startx > 1)
+                                    {
+                                        clearblock();
+                                        startx -= 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Down:
+                                    if (starty < BoardHeight - 3)
+                                    {
+                                        placeblockcheck();
+                                        clearblock();
+                                        starty += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Y:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation += 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                                case Keys.X:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation -= 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                            }
+                            break;
+                        case 3:
+                            //180
+                            blockSizeX = Sblock180.GetLength(1);
+                            blockSizeY = Sblock180.GetLength(0);
+
+                            switch (e.KeyCode)
+                            {
+                                case Keys.Right:
+                                    if (startx < maxX - 5)
+                                    {
+                                        clearblock();
+                                        startx += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Left:
+                                    if (startx > 2)
+                                    {
+                                        clearblock();
+                                        startx -= 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Down:
+                                    if (starty < BoardHeight - 3)
+                                    {
+                                        placeblockcheck();
+                                        clearblock();
+                                        starty += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Y:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation += 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                                case Keys.X:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation -= 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                            }
+                            break;
+                        case 4:
+                            //270
+                            blockSizeX = Sblock270.GetLength(1);
+                            blockSizeY = Sblock270.GetLength(0);
+
+                            switch (e.KeyCode)
+                            {
+                                case Keys.Right:
+                                    if (startx < maxX - 4)
+                                    {
+                                        clearblock();
+                                        startx += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Left:
+                                    if (startx > 2)
+                                    {
+                                        clearblock();
+                                        startx -= 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Down:
+                                    if (starty < BoardHeight - 3)
+                                    {
+                                        placeblockcheck();
+                                        clearblock();
+                                        starty += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Y:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation += 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                                case Keys.X:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation -= 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                            }
+                            break;
+                        default:
+                            //0
+                            blockSizeX = Sblock.GetLength(1);
+                            blockSizeY = Sblock.GetLength(0);
+
+                            switch (e.KeyCode)
+                            {
+                                case Keys.Right:
+                                    if (startx < maxX - 5)
+                                    {
+                                        clearblock();
+                                        startx += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Left:
+                                    if (startx > 2)
+                                    {
+                                        clearblock();
+                                        startx -= 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Down:
+                                    if (starty < BoardHeight - 3)
+                                    {
+                                        placeblockcheck();
+                                        clearblock();
+                                        starty += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Y:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation += 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                                case Keys.X:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation -= 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                            }
+                            break;
+                    }
+                }
+                if (chosenblock == Zblock)
+                {
+                    switch (rotation)
+                    {
+                        case 2:
+                            //90
+                            blockSizeX = Zblock90.GetLength(1);
+                            blockSizeY = Zblock90.GetLength(0);
+
+                            switch (e.KeyCode)
+                            {
+                                case Keys.Right:
+                                    if (startx < maxX - 5)
+                                    {
+                                        clearblock();
+                                        startx += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Left:
+                                    if (startx > 1)
+                                    {
+                                        clearblock();
+                                        startx -= 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Down:
+                                    if (starty < BoardHeight - 3)
+                                    {
+                                        placeblockcheck();
+                                        clearblock();
+                                        starty += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Y:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation += 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                                case Keys.X:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation -= 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                            }
+                            break;
+                        case 3:
+                            //180
+                            blockSizeX = Zblock180.GetLength(1);
+                            blockSizeY = Zblock180.GetLength(0);
+
+                            switch (e.KeyCode)
+                            {
+                                case Keys.Right:
+                                    if (startx < maxX - 5)
+                                    {
+                                        clearblock();
+                                        startx += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Left:
+                                    if (startx > 2)
+                                    {
+                                        clearblock();
+                                        startx -= 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Down:
+                                    if (starty < BoardHeight - 3)
+                                    {
+                                        placeblockcheck();
+                                        clearblock();
+                                        starty += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Y:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation += 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                                case Keys.X:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation -= 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                            }
+                            break;
+                        case 4:
+                            //270
+                            blockSizeX = Zblock270.GetLength(1);
+                            blockSizeY = Zblock270.GetLength(0);
+
+                            switch (e.KeyCode)
+                            {
+                                case Keys.Right:
+                                    if (startx < maxX - 4)
+                                    {
+                                        clearblock();
+                                        startx += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Left:
+                                    if (startx > 2)
+                                    {
+                                        clearblock();
+                                        startx -= 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Down:
+                                    if (starty < BoardHeight - 3)
+                                    {
+                                        placeblockcheck();
+                                        clearblock();
+                                        starty += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Y:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation += 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                                case Keys.X:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation -= 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                            }
+                            break;
+                        default:
+                            //0
+                            blockSizeX = Zblock.GetLength(1);
+                            blockSizeY = Zblock.GetLength(0);
+
+                            switch (e.KeyCode)
+                            {
+                                case Keys.Right:
+                                    if (startx < maxX - 5)
+                                    {
+                                        clearblock();
+                                        startx += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Left:
+                                    if (startx > 2)
+                                    {
+                                        clearblock();
+                                        startx -= 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Down:
+                                    if (starty < BoardHeight - 3)
+                                    {
+                                        placeblockcheck();
+                                        clearblock();
+                                        starty += 1;
+                                        drawblock(startx, starty);
+                                        placeblockcheck();
+                                        UpdateGameBoard();
+                                    }
+                                    break;
+                                case Keys.Y:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation += 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                                case Keys.X:
+                                    if (starty < maxY)
+                                    {
+                                        clearblock();
+                                        rotation -= 1;
+                                        Rotate();
+                                        clearblock();
+                                        drawblock(startx, starty);
+                                        UpdateGameBoard();
+                                        clearblock();
+                                    }
+                                    break;
+                            }
+                            break;
+                    }
                 }
             }
-            else if (chosenblock == Lblock)
-            {
-                switch (rotation)
-                {
-                    case 2:
-                        //90
-                        blockSizeX = Lblock90.GetLength(1);
-                        blockSizeY = Lblock90.GetLength(0);
-
-                        switch (e.KeyCode)
-                        {
-                            case Keys.Right:
-                                if (startx < maxX - 5)
-                                {
-                                    clearblock();
-                                    startx += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Left:
-                                if (startx > 1)
-                                {
-                                    clearblock();
-                                    startx -= 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Down:
-                                if (starty < BoardHeight - 3)
-                                {
-                                    placeblockcheck();
-                                    clearblock();
-                                    starty += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Y:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation += 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                            case Keys.X:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation -= 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                        }
-                        break;
-                    case 3:
-                        //180
-                        blockSizeX = Lblock180.GetLength(1);
-                        blockSizeY = Lblock180.GetLength(0);
-
-                        switch (e.KeyCode)
-                        {
-                            case Keys.Right:
-                                if (startx < maxX - 5)
-                                {
-                                    clearblock();
-                                    startx += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Left:
-                                if (startx > 2)
-                                {
-                                    clearblock();
-                                    startx -= 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Down:
-                                if (starty < BoardHeight - 3)
-                                {
-                                    placeblockcheck();
-                                    clearblock();
-                                    starty += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Y:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation += 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                            case Keys.X:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation -= 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                        }
-                        break;
-                    case 4:
-                        //270
-                        blockSizeX = Lblock270.GetLength(1);
-                        blockSizeY = Lblock270.GetLength(0);
-
-                        switch (e.KeyCode)
-                        {
-                            case Keys.Right:
-                                if (startx < maxX - 4)
-                                {
-                                    clearblock();
-                                    startx += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Left:
-                                if (startx > 2)
-                                {
-                                    clearblock();
-                                    startx -= 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Down:
-                                if (starty < BoardHeight - 3)
-                                {
-                                    placeblockcheck();
-                                    clearblock();
-                                    starty += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Y:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation += 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                            case Keys.X:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation -= 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                        }
-                        break;
-                    default:
-                        //0
-                        blockSizeX = Lblock.GetLength(1);
-                        blockSizeY = Lblock.GetLength(0);
-
-                        switch (e.KeyCode)
-                        {
-                            case Keys.Right:
-                                if (startx < maxX - 5)
-                                {
-                                    clearblock();
-                                    startx += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Left:
-                                if (startx > 2)
-                                {
-                                    clearblock();
-                                    startx -= 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Down:
-                                if (starty < BoardHeight - 3)
-                                {
-                                    placeblockcheck();
-                                    clearblock();
-                                    starty += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Y:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation += 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                            case Keys.X:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation -= 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                        }
-                        break;
-                }
-            }
-            else if (chosenblock == Jblock)
-            {
-                switch (rotation)
-                {
-                    case 2:
-                        //90
-                        blockSizeX = Jblock90.GetLength(1);
-                        blockSizeY = Jblock90.GetLength(0);
-
-                        switch (e.KeyCode)
-                        {
-                            case Keys.Right:
-                                if (startx < maxX - 5)
-                                {
-                                    clearblock();
-                                    startx += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Left:
-                                if (startx > 1)
-                                {
-                                    clearblock();
-                                    startx -= 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Down:
-                                if (starty < BoardHeight - 3)
-                                {
-                                    placeblockcheck();
-                                    clearblock();
-                                    starty += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Y:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation += 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                            case Keys.X:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation -= 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                        }
-                        break;
-                    case 3:
-                        //180
-                        blockSizeX = Jblock180.GetLength(1);
-                        blockSizeY = Jblock180.GetLength(0);
-
-                        switch (e.KeyCode)
-                        {
-                            case Keys.Right:
-                                if (startx < maxX - 5)
-                                {
-                                    clearblock();
-                                    startx += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Left:
-                                if (startx > 2)
-                                {
-                                    clearblock();
-                                    startx -= 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Down:
-                                if (starty < BoardHeight - 3)
-                                {
-                                    placeblockcheck();
-                                    clearblock();
-                                    starty += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Y:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation += 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                            case Keys.X:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation -= 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                        }
-                        break;
-                    case 4:
-                        //270
-                        blockSizeX = Jblock270.GetLength(1);
-                        blockSizeY = Jblock270.GetLength(0);
-
-                        switch (e.KeyCode)
-                        {
-                            case Keys.Right:
-                                if (startx < maxX - 4)
-                                {
-                                    clearblock();
-                                    startx += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Left:
-                                if (startx > 2)
-                                {
-                                    clearblock();
-                                    startx -= 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Down:
-                                if (starty < BoardHeight - 3)
-                                {
-                                    placeblockcheck();
-                                    clearblock();
-                                    starty += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Y:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation += 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                            case Keys.X:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation -= 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                        }
-                        break;
-                    default:
-                        //0
-                        blockSizeX = Jblock.GetLength(1);
-                        blockSizeY = Jblock.GetLength(0);
-
-                        switch (e.KeyCode)
-                        {
-                            case Keys.Right:
-                                if (startx < maxX - 5)
-                                {
-                                    clearblock();
-                                    startx += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Left:
-                                if (startx > 2)
-                                {
-                                    clearblock();
-                                    startx -= 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Down:
-                                if (starty < BoardHeight - 3)
-                                {
-                                    placeblockcheck();
-                                    clearblock();
-                                    starty += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Y:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation += 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                            case Keys.X:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation -= 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                        }
-                        break;
-                }
-            }
-            else if (chosenblock == Iblock)
-            {
-                switch (rotation)
-                {
-                    case 2:
-                        //90
-                        blockSizeX = Iblock90.GetLength(1);
-                        blockSizeY = Iblock90.GetLength(0);
-
-                        switch (e.KeyCode)
-                        {
-                            case Keys.Right:
-                                if (startx < maxX - 5)
-                                {
-                                    clearblock();
-                                    startx += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Left:
-                                if (startx > 0)
-                                {
-                                    clearblock();
-                                    startx -= 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Down:
-                                if (starty < BoardHeight - 3)
-                                {
-                                    placeblockcheck();
-                                    clearblock();
-                                    starty += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Y:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation += 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                            case Keys.X:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation -= 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                        }
-                        break;
-                    case 3:
-                        //180
-                        blockSizeX = Iblock180.GetLength(1);
-                        blockSizeY = Iblock180.GetLength(0);
-
-                        switch (e.KeyCode)
-                        {
-                            case Keys.Right:
-                                if (startx < maxX - 6)
-                                {
-                                    clearblock();
-                                    startx += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Left:
-                                if (startx > 2)
-                                {
-                                    clearblock();
-                                    startx -= 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Down:
-                                if (starty < BoardHeight - 3)
-                                {
-                                    placeblockcheck();
-                                    clearblock();
-                                    starty += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Y:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation += 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                            case Keys.X:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation -= 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                        }
-                        break;
-                    case 4:
-                        //270
-                        blockSizeX = Iblock270.GetLength(1);
-                        blockSizeY = Iblock270.GetLength(0);
-
-                        switch (e.KeyCode)
-                        {
-                            case Keys.Right:
-                                if (startx < maxX - 4)
-                                {
-                                    clearblock();
-                                    startx += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Left:
-                                if (startx > 1)
-                                {
-                                    clearblock();
-                                    startx -= 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Down:
-                                if (starty < BoardHeight - 3)
-                                {
-                                    placeblockcheck();
-                                    clearblock();
-                                    starty += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Y:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation += 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                            case Keys.X:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation -= 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                        }
-                        break;
-                    default:
-                        //0
-                        blockSizeX = Iblock.GetLength(1);
-                        blockSizeY = Iblock.GetLength(0);
-
-                        switch (e.KeyCode)
-                        {
-                            case Keys.Right:
-                                if (startx < maxX - 6)
-                                {
-                                    clearblock();
-                                    startx += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Left:
-                                if (startx > 2)
-                                {
-                                    clearblock();
-                                    startx -= 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Down:
-                                if (starty < BoardHeight - 3)
-                                {
-                                    placeblockcheck();
-                                    clearblock();
-                                    starty += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Y:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation += 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                            case Keys.X:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation -= 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                        }
-                        break;
-                }
-            }
-            else if (chosenblock == Oblock)
-            {
-                blockSizeX = Oblock.GetLength(1);
-                blockSizeY = Oblock.GetLength(0);
-
-                switch (e.KeyCode)
-                {
-                    case Keys.Right:
-                        if (startx < maxX - 4)
-                        {
-                            clearblock();
-                            startx += 1;
-                            drawblock(startx, starty);
-                            placeblockcheck();
-                            UpdateGameBoard();
-                        }
-                        break;
-                    case Keys.Left:
-                        if (startx > 2)
-                        {
-                            clearblock();
-                            startx -= 1;
-                            drawblock(startx, starty);
-                            placeblockcheck();
-                            UpdateGameBoard();
-                        }
-                        break;
-                    case Keys.Down:
-                        if (starty < BoardHeight - 3)
-                        {
-                            placeblockcheck();
-                            clearblock();
-                            starty += 1;
-                            drawblock(startx, starty);
-                            placeblockcheck();
-                            UpdateGameBoard();
-                        }
-                        break;
-                    case Keys.Y:
-                        if (starty < maxY)
-                        {
-                            clearblock();
-                            rotation += 1;
-                            Rotate();
-                            clearblock();
-                            drawblock(startx, starty);
-                            UpdateGameBoard();
-                            clearblock();
-                        }
-                        break;
-                    case Keys.X:
-                        if (starty < maxY)
-                        {
-                            clearblock();
-                            rotation -= 1;
-                            Rotate();
-                            clearblock();
-                            drawblock(startx, starty);
-                            UpdateGameBoard();
-                            clearblock();
-                        }
-                        break;
-                }
-            }
-            if (chosenblock == Sblock)
-            {
-                switch (rotation)
-                {
-                    case 2:
-                        //90
-                        blockSizeX = Sblock90.GetLength(1);
-                        blockSizeY = Sblock90.GetLength(0);
-
-                        switch (e.KeyCode)
-                        {
-                            case Keys.Right:
-                                if (startx < maxX - 5)
-                                {
-                                    clearblock();
-                                    startx += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Left:
-                                if (startx > 1)
-                                {
-                                    clearblock();
-                                    startx -= 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Down:
-                                if (starty < BoardHeight - 3)
-                                {
-                                    placeblockcheck();
-                                    clearblock();
-                                    starty += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Y:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation += 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                            case Keys.X:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation -= 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                        }
-                        break;
-                    case 3:
-                        //180
-                        blockSizeX = Sblock180.GetLength(1);
-                        blockSizeY = Sblock180.GetLength(0);
-
-                        switch (e.KeyCode)
-                        {
-                            case Keys.Right:
-                                if (startx < maxX - 5)
-                                {
-                                    clearblock();
-                                    startx += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Left:
-                                if (startx > 2)
-                                {
-                                    clearblock();
-                                    startx -= 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Down:
-                                if (starty < BoardHeight - 3)
-                                {
-                                    placeblockcheck();
-                                    clearblock();
-                                    starty += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Y:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation += 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                            case Keys.X:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation -= 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                        }
-                        break;
-                    case 4:
-                        //270
-                        blockSizeX = Sblock270.GetLength(1);
-                        blockSizeY = Sblock270.GetLength(0);
-
-                        switch (e.KeyCode)
-                        {
-                            case Keys.Right:
-                                if (startx < maxX - 4)
-                                {
-                                    clearblock();
-                                    startx += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Left:
-                                if (startx > 2)
-                                {
-                                    clearblock();
-                                    startx -= 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Down:
-                                if (starty < BoardHeight - 3)
-                                {
-                                    placeblockcheck();
-                                    clearblock();
-                                    starty += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Y:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation += 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                            case Keys.X:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation -= 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                        }
-                        break;
-                    default:
-                        //0
-                        blockSizeX = Sblock.GetLength(1);
-                        blockSizeY = Sblock.GetLength(0);
-
-                        switch (e.KeyCode)
-                        {
-                            case Keys.Right:
-                                if (startx < maxX - 5)
-                                {
-                                    clearblock();
-                                    startx += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Left:
-                                if (startx > 2)
-                                {
-                                    clearblock();
-                                    startx -= 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Down:
-                                if (starty < BoardHeight - 3)
-                                {
-                                    placeblockcheck();
-                                    clearblock();
-                                    starty += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Y:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation += 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                            case Keys.X:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation -= 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                        }
-                        break;
-                }
-            }
-            if (chosenblock == Zblock)
-            {
-                switch (rotation)
-                {
-                    case 2:
-                        //90
-                        blockSizeX = Zblock90.GetLength(1);
-                        blockSizeY = Zblock90.GetLength(0);
-
-                        switch (e.KeyCode)
-                        {
-                            case Keys.Right:
-                                if (startx < maxX - 5)
-                                {
-                                    clearblock();
-                                    startx += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Left:
-                                if (startx > 1)
-                                {
-                                    clearblock();
-                                    startx -= 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Down:
-                                if (starty < BoardHeight - 3)
-                                {
-                                    placeblockcheck();
-                                    clearblock();
-                                    starty += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Y:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation += 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                            case Keys.X:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation -= 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                        }
-                        break;
-                    case 3:
-                        //180
-                        blockSizeX = Zblock180.GetLength(1);
-                        blockSizeY = Zblock180.GetLength(0);
-
-                        switch (e.KeyCode)
-                        {
-                            case Keys.Right:
-                                if (startx < maxX - 5)
-                                {
-                                    clearblock();
-                                    startx += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Left:
-                                if (startx > 2)
-                                {
-                                    clearblock();
-                                    startx -= 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Down:
-                                if (starty < BoardHeight - 3)
-                                {
-                                    placeblockcheck();
-                                    clearblock();
-                                    starty += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Y:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation += 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                            case Keys.X:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation -= 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                        }
-                        break;
-                    case 4:
-                        //270
-                        blockSizeX = Zblock270.GetLength(1);
-                        blockSizeY = Zblock270.GetLength(0);
-
-                        switch (e.KeyCode)
-                        {
-                            case Keys.Right:
-                                if (startx < maxX - 4)
-                                {
-                                    clearblock();
-                                    startx += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Left:
-                                if (startx > 2)
-                                {
-                                    clearblock();
-                                    startx -= 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Down:
-                                if (starty < BoardHeight - 3)
-                                {
-                                    placeblockcheck();
-                                    clearblock();
-                                    starty += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Y:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation += 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                            case Keys.X:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation -= 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                        }
-                        break;
-                    default:
-                        //0
-                        blockSizeX = Zblock.GetLength(1);
-                        blockSizeY = Zblock.GetLength(0);
-
-                        switch (e.KeyCode)
-                        {
-                            case Keys.Right:
-                                if (startx < maxX - 5)
-                                {
-                                    clearblock();
-                                    startx += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Left:
-                                if (startx > 2)
-                                {
-                                    clearblock();
-                                    startx -= 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Down:
-                                if (starty < BoardHeight - 3)
-                                {
-                                    placeblockcheck();
-                                    clearblock();
-                                    starty += 1;
-                                    drawblock(startx, starty);
-                                    placeblockcheck();
-                                    UpdateGameBoard();
-                                }
-                                break;
-                            case Keys.Y:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation += 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                            case Keys.X:
-                                if (starty < maxY)
-                                {
-                                    clearblock();
-                                    rotation -= 1;
-                                    Rotate();
-                                    clearblock();
-                                    drawblock(startx, starty);
-                                    UpdateGameBoard();
-                                    clearblock();
-                                }
-                                break;
-                        }
-                        break;
-                }
-            }
-
-
-
-
+            
         }
         int rotation = 5;
         private void Rotate()
