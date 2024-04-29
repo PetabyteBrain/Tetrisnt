@@ -84,8 +84,6 @@
     <Content Include="Image\Homescreen.jpg" />
     <Content Include="Image\Homescreen.png" />
     <None Include="Resources\Homescreen.jpg" />
-    <None Include="Resources\Homescreen.png" />
-    <None Include="Resources\Image1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

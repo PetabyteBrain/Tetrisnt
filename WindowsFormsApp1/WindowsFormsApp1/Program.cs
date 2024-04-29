@@ -53,6 +53,8 @@ namespace WindowsFormsApp1
         Button quitbutton = new Button();
         Button restartbutton = new Button();
 
+        PictureBox startscreenimage = new PictureBox();
+
         // BLOCKS
         // TBLOCK ORIENTATIONS
         private int[,] Tblock = new int[,]
@@ -271,10 +273,12 @@ namespace WindowsFormsApp1
             quitbutton.Click += quitbutton_Click;
 
             //Background Picture
-            PictureBox startscreenimage = new PictureBox();
-            startscreenimage.Location = new Point(10, 10);
-            startscreenimage.Size = new Size(100, 100);
+            this.Controls.Add(startscreenimage);
+            startscreenimage.Location = new Point(0, 0);
+            startscreenimage.Size = new Size(500, 500);
             Controls.Add(startscreenimage);
+            startscreenimage.SizeMode = PictureBoxSizeMode.StretchImage;
+
             startscreenimage.Image = Properties.Resources.Homescreen;
             
         }
@@ -283,6 +287,7 @@ namespace WindowsFormsApp1
             this.Controls.Remove(startbutton);
             this.Controls.Remove(quitbutton);
             this.Controls.Remove(restartbutton);
+            this.Controls.Remove(startscreenimage);
             ShowGameBoard();
             gameplay();
         }
