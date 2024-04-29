@@ -18,3 +18,13 @@ C:\Users\BWD Spyros\OneDrive - bwd 365\Dokumente\GitHub\Tetrisnt\WindowsFormsApp
 C:\Users\BWD Spyros\OneDrive - bwd 365\Dokumente\GitHub\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
 C:\Users\BWD Spyros\OneDrive - bwd 365\Dokumente\GitHub\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
 C:\Users\BWD Spyros\OneDrive - bwd 365\Dokumente\GitHub\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+\\178.192.62.27\shared\GitHub\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
+\\178.192.62.27\shared\GitHub\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+\\178.192.62.27\shared\GitHub\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+\\178.192.62.27\shared\GitHub\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.AssemblyReference.cache
+\\178.192.62.27\shared\GitHub\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form1.resources
+\\178.192.62.27\shared\GitHub\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+\\178.192.62.27\shared\GitHub\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.cache
+\\178.192.62.27\shared\GitHub\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
+\\178.192.62.27\shared\GitHub\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+\\178.192.62.27\shared\GitHub\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb

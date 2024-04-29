@@ -275,10 +275,8 @@ namespace WindowsFormsApp1
             startscreenimage.Location = new Point(10, 10);
             startscreenimage.Size = new Size(100, 100);
             Controls.Add(startscreenimage);
-            //startscreenimage.ImageLocation = @"..\Image\Homescreen.jpg";
-            //startscreenimage.ImageLocation = @"WindowsFormsApp1/Image/Homescreen.jpg";
-            startscreenimage.ImageLocation = @"Image\Homescreen.jpg";
-
+            startscreenimage.Image = Properties.Resources.Homescreen;
+            
         }
         void startbutton_Click(object sender, EventArgs e)
         {
