@@ -21,16 +21,19 @@ Tetris is a very recognised game and beloved by Generations, alot of people grew
 ## To do ...
 
 ### Important
-- Add Rotation block if Blocks shouldnt be able to Rotate in specific position
-- Add **Start** screen and **Death** screen.
-- Add Start, Restart and Exit Buttons
-- Add feature so that the Highscore System saves it's Value after closing.
+- Fix **BUG** After Restart random fragment is left behind at top row (Sometimes leads to accidental Gameover), **cause Mistake in Restart Script**
+
+- Add **Rotation Lock** if Blocks shouldnt be able to Rotate in specific position
+- Add feature so that the **Highscore** System **saves** it's **Value** after closing.
 - Show Next Block on right side.
-- Add Pause and Resume Button
+- Add **Pause**, **Resume** and **Quit** Menu Button
 - Add Feature to give Points per Cell which is Softdropped.
 
 ### Extra
-- Add Textures (BLock Texture and Colours / Background)
-- Maybe add Animations
+- Add **Textures** (BLock Texture and Colours / Background)
+- change **Gui design** (Start / Death Screen, Buttons)
+- Maybe **add Animations**
 - Balance Level System (Point distribution / Tick Speed)
+- Add **Harddrop Feature**.
 
+- More Features ...

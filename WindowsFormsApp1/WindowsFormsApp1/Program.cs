@@ -53,6 +53,18 @@ namespace WindowsFormsApp1
         Button quitbutton = new Button();
         Button restartbutton = new Button();
 
+        //Level Buttons
+        Button level0button = new Button();
+        Button level1button = new Button();
+        Button level2button = new Button();
+        Button level3button = new Button();
+        Button level4button = new Button();
+        Button level5button = new Button();
+        Button level6button = new Button();
+        Button level7button = new Button();
+        Button level8button = new Button();
+        Button level9button = new Button();
+
         PictureBox startscreenimage = new PictureBox();
 
         // BLOCKS
@@ -232,9 +244,75 @@ namespace WindowsFormsApp1
             InitializeGameBoard();
             this.KeyDown += Form1_KeyDown;
         }
+        private void levelselect()
+        {
+            int levelbuttonwidth = 100;
+            int levelbuttonheight = 75;
+            //Level0 Select
+            this.Controls.Add(level0button);
+            level0button.Text = "0";
+            level0button.Location = new Point(10, 100);
+            level0button.Size = new Size(levelbuttonwidth, levelbuttonheight);
+            level0button.Click += level0button_Click;
+            //Level1 Select
+            this.Controls.Add(level1button);
+            level1button.Text = "1";
+            level1button.Location = new Point(110, 100);
+            level1button.Size = new Size(levelbuttonwidth, levelbuttonheight);
+            level1button.Click += level1button_Click;
+            //Level2 Select
+            this.Controls.Add(level2button);
+            level2button.Text = "2";
+            level2button.Location = new Point(210, 100);
+            level2button.Size = new Size(levelbuttonwidth, levelbuttonheight);
+            level2button.Click += level2button_Click;
+            //Level3 Select
+            this.Controls.Add(level3button);
+            level3button.Text = "3";
+            level3button.Location = new Point(310, 100);
+            level3button.Size = new Size(levelbuttonwidth, levelbuttonheight);
+            level3button.Click += level3button_Click;
+            //Level4 Select
+            this.Controls.Add(level4button);
+            level4button.Text = "4";
+            level4button.Location = new Point(410, 100);
+            level4button.Size = new Size(levelbuttonwidth, levelbuttonheight);
+            level4button.Click += level4button_Click;
+            //Level5 Select
+            this.Controls.Add(level5button);
+            level5button.Text = "5";
+            level5button.Location = new Point(10, 200);
+            level5button.Size = new Size(levelbuttonwidth, levelbuttonheight);
+            level5button.Click += level5button_Click;
+            //Level6 Select
+            this.Controls.Add(level6button);
+            level6button.Text = "6";
+            level6button.Location = new Point(110, 200);
+            level6button.Size = new Size(levelbuttonwidth, levelbuttonheight);
+            level6button.Click += level6button_Click;
+            //Level7 Select
+            this.Controls.Add(level7button);
+            level7button.Text = "7";
+            level7button.Location = new Point(210, 200);
+            level7button.Size = new Size(levelbuttonwidth, levelbuttonheight);
+            level7button.Click += level7button_Click;
+            //Level8 Select
+            this.Controls.Add(level8button);
+            level8button.Text = "8";
+            level8button.Location = new Point(310, 200);
+            level8button.Size = new Size(levelbuttonwidth, levelbuttonheight);
+            level8button.Click += level8button_Click;
+            //Level9 Select
+            this.Controls.Add(level9button);
+            level9button.Text = "9";
+            level9button.Location = new Point(410, 200);
+            level9button.Size = new Size(levelbuttonwidth, levelbuttonheight);
+            level9button.Click += level9button_Click;
+        }
         private void gameplay()
         {
             // Initiate & Update
+            gameover = false;
             InitializeScore();
             Initializehighscore();
             Updatehighscore();
@@ -244,8 +322,7 @@ namespace WindowsFormsApp1
             UpdateLevel();
             UpdateScore();
 
-            
-
+            timer1.Start();
             // beginning of game
             blockpicker();
             
@@ -288,13 +365,94 @@ namespace WindowsFormsApp1
             this.Controls.Remove(quitbutton);
             this.Controls.Remove(restartbutton);
             this.Controls.Remove(startscreenimage);
-            ShowGameBoard();
-            gameplay();
+            
+
+            levelselect();
         }
         void quitbutton_Click(object sender, EventArgs e)
         {
             timer1.Stop();
             this.Close();
+        }
+        void level0button_Click(object sender, EventArgs e)
+        {
+            startscriptremove();
+            Level = 0;
+            gameplay();
+        }
+        void level1button_Click(object sender, EventArgs e)
+        {
+            startscriptremove();
+            Level = 1;
+            gameplay();
+        }
+        void level2button_Click(object sender, EventArgs e)
+        {
+            startscriptremove();
+            Level = 2;
+            gameplay();
+        }
+        void level3button_Click(object sender, EventArgs e)
+        {
+            startscriptremove();
+            Level = 3;
+            gameplay();
+        }
+        void level4button_Click(object sender, EventArgs e)
+        {
+            startscriptremove();
+            Level = 4;
+            gameplay();
+        }
+        void level5button_Click(object sender, EventArgs e)
+        {
+            startscriptremove();
+            Level = 5;
+            gameplay();
+        }
+        void level6button_Click(object sender, EventArgs e)
+        {
+            startscriptremove();
+            Level = 6;
+            gameplay();
+        }
+        void level7button_Click(object sender, EventArgs e)
+        {
+            startscriptremove();
+            Level = 7;
+            gameplay();
+        }
+        void level8button_Click(object sender, EventArgs e)
+        {
+            startscriptremove();
+            Level = 8;
+            gameplay();
+        }
+        void level9button_Click(object sender, EventArgs e)
+        {
+            startscriptremove();
+            Level = 9;
+            gameplay();
+        }
+        private void startscriptremove()
+        {
+            this.Controls.Remove(startbutton);
+            this.Controls.Remove(quitbutton);
+            this.Controls.Remove(restartbutton);
+            this.Controls.Remove(startscreenimage);
+
+            this.Controls.Remove(level0button);
+            this.Controls.Remove(level1button);
+            this.Controls.Remove(level2button);
+            this.Controls.Remove(level3button);
+            this.Controls.Remove(level4button);
+            this.Controls.Remove(level5button);
+            this.Controls.Remove(level6button);
+            this.Controls.Remove(level7button);
+            this.Controls.Remove(level8button);
+            this.Controls.Remove(level9button);
+
+            ShowGameBoard();
         }
 
 
@@ -311,6 +469,15 @@ namespace WindowsFormsApp1
         }
         private void HideGameBoard()
         {
+            for (int x = 0; x < BoardWidth; x++)
+            {
+                for (int y = 0; y < BoardHeight; y++)
+                {
+                    permanentGameBoard[x, y] = 0;
+                    tempGameBoard[x, y] = 0;
+                }
+            }
+
             foreach (Control control in this.Controls)
             {
                 if (control is PictureBox)
@@ -342,7 +509,6 @@ namespace WindowsFormsApp1
         }
         void restartbutton_Click(object sender, EventArgs e)
         {
-            gameover = false;
             Score = 0;
             Highscore = 0;
             for (int x = 0; x < BoardWidth; x++)
@@ -353,15 +519,13 @@ namespace WindowsFormsApp1
                     tempGameBoard[x, y] = 0;
                 }
             }
-            timer1.Start();
             this.Controls.Remove(quitbutton);
             this.Controls.Remove(restartbutton);
             this.Controls.Remove(finalhighscorep);
             this.Controls.Remove(finalscorep);
             Level = 0;
             completedlines = 0;
-            ShowGameBoard();
-            gameplay();
+            levelselect();
         }
         private void Finalhighscorev()
         {
@@ -403,12 +567,15 @@ namespace WindowsFormsApp1
             this.Controls.Remove(highscore);
             this.Controls.Remove(linecount);
             this.Controls.Remove(levelcount);
+            if(Highscore >= FinalHighScore)
+            {
+                FinalHighScore = Highscore;
+            }
+            
             FinalScore = Score;
-            FinalHighScore = Highscore;
             ShowGameOverScreen();
 
         }
-
         private void InitializeGameBoard()
         {
             for (int y = 0; y < BoardHeight; y++)
@@ -497,7 +664,6 @@ namespace WindowsFormsApp1
         }
         private void UpdateLevelcount()
         {
-            
             if(onelevelup >= 10)
             {
                 Level += 1;
@@ -512,7 +678,7 @@ namespace WindowsFormsApp1
             if(timer1.Interval > 0)
             {
                 //Choose Speed
-                timer1.Interval = 1000 - (Level * 200);
+                timer1.Interval = 1000 - (Level * 100);
             }
         }
         private void UpdateLinecount()
@@ -520,8 +686,6 @@ namespace WindowsFormsApp1
             string Linecounter = completedlines.ToString();
             linecount.Text = String.Format($"Lines: {Linecounter}");
         }
-
-
         private System.Drawing.Color GetCombinedColor(int x, int y)
         {
             if (tempGameBoard[x, y] == 1 || permanentGameBoard[x, y] == 1)
@@ -536,8 +700,6 @@ namespace WindowsFormsApp1
             else
                 return System.Drawing.Color.White;
         }
-
-
         private void UpdateGameBoard()
         {
             for (int y = 0; y < BoardHeight; y++)
@@ -554,11 +716,6 @@ namespace WindowsFormsApp1
             }
             UpdateLevelcount();
         }
-
-
-
-
-
         // Example usage
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -2288,7 +2445,7 @@ namespace WindowsFormsApp1
 
             for (int x = 0; x < BoardWidth; x++)
             {
-                if (permanentGameBoard[x, 4] == 1)
+                if (permanentGameBoard[x, 3] == 1)
                 {
                     gameover = true;
                 }
