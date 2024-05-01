@@ -311,6 +311,15 @@ namespace WindowsFormsApp1
         }
         private void gameplay()
         {
+            for (int x = 0; x < BoardWidth; x++)
+            {
+                for (int y = 0; y < BoardHeight; y++)
+                {
+                    permanentGameBoard[x, y] = 0;
+                    tempGameBoard[x, y] = 0;
+                }
+            }
+
             // Initiate & Update
             gameover = false;
             InitializeScore();

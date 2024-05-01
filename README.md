@@ -21,7 +21,6 @@ Tetris is a very recognised game and beloved by Generations, alot of people grew
 ## To do ...
 
 ### Important
-- Fix **BUG** After Restart random fragment is left behind at top row (Sometimes leads to accidental Gameover), **cause Mistake in Restart Script**
 
 - Add **Rotation Lock** if Blocks shouldnt be able to Rotate in specific position
 - Add feature so that the **Highscore** System **saves** it's **Value** after closing.
