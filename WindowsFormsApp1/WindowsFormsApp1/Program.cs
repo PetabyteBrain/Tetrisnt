@@ -787,30 +787,6 @@ namespace WindowsFormsApp1
                                         UpdateGameBoard();
                                     }
                                     break;
-                                case Keys.Y:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation += 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
-                                case Keys.X:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation -= 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
                             }
                             break;
                         case 3:
@@ -849,30 +825,6 @@ namespace WindowsFormsApp1
                                         drawblock(startx, starty);
                                         placeblockcheck();
                                         UpdateGameBoard();
-                                    }
-                                    break;
-                                case Keys.Y:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation += 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
-                                case Keys.X:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation -= 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
                                     }
                                     break;
                             }
@@ -915,30 +867,6 @@ namespace WindowsFormsApp1
                                         UpdateGameBoard();
                                     }
                                     break;
-                                case Keys.Y:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation += 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
-                                case Keys.X:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation -= 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
                             }
                             break;
                         default:
@@ -977,30 +905,6 @@ namespace WindowsFormsApp1
                                         drawblock(startx, starty);
                                         placeblockcheck();
                                         UpdateGameBoard();
-                                    }
-                                    break;
-                                case Keys.Y:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation += 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
-                                case Keys.X:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation -= 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
                                     }
                                     break;
                             }
@@ -1049,30 +953,6 @@ namespace WindowsFormsApp1
                                         UpdateGameBoard();
                                     }
                                     break;
-                                case Keys.Y:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation += 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
-                                case Keys.X:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation -= 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
                             }
                             break;
                         case 3:
@@ -1111,30 +991,6 @@ namespace WindowsFormsApp1
                                         drawblock(startx, starty);
                                         placeblockcheck();
                                         UpdateGameBoard();
-                                    }
-                                    break;
-                                case Keys.Y:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation += 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
-                                case Keys.X:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation -= 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
                                     }
                                     break;
                             }
@@ -1177,30 +1033,6 @@ namespace WindowsFormsApp1
                                         UpdateGameBoard();
                                     }
                                     break;
-                                case Keys.Y:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation += 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
-                                case Keys.X:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation -= 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
                             }
                             break;
                         default:
@@ -1239,30 +1071,6 @@ namespace WindowsFormsApp1
                                         drawblock(startx, starty);
                                         placeblockcheck();
                                         UpdateGameBoard();
-                                    }
-                                    break;
-                                case Keys.Y:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation += 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
-                                case Keys.X:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation -= 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
                                     }
                                     break;
                             }
@@ -1311,30 +1119,6 @@ namespace WindowsFormsApp1
                                         UpdateGameBoard();
                                     }
                                     break;
-                                case Keys.Y:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation += 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
-                                case Keys.X:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation -= 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
                             }
                             break;
                         case 3:
@@ -1373,30 +1157,6 @@ namespace WindowsFormsApp1
                                         drawblock(startx, starty);
                                         placeblockcheck();
                                         UpdateGameBoard();
-                                    }
-                                    break;
-                                case Keys.Y:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation += 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
-                                case Keys.X:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation -= 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
                                     }
                                     break;
                             }
@@ -1439,30 +1199,6 @@ namespace WindowsFormsApp1
                                         UpdateGameBoard();
                                     }
                                     break;
-                                case Keys.Y:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation += 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
-                                case Keys.X:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation -= 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
                             }
                             break;
                         default:
@@ -1501,30 +1237,6 @@ namespace WindowsFormsApp1
                                         drawblock(startx, starty);
                                         placeblockcheck();
                                         UpdateGameBoard();
-                                    }
-                                    break;
-                                case Keys.Y:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation += 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
-                                case Keys.X:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation -= 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
                                     }
                                     break;
                             }
@@ -1573,30 +1285,6 @@ namespace WindowsFormsApp1
                                         UpdateGameBoard();
                                     }
                                     break;
-                                case Keys.Y:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation += 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
-                                case Keys.X:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation -= 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
                             }
                             break;
                         case 3:
@@ -1635,30 +1323,6 @@ namespace WindowsFormsApp1
                                         drawblock(startx, starty);
                                         placeblockcheck();
                                         UpdateGameBoard();
-                                    }
-                                    break;
-                                case Keys.Y:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation += 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
-                                case Keys.X:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation -= 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
                                     }
                                     break;
                             }
@@ -1701,30 +1365,6 @@ namespace WindowsFormsApp1
                                         UpdateGameBoard();
                                     }
                                     break;
-                                case Keys.Y:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation += 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
-                                case Keys.X:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation -= 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
                             }
                             break;
                         default:
@@ -1763,30 +1403,6 @@ namespace WindowsFormsApp1
                                         drawblock(startx, starty);
                                         placeblockcheck();
                                         UpdateGameBoard();
-                                    }
-                                    break;
-                                case Keys.Y:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation += 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
-                                case Keys.X:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation -= 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
                                     }
                                     break;
                             }
@@ -1829,30 +1445,6 @@ namespace WindowsFormsApp1
                                 drawblock(startx, starty);
                                 placeblockcheck();
                                 UpdateGameBoard();
-                            }
-                            break;
-                        case Keys.Y:
-                            if (starty < maxY)
-                            {
-                                clearblock();
-                                rotation += 1;
-                                Rotate();
-                                clearblock();
-                                drawblock(startx, starty);
-                                UpdateGameBoard();
-                                clearblock();
-                            }
-                            break;
-                        case Keys.X:
-                            if (starty < maxY)
-                            {
-                                clearblock();
-                                rotation -= 1;
-                                Rotate();
-                                clearblock();
-                                drawblock(startx, starty);
-                                UpdateGameBoard();
-                                clearblock();
                             }
                             break;
                     }
@@ -1899,30 +1491,6 @@ namespace WindowsFormsApp1
                                         UpdateGameBoard();
                                     }
                                     break;
-                                case Keys.Y:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation += 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
-                                case Keys.X:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation -= 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
                             }
                             break;
                         case 3:
@@ -1961,30 +1529,6 @@ namespace WindowsFormsApp1
                                         drawblock(startx, starty);
                                         placeblockcheck();
                                         UpdateGameBoard();
-                                    }
-                                    break;
-                                case Keys.Y:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation += 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
-                                case Keys.X:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation -= 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
                                     }
                                     break;
                             }
@@ -2027,30 +1571,6 @@ namespace WindowsFormsApp1
                                         UpdateGameBoard();
                                     }
                                     break;
-                                case Keys.Y:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation += 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
-                                case Keys.X:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation -= 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
                             }
                             break;
                         default:
@@ -2089,30 +1609,6 @@ namespace WindowsFormsApp1
                                         drawblock(startx, starty);
                                         placeblockcheck();
                                         UpdateGameBoard();
-                                    }
-                                    break;
-                                case Keys.Y:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation += 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
-                                case Keys.X:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation -= 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
                                     }
                                     break;
                             }
@@ -2161,30 +1657,6 @@ namespace WindowsFormsApp1
                                         UpdateGameBoard();
                                     }
                                     break;
-                                case Keys.Y:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation += 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
-                                case Keys.X:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation -= 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
                             }
                             break;
                         case 3:
@@ -2223,30 +1695,6 @@ namespace WindowsFormsApp1
                                         drawblock(startx, starty);
                                         placeblockcheck();
                                         UpdateGameBoard();
-                                    }
-                                    break;
-                                case Keys.Y:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation += 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
-                                case Keys.X:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation -= 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
                                     }
                                     break;
                             }
@@ -2289,30 +1737,6 @@ namespace WindowsFormsApp1
                                         UpdateGameBoard();
                                     }
                                     break;
-                                case Keys.Y:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation += 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
-                                case Keys.X:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation -= 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
                             }
                             break;
                         default:
@@ -2353,36 +1777,38 @@ namespace WindowsFormsApp1
                                         UpdateGameBoard();
                                     }
                                     break;
-                                case Keys.Y:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation += 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
-                                case Keys.X:
-                                    if (starty < maxY)
-                                    {
-                                        clearblock();
-                                        rotation -= 1;
-                                        Rotate();
-                                        clearblock();
-                                        drawblock(startx, starty);
-                                        UpdateGameBoard();
-                                        clearblock();
-                                    }
-                                    break;
                             }
                             break;
                     }
                 }
+                switch (e.KeyCode)
+                {
+                    case Keys.Y:
+                        if (starty < maxY)
+                        {
+                            clearblock();
+                            rotation += 1;
+                            Rotate();
+                            clearblock();
+                            drawblock(startx, starty);
+                            UpdateGameBoard();
+                            clearblock();
+                        }
+                        break;
+                    case Keys.X:
+                        if (starty < maxY)
+                        {
+                            clearblock();
+                            rotation -= 1;
+                            Rotate();
+                            clearblock();
+                            drawblock(startx, starty);
+                            UpdateGameBoard();
+                            clearblock();
+                        }
+                        break;
+                }
             }
-            
         }
         int rotation = 5;
         private void Rotate()
