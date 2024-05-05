@@ -30,6 +30,7 @@ namespace WindowsFormsApp1
                 if (newtimer > oldtimer | newtimer == oldtimer)
                 {
                     placeblockcheck();
+                    CheckCollision();
                     clearblock();
                     UpdateGameBoard();
 

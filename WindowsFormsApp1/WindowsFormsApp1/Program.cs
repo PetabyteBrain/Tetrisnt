@@ -757,7 +757,7 @@ namespace WindowsFormsApp1
                             switch (e.KeyCode)
                             {
                                 case Keys.Right:
-                                    if (startx < maxX - 5)
+                                    if (startx < maxX - 5 && AllowMoveRight == true)
                                     {
                                         clearblock();
                                         startx += 1;
@@ -767,7 +767,7 @@ namespace WindowsFormsApp1
                                     }
                                     break;
                                 case Keys.Left:
-                                    if (startx > 1)
+                                    if (startx > 1 && AllowMoveLeft == true)
                                     {
                                         clearblock();
                                         startx -= 1;
@@ -797,7 +797,7 @@ namespace WindowsFormsApp1
                             switch (e.KeyCode)
                             {
                                 case Keys.Right:
-                                    if (startx < maxX - 5)
+                                    if (startx < maxX - 5 && AllowMoveRight == true)
                                     {
                                         clearblock();
                                         startx += 1;
@@ -807,7 +807,7 @@ namespace WindowsFormsApp1
                                     }
                                     break;
                                 case Keys.Left:
-                                    if (startx > 2)
+                                    if (startx > 2 && AllowMoveLeft == true)
                                     {
                                         clearblock();
                                         startx -= 1;
@@ -837,7 +837,7 @@ namespace WindowsFormsApp1
                             switch (e.KeyCode)
                             {
                                 case Keys.Right:
-                                    if (startx < maxX - 4)
+                                    if (startx < maxX - 4 && AllowMoveRight == true)
                                     {
                                         clearblock();
                                         startx += 1;
@@ -847,7 +847,7 @@ namespace WindowsFormsApp1
                                     }
                                     break;
                                 case Keys.Left:
-                                    if (startx > 2)
+                                    if (startx > 2 && AllowMoveLeft == true)
                                     {
                                         clearblock();
                                         startx -= 1;
@@ -877,7 +877,7 @@ namespace WindowsFormsApp1
                             switch (e.KeyCode)
                             {
                                 case Keys.Right:
-                                    if (startx < maxX - 5)
+                                    if (startx < maxX - 5 && AllowMoveRight == true)
                                     {
                                         clearblock();
                                         startx += 1;
@@ -887,7 +887,7 @@ namespace WindowsFormsApp1
                                     }
                                     break;
                                 case Keys.Left:
-                                    if (startx > 2)
+                                    if (startx > 2 && AllowMoveLeft == true)
                                     {
                                         clearblock();
                                         startx -= 1;
@@ -923,7 +923,7 @@ namespace WindowsFormsApp1
                             switch (e.KeyCode)
                             {
                                 case Keys.Right:
-                                    if (startx < maxX - 5)
+                                    if (startx < maxX - 5 && AllowMoveRight == true)
                                     {
                                         clearblock();
                                         startx += 1;
@@ -933,7 +933,7 @@ namespace WindowsFormsApp1
                                     }
                                     break;
                                 case Keys.Left:
-                                    if (startx > 1)
+                                    if (startx > 1 && AllowMoveLeft == true)
                                     {
                                         clearblock();
                                         startx -= 1;
@@ -963,7 +963,7 @@ namespace WindowsFormsApp1
                             switch (e.KeyCode)
                             {
                                 case Keys.Right:
-                                    if (startx < maxX - 5)
+                                    if (startx < maxX - 5 && AllowMoveRight == true)
                                     {
                                         clearblock();
                                         startx += 1;
@@ -973,7 +973,7 @@ namespace WindowsFormsApp1
                                     }
                                     break;
                                 case Keys.Left:
-                                    if (startx > 2)
+                                    if (startx > 2 && AllowMoveLeft == true)
                                     {
                                         clearblock();
                                         startx -= 1;
@@ -1003,7 +1003,7 @@ namespace WindowsFormsApp1
                             switch (e.KeyCode)
                             {
                                 case Keys.Right:
-                                    if (startx < maxX - 4)
+                                    if (startx < maxX - 4 && AllowMoveRight == true)
                                     {
                                         clearblock();
                                         startx += 1;
@@ -1013,7 +1013,7 @@ namespace WindowsFormsApp1
                                     }
                                     break;
                                 case Keys.Left:
-                                    if (startx > 2)
+                                    if (startx > 2 && AllowMoveLeft == true)
                                     {
                                         clearblock();
                                         startx -= 1;
@@ -1043,7 +1043,7 @@ namespace WindowsFormsApp1
                             switch (e.KeyCode)
                             {
                                 case Keys.Right:
-                                    if (startx < maxX - 5)
+                                    if (startx < maxX - 5 && AllowMoveRight == true)
                                     {
                                         clearblock();
                                         startx += 1;
@@ -1053,7 +1053,7 @@ namespace WindowsFormsApp1
                                     }
                                     break;
                                 case Keys.Left:
-                                    if (startx > 2)
+                                    if (startx > 2 && AllowMoveLeft == true)
                                     {
                                         clearblock();
                                         startx -= 1;
@@ -1089,7 +1089,7 @@ namespace WindowsFormsApp1
                             switch (e.KeyCode)
                             {
                                 case Keys.Right:
-                                    if (startx < maxX - 5)
+                                    if (startx < maxX - 5 && AllowMoveRight == true)
                                     {
                                         clearblock();
                                         startx += 1;
@@ -1099,7 +1099,7 @@ namespace WindowsFormsApp1
                                     }
                                     break;
                                 case Keys.Left:
-                                    if (startx > 1)
+                                    if (startx > 1 && AllowMoveLeft == true)
                                     {
                                         clearblock();
                                         startx -= 1;
@@ -1129,7 +1129,7 @@ namespace WindowsFormsApp1
                             switch (e.KeyCode)
                             {
                                 case Keys.Right:
-                                    if (startx < maxX - 5)
+                                    if (startx < maxX - 5 && AllowMoveRight == true)
                                     {
                                         clearblock();
                                         startx += 1;
@@ -1139,7 +1139,7 @@ namespace WindowsFormsApp1
                                     }
                                     break;
                                 case Keys.Left:
-                                    if (startx > 2)
+                                    if (startx > 2 && AllowMoveLeft == true)
                                     {
                                         clearblock();
                                         startx -= 1;
@@ -1169,7 +1169,7 @@ namespace WindowsFormsApp1
                             switch (e.KeyCode)
                             {
                                 case Keys.Right:
-                                    if (startx < maxX - 4)
+                                    if (startx < maxX - 4 && AllowMoveRight == true)
                                     {
                                         clearblock();
                                         startx += 1;
@@ -1179,7 +1179,7 @@ namespace WindowsFormsApp1
                                     }
                                     break;
                                 case Keys.Left:
-                                    if (startx > 2)
+                                    if (startx > 2 && AllowMoveLeft == true)
                                     {
                                         clearblock();
                                         startx -= 1;
@@ -1209,7 +1209,7 @@ namespace WindowsFormsApp1
                             switch (e.KeyCode)
                             {
                                 case Keys.Right:
-                                    if (startx < maxX - 5)
+                                    if (startx < maxX - 5 && AllowMoveRight == true)
                                     {
                                         clearblock();
                                         startx += 1;
@@ -1219,7 +1219,7 @@ namespace WindowsFormsApp1
                                     }
                                     break;
                                 case Keys.Left:
-                                    if (startx > 2)
+                                    if (startx > 2 && AllowMoveLeft == true)
                                     {
                                         clearblock();
                                         startx -= 1;
@@ -1255,7 +1255,7 @@ namespace WindowsFormsApp1
                             switch (e.KeyCode)
                             {
                                 case Keys.Right:
-                                    if (startx < maxX - 5)
+                                    if (startx < maxX - 5 && AllowMoveRight == true)
                                     {
                                         clearblock();
                                         startx += 1;
@@ -1265,7 +1265,7 @@ namespace WindowsFormsApp1
                                     }
                                     break;
                                 case Keys.Left:
-                                    if (startx > 0)
+                                    if (startx > 0 && AllowMoveLeft == true)
                                     {
                                         clearblock();
                                         startx -= 1;
@@ -1295,7 +1295,7 @@ namespace WindowsFormsApp1
                             switch (e.KeyCode)
                             {
                                 case Keys.Right:
-                                    if (startx < maxX - 6)
+                                    if (startx < maxX - 6 && AllowMoveRight == true)
                                     {
                                         clearblock();
                                         startx += 1;
@@ -1305,7 +1305,7 @@ namespace WindowsFormsApp1
                                     }
                                     break;
                                 case Keys.Left:
-                                    if (startx > 2)
+                                    if (startx > 2 && AllowMoveLeft == true)
                                     {
                                         clearblock();
                                         startx -= 1;
@@ -1335,7 +1335,7 @@ namespace WindowsFormsApp1
                             switch (e.KeyCode)
                             {
                                 case Keys.Right:
-                                    if (startx < maxX - 4)
+                                    if (startx < maxX - 4 && AllowMoveRight == true)
                                     {
                                         clearblock();
                                         startx += 1;
@@ -1345,7 +1345,7 @@ namespace WindowsFormsApp1
                                     }
                                     break;
                                 case Keys.Left:
-                                    if (startx > 1)
+                                    if (startx > 1 && AllowMoveLeft == true)
                                     {
                                         clearblock();
                                         startx -= 1;
@@ -1375,7 +1375,7 @@ namespace WindowsFormsApp1
                             switch (e.KeyCode)
                             {
                                 case Keys.Right:
-                                    if (startx < maxX - 6)
+                                    if (startx < maxX - 6 && AllowMoveRight == true)
                                     {
                                         clearblock();
                                         startx += 1;
@@ -1385,7 +1385,7 @@ namespace WindowsFormsApp1
                                     }
                                     break;
                                 case Keys.Left:
-                                    if (startx > 2)
+                                    if (startx > 2 && AllowMoveLeft == true)
                                     {
                                         clearblock();
                                         startx -= 1;
@@ -1417,7 +1417,7 @@ namespace WindowsFormsApp1
                     switch (e.KeyCode)
                     {
                         case Keys.Right:
-                            if (startx < maxX - 4)
+                            if (startx < maxX - 4 && AllowMoveRight == true)
                             {
                                 clearblock();
                                 startx += 1;
@@ -1427,7 +1427,7 @@ namespace WindowsFormsApp1
                             }
                             break;
                         case Keys.Left:
-                            if (startx > 2)
+                            if (startx > 2 && AllowMoveLeft == true)
                             {
                                 clearblock();
                                 startx -= 1;
@@ -1461,7 +1461,7 @@ namespace WindowsFormsApp1
                             switch (e.KeyCode)
                             {
                                 case Keys.Right:
-                                    if (startx < maxX - 5)
+                                    if (startx < maxX - 5 && AllowMoveRight == true)
                                     {
                                         clearblock();
                                         startx += 1;
@@ -1471,7 +1471,7 @@ namespace WindowsFormsApp1
                                     }
                                     break;
                                 case Keys.Left:
-                                    if (startx > 1)
+                                    if (startx > 1 && AllowMoveLeft == true)
                                     {
                                         clearblock();
                                         startx -= 1;
@@ -1501,7 +1501,7 @@ namespace WindowsFormsApp1
                             switch (e.KeyCode)
                             {
                                 case Keys.Right:
-                                    if (startx < maxX - 5)
+                                    if (startx < maxX - 5 && AllowMoveRight == true)
                                     {
                                         clearblock();
                                         startx += 1;
@@ -1511,7 +1511,7 @@ namespace WindowsFormsApp1
                                     }
                                     break;
                                 case Keys.Left:
-                                    if (startx > 2)
+                                    if (startx > 2 && AllowMoveLeft == true)
                                     {
                                         clearblock();
                                         startx -= 1;
@@ -1541,7 +1541,7 @@ namespace WindowsFormsApp1
                             switch (e.KeyCode)
                             {
                                 case Keys.Right:
-                                    if (startx < maxX - 4)
+                                    if (startx < maxX - 4 && AllowMoveRight == true)
                                     {
                                         clearblock();
                                         startx += 1;
@@ -1551,7 +1551,7 @@ namespace WindowsFormsApp1
                                     }
                                     break;
                                 case Keys.Left:
-                                    if (startx > 2)
+                                    if (startx > 2 && AllowMoveLeft == true)
                                     {
                                         clearblock();
                                         startx -= 1;
@@ -1581,7 +1581,7 @@ namespace WindowsFormsApp1
                             switch (e.KeyCode)
                             {
                                 case Keys.Right:
-                                    if (startx < maxX - 5)
+                                    if (startx < maxX - 5 && AllowMoveRight == true)
                                     {
                                         clearblock();
                                         startx += 1;
@@ -1591,7 +1591,7 @@ namespace WindowsFormsApp1
                                     }
                                     break;
                                 case Keys.Left:
-                                    if (startx > 2)
+                                    if (startx > 2 && AllowMoveLeft == true)
                                     {
                                         clearblock();
                                         startx -= 1;
@@ -1627,7 +1627,7 @@ namespace WindowsFormsApp1
                             switch (e.KeyCode)
                             {
                                 case Keys.Right:
-                                    if (startx < maxX - 5)
+                                    if (startx < maxX - 5 && AllowMoveRight == true)
                                     {
                                         clearblock();
                                         startx += 1;
@@ -1637,7 +1637,7 @@ namespace WindowsFormsApp1
                                     }
                                     break;
                                 case Keys.Left:
-                                    if (startx > 1)
+                                    if (startx > 1 && AllowMoveLeft == true)
                                     {
                                         clearblock();
                                         startx -= 1;
@@ -1667,7 +1667,7 @@ namespace WindowsFormsApp1
                             switch (e.KeyCode)
                             {
                                 case Keys.Right:
-                                    if (startx < maxX - 5)
+                                    if (startx < maxX - 5 && AllowMoveRight == true)
                                     {
                                         clearblock();
                                         startx += 1;
@@ -1677,7 +1677,7 @@ namespace WindowsFormsApp1
                                     }
                                     break;
                                 case Keys.Left:
-                                    if (startx > 2)
+                                    if (startx > 2 && AllowMoveLeft == true)
                                     {
                                         clearblock();
                                         startx -= 1;
@@ -1707,7 +1707,7 @@ namespace WindowsFormsApp1
                             switch (e.KeyCode)
                             {
                                 case Keys.Right:
-                                    if (startx < maxX - 4)
+                                    if (startx < maxX - 4 && AllowMoveRight == true)
                                     {
                                         clearblock();
                                         startx += 1;
@@ -1717,7 +1717,7 @@ namespace WindowsFormsApp1
                                     }
                                     break;
                                 case Keys.Left:
-                                    if (startx > 2)
+                                    if (startx > 2 && AllowMoveLeft == true)
                                     {
                                         clearblock();
                                         startx -= 1;
@@ -1747,7 +1747,7 @@ namespace WindowsFormsApp1
                             switch (e.KeyCode)
                             {
                                 case Keys.Right:
-                                    if (startx < maxX - 5)
+                                    if (startx < maxX - 5 && AllowMoveRight == true)
                                     {
                                         clearblock();
                                         startx += 1;
@@ -1757,7 +1757,7 @@ namespace WindowsFormsApp1
                                     }
                                     break;
                                 case Keys.Left:
-                                    if (startx > 2)
+                                    if (startx > 2 && AllowMoveLeft == true)
                                     {
                                         clearblock();
                                         startx -= 1;
@@ -1809,7 +1809,855 @@ namespace WindowsFormsApp1
                         break;
                 }
             }
+            CheckCollision();
         }
+        bool AllowMoveLeft = true;
+        bool AllowMoveRight = true;
+        private void CheckCollision()
+        {
+            if(chosenblock == Oblock)
+            {
+                for (int y = starty; y <= starty + 1; y++)
+                {
+                    for (int xleft = startx - 1; xleft <= startx - 1; xleft++)
+                    {
+                        for (int xright = startx + 2; xright <= startx + 2; xright++)
+                        {
+                            if (permanentGameBoard[xright, y] == 1 && permanentGameBoard[xright, y] != 0)//BLock Right movement if collision
+                            {
+                                AllowMoveRight = false;
+                            }
+                            if (permanentGameBoard[xright, y] != 1 && permanentGameBoard[xright, y] == 0)
+                            {
+                                AllowMoveRight = true;
+                            }
+                            if (permanentGameBoard[xleft, y] == 1 && permanentGameBoard[xleft, y] != 0)//BLock Left movement if collision
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            if (permanentGameBoard[xleft, y] != 1 && permanentGameBoard[xleft, y] == 0)
+                            {
+                                AllowMoveLeft = true;
+                            }
+                        }
+                    }
+                }
+            }
+            else if (chosenblock == Iblock)
+            {
+                switch (rotation)
+                {
+                    case 2:
+                        {//90
+                            for (int y = starty; y <= starty + 3; y++)
+                            {
+                                for (int xleft = startx + 1; xleft <= startx + 1; xleft++)
+                                {
+                                    for (int xright = startx + 3; xright <= startx + 3; xright++)
+                                    {
+                                        if (permanentGameBoard[xright, y] == 1 && permanentGameBoard[xright, y] != 0)//BLock Right movement if collision
+                                        {
+                                            AllowMoveRight = false;
+                                        }
+                                        if (permanentGameBoard[xright, y] != 1 && permanentGameBoard[xright, y] == 0)
+                                        {
+                                            AllowMoveRight = true;
+                                        }
+                                        if (permanentGameBoard[xleft, y] == 1 && permanentGameBoard[xleft, y] != 0)//BLock Left movement if collision
+                                        {
+                                            AllowMoveLeft = false;
+                                        }
+                                        if (permanentGameBoard[xleft, y] != 1 && permanentGameBoard[xleft, y] == 0)
+                                        {
+                                            AllowMoveLeft = true;
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                    case 3:
+                        {//180
+                            for (int y = starty + 2; y <= starty + 2; y++)
+                            {
+                                for (int xleft = startx - 1; xleft <= startx - 1; xleft++)
+                                {
+                                    for (int xright = startx + 4; xright <= startx + 4; xright++)
+                                    {
+                                        if (permanentGameBoard[xright, y] == 1 && permanentGameBoard[xright, y] != 0)//BLock Right movement if collision
+                                        {
+                                            AllowMoveRight = false;
+                                        }
+                                        if (permanentGameBoard[xright, y] != 1 && permanentGameBoard[xright, y] == 0)
+                                        {
+                                            AllowMoveRight = true;
+                                        }
+                                        if (permanentGameBoard[xleft, y] == 1 && permanentGameBoard[xleft, y] != 0)//BLock Left movement if collision
+                                        {
+                                            AllowMoveLeft = false;
+                                        }
+                                        if (permanentGameBoard[xleft, y] != 1 && permanentGameBoard[xleft, y] == 0)
+                                        {
+                                            AllowMoveLeft = true;
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                    case 4:
+                        {//270
+                            for (int y = starty; y <= starty + 3; y++)
+                            {
+                                for (int xleft = startx; xleft <= startx; xleft++)
+                                {
+                                    for (int xright = startx + 2; xright <= startx + 2; xright++)
+                                    {
+                                        if (permanentGameBoard[xright, y] == 1 && permanentGameBoard[xright, y] != 0)//BLock Right movement if collision
+                                        {
+                                            AllowMoveRight = false;
+                                        }
+                                        if (permanentGameBoard[xright, y] != 1 && permanentGameBoard[xright, y] == 0)
+                                        {
+                                            AllowMoveRight = true;
+                                        }
+                                        if (permanentGameBoard[xleft, y] == 1 && permanentGameBoard[xleft, y] != 0)//BLock Left movement if collision
+                                        {
+                                            AllowMoveLeft = false;
+                                        }
+                                        if (permanentGameBoard[xleft, y] != 1 && permanentGameBoard[xleft, y] == 0)
+                                        {
+                                            AllowMoveLeft = true;
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                    default:
+                        {// 0
+                            for (int y = starty + 1; y <= starty + 1; y++)
+                            {
+                                for (int xleft = startx - 1; xleft <= startx - 1; xleft++)
+                                {
+                                    for (int xright = startx + 4; xright <= startx + 4; xright++)
+                                    {
+                                        if (permanentGameBoard[xright, y] == 1 && permanentGameBoard[xright, y] != 0)//BLock Right movement if collision
+                                        {
+                                            AllowMoveRight = false;
+                                        }
+                                        if (permanentGameBoard[xright, y] != 1 && permanentGameBoard[xright, y] == 0)
+                                        {
+                                            AllowMoveRight = true;
+                                        }
+                                        if (permanentGameBoard[xleft, y] == 1 && permanentGameBoard[xleft, y] != 0)//BLock Left movement if collision
+                                        {
+                                            AllowMoveLeft = false;
+                                        }
+                                        if (permanentGameBoard[xleft, y] != 1 && permanentGameBoard[xleft, y] == 0)
+                                        {
+                                            AllowMoveLeft = true;
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                }
+            }
+            else if (chosenblock == Tblock)
+            {
+                switch (rotation)
+                {
+                    case 2:
+                        {//90
+                            if (permanentGameBoard[startx + 2, starty] != 0)//BLock Right movement if collision
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 3, starty + 1] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 2, starty + 2] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else
+                            {
+                                AllowMoveRight = true;
+                            }
+
+                            if (permanentGameBoard[startx, starty] != 0)//BLock Left movement if collision
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx, starty + 1] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx, starty + 2] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else
+                            {
+                                AllowMoveLeft = true;
+                            }
+                            break;
+                        }
+                    case 3:
+                        {//180
+                            if (permanentGameBoard[startx + 3, starty + 1] != 0)//BLock Right movement if collision
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 2, starty + 2] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else
+                            {
+                                AllowMoveRight = true;
+                            }
+
+                            if (permanentGameBoard[startx, starty + 2] != 0)//BLock Left movement if collision
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx - 1, starty + 1] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else
+                            {
+                                AllowMoveLeft = true;
+                            }
+                            break;
+                        }
+                    case 4:
+                        {//270
+                            if (permanentGameBoard[startx + 2, starty] != 0)//BLock Right movement if collision
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 2, starty + 1] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 2, starty + 2] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else
+                            {
+                                AllowMoveRight = true;
+                            }
+
+                            if (permanentGameBoard[startx, starty] != 0)//BLock Left movement if collision
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx - 1, starty + 1] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx, starty + 2] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else
+                            {
+                                AllowMoveLeft = true;
+                            }
+                            break;
+                        }
+                    default:
+                        {// 0
+                            if (permanentGameBoard[startx + 3, starty + 1] != 0)//BLock Right movement if collision
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 2, starty] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else
+                            {
+                                AllowMoveRight = true;
+                            }
+
+                            if (permanentGameBoard[startx, starty] != 0)//BLock Left movement if collision
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx - 1, starty + 1] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else
+                            {
+                                AllowMoveLeft = true;
+                            }
+                            break;
+                        }
+                }
+            }
+            else if (chosenblock == Lblock)
+            {
+                switch (rotation)
+                {
+                    case 2:
+                        {//90
+                            if (permanentGameBoard[startx + 2, starty] != 0)//BLock Right movement if collision
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 2, starty + 1] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 3, starty + 2] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else
+                            {
+                                AllowMoveRight = true;
+                            }
+
+                            if (permanentGameBoard[startx, starty] != 0)//BLock Left movement if collision
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx, starty + 1] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx, starty + 2] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else
+                            {
+                                AllowMoveLeft = true;
+                            }
+                            break;
+                        }
+                    case 3:
+                        {//180
+                            if (permanentGameBoard[startx + 3, starty + 1] != 0)//BLock Right movement if collision
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 1, starty + 2] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            
+                            else
+                            {
+                                AllowMoveRight = true;
+                            }
+
+                            if (permanentGameBoard[startx - 1, starty + 1] != 0)//BLock Left movement if collision
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx - 1, starty + 2] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else
+                            {
+                                AllowMoveLeft = true;
+                            }
+                            break;
+                        }
+                    case 4:
+                        {//270
+                            if (permanentGameBoard[startx + 2, starty] != 0)//BLock Right movement if collision
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 2, starty + 1] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 2, starty + 2] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else
+                            {
+                                AllowMoveRight = true;
+                            }
+
+                            if (permanentGameBoard[startx - 1, starty] != 0)//BLock Left movement if collision
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx, starty + 1] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx, starty + 2] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else
+                            {
+                                AllowMoveLeft = true;
+                            }
+                            break;
+                        }
+                    default:
+                        {// 0
+                            if (permanentGameBoard[startx + 3, starty] != 0)//BLock Right movement if collision
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 3, starty + 1] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else
+                            {
+                                AllowMoveRight = true;
+                            }
+
+                            if (permanentGameBoard[startx + 1, starty] != 0)//BLock Left movement if collision
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx - 1, starty + 1] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else
+                            {
+                                AllowMoveLeft = true;
+                            }
+                            break;
+                        }
+                }
+            }
+            else if (chosenblock == Jblock)
+            {
+                switch (rotation)
+                {
+                    case 2:
+                        {//90
+                            if (permanentGameBoard[startx + 3, starty] != 0)//BLock Right movement if collision
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 2, starty + 1] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 2, starty + 2] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else
+                            {
+                                AllowMoveRight = true;
+                            }
+
+                            if (permanentGameBoard[startx, starty] != 0)//BLock Left movement if collision
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx, starty + 1] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx, starty + 2] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else
+                            {
+                                AllowMoveLeft = true;
+                            }
+                            break;
+                        }
+                    case 3:
+                        {//180
+                            if (permanentGameBoard[startx + 3, starty + 1] != 0)//BLock Right movement if collision
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 3, starty + 2] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else
+                            {
+                                AllowMoveRight = true;
+                            }
+
+                            if (permanentGameBoard[startx - 1, starty + 1] != 0)//BLock Left movement if collision
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx + 1, starty + 2] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else
+                            {
+                                AllowMoveLeft = true;
+                            }
+                            break;
+                        }
+                    case 4:
+                        {//270
+                            if (permanentGameBoard[startx + 2, starty] != 0)//BLock Right movement if collision
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 2, starty + 1] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 2, starty + 2] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else
+                            {
+                                AllowMoveRight = true;
+                            }
+
+                            if (permanentGameBoard[startx, starty] != 0)//BLock Left movement if collision
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx, starty + 1] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx - 1, starty + 2] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else
+                            {
+                                AllowMoveLeft = true;
+                            }
+                            break;
+                        }
+                    default:
+                        {// 0
+                            if (permanentGameBoard[startx + 1, starty] != 0)//BLock Right movement if collision
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 3, starty + 1] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else
+                            {
+                                AllowMoveRight = true;
+                            }
+
+                            if (permanentGameBoard[startx - 1, starty] != 0)//BLock Left movement if collision
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx - 1, starty + 1] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else
+                            {
+                                AllowMoveLeft = true;
+                            }
+                            break;
+                        }
+                }
+            }
+            else if (chosenblock == Sblock)
+            {
+                switch (rotation)
+                {
+                    case 2:
+                        {//90
+                            if (permanentGameBoard[startx + 2, starty] != 0)//BLock Right movement if collision
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 3, starty + 1] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 3, starty + 2] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else
+                            {
+                                AllowMoveRight = true;
+                            }
+
+                            if (permanentGameBoard[startx, starty] != 0)//BLock Left movement if collision
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx, starty + 1] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx + 1, starty + 2] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else
+                            {
+                                AllowMoveLeft = true;
+                            }
+                            break;
+                        }
+                    case 3:
+                        {//180
+                            if (permanentGameBoard[startx + 3, starty + 1] != 0)//BLock Right movement if collision
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 2, starty + 2] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else
+                            {
+                                AllowMoveRight = true;
+                            }
+
+                            if (permanentGameBoard[startx, starty + 1] != 0)//BLock Left movement if collision
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx - 1, starty + 2] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else
+                            {
+                                AllowMoveLeft = true;
+                            }
+                            break;
+                        }
+                    case 4:
+                        {//270
+                            if (permanentGameBoard[startx + 1, starty] != 0)//BLock Right movement if collision
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 2, starty + 1] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 2, starty + 2] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else
+                            {
+                                AllowMoveRight = true;
+                            }
+
+                            if (permanentGameBoard[startx - 1, starty] != 0)//BLock Left movement if collision
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx - 1, starty + 1] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx, starty + 2] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else
+                            {
+                                AllowMoveLeft = true;
+                            }
+                            break;
+                        }
+                    default:
+                        {// 0
+                            if (permanentGameBoard[startx + 3, starty] != 0)//BLock Right movement if collision
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 2, starty + 1] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else
+                            {
+                                AllowMoveRight = true;
+                            }
+
+                            if (permanentGameBoard[startx, starty] != 0)//BLock Left movement if collision
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx - 1, starty + 1] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else
+                            {
+                                AllowMoveLeft = true;
+                            }
+                            break;
+                        }
+                }
+            }
+            else if (chosenblock == Zblock)
+            {
+                switch (rotation)
+                {
+                    case 2:
+                        {//90
+                            if (permanentGameBoard[startx + 3, starty] != 0)//BLock Right movement if collision
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 3, starty + 1] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 2, starty + 2] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else
+                            {
+                                AllowMoveRight = true;
+                            }
+
+                            if (permanentGameBoard[startx + 1, starty] != 0)//BLock Left movement if collision
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx, starty + 1] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx, starty + 2] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else
+                            {
+                                AllowMoveLeft = true;
+                            }
+                            break;
+                        }
+                    case 3:
+                        {//180
+                            if (permanentGameBoard[startx + 2, starty + 1] != 0)//BLock Right movement if collision
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 3, starty + 2] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else
+                            {
+                                AllowMoveRight = true;
+                            }
+
+                            if (permanentGameBoard[startx - 1, starty + 1] != 0)//BLock Left movement if collision
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx, starty + 2] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else
+                            {
+                                AllowMoveLeft = true;
+                            }
+                            break;
+                        }
+                    case 4:
+                        {//270
+                            if (permanentGameBoard[startx + 2, starty] != 0)//BLock Right movement if collision
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 2, starty + 1] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 1, starty + 2] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else
+                            {
+                                AllowMoveRight = true;
+                            }
+
+                            if (permanentGameBoard[startx, starty] != 0)//BLock Left movement if collision
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx - 1, starty + 1] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx - 1, starty + 2] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else
+                            {
+                                AllowMoveLeft = true;
+                            }
+                            break;
+                        }
+                    default:
+                        {// 0
+                            if (permanentGameBoard[startx + 2, starty] != 0)//BLock Right movement if collision
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else if (permanentGameBoard[startx + 3, starty + 1] != 0)
+                            {
+                                AllowMoveRight = false;
+                            }
+                            else
+                            {
+                                AllowMoveRight = true;
+                            }
+
+                            if (permanentGameBoard[startx - 1, starty] != 0)//BLock Left movement if collision
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else if (permanentGameBoard[startx, starty + 1] != 0)
+                            {
+                                AllowMoveLeft = false;
+                            }
+                            else
+                            {
+                                AllowMoveLeft = true;
+                            }
+                            break;
+                        }
+                }
+            }
+        }
+
         int rotation = 5;
         private void Rotate()
         {
@@ -1848,7 +2696,7 @@ namespace WindowsFormsApp1
             Random rnd = new Random();
             int blocktype = rnd.Next(1, 8);
             // Block type Lock:
-            //int  blocktype = 1;
+            //int  blocktype = 7;
 
             switch (blocktype)
             {
@@ -3418,7 +4266,8 @@ namespace WindowsFormsApp1
 
                 CheckCompletedRows();
 
-
+                AllowMoveLeft = true;
+                AllowMoveRight = true;
                 rotation = 5;
                 blockpicker();
                 startx = 5;
