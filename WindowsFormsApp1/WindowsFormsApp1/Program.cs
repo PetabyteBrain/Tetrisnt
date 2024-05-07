@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Threading;
@@ -29,8 +30,10 @@ namespace WindowsFormsApp1
         private const int BoardWidth = 14;
         private const int BoardHeight = 23;
         private const int CellSize = 20;
+        private const int nextblocklimit = 4;
         private int[,] tempGameBoard = new int[BoardWidth, BoardHeight];
         private int[,] permanentGameBoard = new int[BoardWidth, BoardHeight];
+        private int[,] nextblockscreen = new int[nextblocklimit, nextblocklimit];
         int Score = 0;
         int Highscore = 0;
 
@@ -40,6 +43,10 @@ namespace WindowsFormsApp1
         int Level = 0;
         int onelevelup = 0;
         int completedlines = 0;
+
+        int nextblock = 0;
+        int blocktype = 0;
+
         Label scoreboard = new Label();
         Label highscore = new Label();
         Label linecount = new Label();
@@ -321,6 +328,7 @@ namespace WindowsFormsApp1
             }
 
             // Initiate & Update
+
             gameover = false;
             InitializeScore();
             Initializehighscore();
@@ -330,6 +338,10 @@ namespace WindowsFormsApp1
             InitializeLevel();
             UpdateLevel();
             UpdateScore();
+            initializenextblock();
+            updatenextblock();
+            drawnextblock();
+            updatenextblock();
 
             timer1.Start();
             // beginning of game
@@ -475,6 +487,7 @@ namespace WindowsFormsApp1
                     control.Visible = true;
                 }
             }
+
         }
         private void HideGameBoard()
         {
@@ -709,6 +722,20 @@ namespace WindowsFormsApp1
             else
                 return System.Drawing.Color.White;
         }
+        private System.Drawing.Color GetCombinedColorNext(int screenX, int screenY)
+        {
+            // Retrieve color based on nextblockscreen value at given position
+            if (nextblockscreen[screenX, screenY] == 1)
+                return System.Drawing.Color.Black;
+            if (nextblockscreen[screenX, screenY] == 2)
+                return System.Drawing.Color.Yellow;
+            if (nextblockscreen[screenX, screenY] == 3)
+                return System.Drawing.Color.Blue;
+            if (nextblockscreen[screenX, screenY] == 8)
+                return System.Drawing.Color.Red;
+            else
+                return System.Drawing.Color.White;
+        }
         private void UpdateGameBoard()
         {
             for (int y = 0; y < BoardHeight; y++)
@@ -716,10 +743,10 @@ namespace WindowsFormsApp1
                 for (int x = 0; x < BoardWidth; x++)
                 {
                     Control control = this.Controls[y * BoardWidth + x];
-                    if (control is PictureBox pictureBox)
+                    if (control is PictureBox pictureBox1)
                     {
                         System.Drawing.Color color = GetCombinedColor(x, y);
-                        pictureBox.BackColor = color;
+                        pictureBox1.BackColor = color;
                     }
                 }
             }
@@ -2691,10 +2718,23 @@ namespace WindowsFormsApp1
         }
 
         object chosenblock = null;
+        object chosennextblock = null;
+        
         private void blockpicker()
         {
+            if (blocktype != 0 && nextblock != 0)
+            {
+                blocktype = nextblock;
+            }
+            clearnextblock();
             Random rnd = new Random();
-            int blocktype = rnd.Next(1, 8);
+            nextblock = rnd.Next(1, 8);
+            if(blocktype == 0)
+            {
+                blocktype = rnd.Next(1, 8);
+            }
+            //blocktype = nextblock;
+            updatenextblock();
             // Block type Lock:
             //int  blocktype = 7;
 
@@ -2702,26 +2742,260 @@ namespace WindowsFormsApp1
             {
                 case 1:
                     chosenblock = Tblock;
+                    Console.WriteLine("Chosenblock = Tblock");
                     break;
                 case 2:
                     chosenblock = Lblock;
+                    Console.WriteLine("Chosenblock = Lblock");
                     break;
                 case 3:
                     chosenblock = Jblock;
+                    Console.WriteLine("Chosenblock = Jblock");
                     break;
                 case 4:
                     chosenblock = Iblock;
+                    Console.WriteLine("Chosenblock = Iblock");
                     break;
                 case 5:
                     chosenblock = Oblock;
+                    Console.WriteLine("Chosenblock = Oblock");
                     break;
                 case 6:
                     chosenblock = Sblock;
+                    Console.WriteLine("Chosenblock = Sblock");
                     break;
                 case 7:
                     chosenblock = Zblock;
+                    Console.WriteLine("Chosenblock = Zblock");
+                    break;
+                default:
+                    blocktype = rnd.Next(1, 8);
+                    Console.WriteLine("Chosenblock = Random Value");
+                    blockpicker();
                     break;
             }
+            switch (nextblock)
+            {
+                case 1:
+                    chosennextblock = Tblock;
+                    Console.WriteLine("Nextblock = Tblock1");
+                    break;
+                case 2:
+                    chosennextblock = Lblock;
+                    Console.WriteLine("Nextblock = Lblock2");
+                    break;
+                case 3:
+                    chosennextblock = Jblock;
+                    Console.WriteLine("Nextblock = Jblock3");
+                    break;
+                case 4:
+                    chosennextblock = Iblock;
+                    Console.WriteLine("Nextblock = Iblock4");
+                    break;
+                case 5:
+                    chosennextblock = Oblock;
+                    Console.WriteLine("Nextblock = Oblock5");
+                    break;
+                case 6:
+                    chosennextblock = Sblock;
+                    Console.WriteLine("Nextblock = Sblock6");
+                    break;
+                case 7:
+                    chosennextblock = Zblock;
+                    Console.WriteLine("Nextblock = Zblock7");
+                    break;
+            }
+                    drawnextblock();
+        }
+        private void initializenextblock()
+        {
+            for (int y = 0; y < nextblocklimit; y++)
+            {
+                for (int x = 0; x < nextblocklimit; x++)
+                {
+                    PictureBox nextblockscreen1 = new PictureBox();
+                    nextblockscreen1.Width = CellSize;
+                    nextblockscreen1.Height = CellSize;
+                    nextblockscreen1.Left = 400 + x * CellSize;
+                    nextblockscreen1.Top = 300 + y * CellSize;
+                    nextblockscreen1.BorderStyle = BorderStyle.FixedSingle;
+                    this.Controls.Add(nextblockscreen1);
+                    nextblockscreen1.BackColor = GetCombinedColorNext(x, y); // Set background color
+                }
+            }
+        }
+        private void updatenextblock()
+        {
+            for (int y = 0; y < nextblocklimit; y++)
+            {
+                for (int x = 0; x < nextblocklimit; x++)
+                {
+                    Control control = this.Controls[y * nextblocklimit + x];
+                    if (control is PictureBox nextblockscreen1)
+                    {
+                        System.Drawing.Color color = GetCombinedColor(x, y);
+                        nextblockscreen1.BackColor = color;
+                    }
+                }
+            }
+        }
+        private void clearnextblock()
+        {
+            // Clear the next block screen
+            for (int y = 0; y < nextblocklimit; y++)
+            {
+                for (int x = 0; x < nextblocklimit; x++)
+                {
+                    nextblockscreen[x, y] = 0; // Clear all cells
+                }
+            }
+            Debug.WriteLine($"Cleared Next BLock");
+        }
+        private void drawnextblock()
+        {
+            Debug.WriteLine($"the next block is {nextblock}");
+            // Determine which block is chosen and update the nextblockscreen accordingly
+
+            if (nextblock == 0)
+            {
+                Debug.WriteLine($"1 {nextblock}");
+                for (int y = 0; y < Tblock.GetLength(0); y++)
+                {
+                    for (int x = 0; x < Tblock.GetLength(1); x++)
+                    {
+                        if (Tblock[x, y] == 1)
+                        {
+                            // Calculate the corresponding position on the next block screen
+                            int screenX = 1 + x; // Adjust as needed
+                            int screenY = 0 + y; // Adjust as needed
+
+                            nextblockscreen[screenY, screenX] = 1; // Set the cell to filled
+                        }
+                    }
+                }
+            }
+            if (chosennextblock == Lblock)
+            {
+                for (int y = 0; y < Lblock.GetLength(0); y++)
+                {
+                    for (int x = 0; x < Lblock.GetLength(1); x++)
+                    {
+                        if (Lblock[y, x] == 1)
+                        {
+                            // Calculate the corresponding position on the next block screen
+                            int screenX = 0 + x; // Adjust as needed
+                            int screenY = 1 + y; // Adjust as needed
+
+                            if (screenX >= 0 && screenX < nextblocklimit && screenY >= 0 && screenY < nextblocklimit)
+                            {
+                                nextblockscreen[screenX, screenY] = 1; // Set the cell to filled
+                            }
+                        }
+                    }
+                }
+            }
+            if(chosennextblock == Jblock)
+            {
+                for (int y = 0; y < Jblock.GetLength(0); y++)
+                {
+                    for (int x = 0; x < Jblock.GetLength(1); x++)
+                    {
+                        if (Jblock[y, x] == 1)
+                        {
+                            // Calculate the corresponding position on the next block screen
+                            int screenX = 0 + x; // Adjust as needed
+                            int screenY = 1 + y; // Adjust as needed
+
+                            if (screenX >= 0 && screenX < nextblocklimit && screenY >= 0 && screenY < nextblocklimit)
+                            {
+                                nextblockscreen[screenX, screenY] = 1; // Set the cell to filled
+                            }
+                        }
+                    }
+                }
+            }
+            if (chosennextblock == Iblock)
+            {
+                for (int y = 0; y < Iblock.GetLength(0); y++)
+                {
+                    for (int x = 0; x < Iblock.GetLength(1); x++)
+                    {
+                        if (Iblock[y, x] == 1)
+                        {
+                            // Calculate the corresponding position on the next block screen
+                            int screenX = 0 + x; // Adjust as needed
+                            int screenY = 0 + y; // Adjust as needed
+
+                            if (screenX >= 0 && screenX < nextblocklimit && screenY >= 0 && screenY < nextblocklimit)
+                            {
+                                nextblockscreen[screenX, screenY] = 1; // Set the cell to filled
+                            }
+                        }
+                    }
+                }
+            }
+            if(chosennextblock == Oblock)
+            {
+                for (int y = 0; y < Oblock.GetLength(0); y++)
+                {
+                    for (int x = 0; x < Oblock.GetLength(1); x++)
+                    {
+                        if (Oblock[y, x] == 1)
+                        {
+                            // Calculate the corresponding position on the next block screen
+                            int screenX = 1 + x; // Adjust as needed
+                            int screenY = 1 + y; // Adjust as needed
+
+                            if (screenX >= 0 && screenX < nextblocklimit && screenY >= 0 && screenY < nextblocklimit)
+                            {
+                                nextblockscreen[screenX, screenY] = 1; // Set the cell to filled
+                            }
+                        }
+                    }
+                }
+            }
+            if(chosennextblock == Sblock)
+            {
+                for (int y = 0; y < Sblock.GetLength(0); y++)
+                {
+                    for (int x = 0; x < Sblock.GetLength(1); x++)
+                    {
+                        if (Sblock[y, x] == 1)
+                        {
+                            // Calculate the corresponding position on the next block screen
+                            int screenX = 0 + x; // Adjust as needed
+                            int screenY = 1 + y; // Adjust as needed
+
+                            if (screenX >= 0 && screenX < nextblocklimit && screenY >= 0 && screenY < nextblocklimit)
+                            {
+                                nextblockscreen[screenX, screenY] = 1; // Set the cell to filled
+                            }
+                        }
+                    }
+                }
+            }
+            if (chosennextblock == Zblock)
+            {
+                for (int y = 0; y < Zblock.GetLength(0); y++)
+                {
+                    for (int x = 0; x < Zblock.GetLength(1); x++)
+                    {
+                        if (Zblock[y, x] == 1)
+                        {
+                            // Calculate the corresponding position on the next block screen
+                            int screenX = 0 + x; // Adjust as needed
+                            int screenY = 1 + y; // Adjust as needed
+
+                            if (screenX >= 0 && screenX < nextblocklimit && screenY >= 0 && screenY < nextblocklimit)
+                            {
+                                nextblockscreen[screenX, screenY] = 1; // Set the cell to filled
+                            }
+                        }
+                    }
+                }
+            }
+            // Update the PictureBox controls to reflect the changes in the next block screen
+            updatenextblock();
         }
         private void gameovercheck()
         {

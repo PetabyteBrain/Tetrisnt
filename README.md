@@ -24,7 +24,7 @@ Tetris is a very recognised game and beloved by Generations, alot of people grew
 
 - Add **Rotation Lock** if Blocks shouldnt be able to Rotate in specific position
 - Add feature so that the **Highscore** System **saves** it's **Value** after closing.
-- Show Next Block on right side.
+- Show **Next Block** on right side.
 - Add **Pause**, **Resume** and **Quit** Menu Button
 - Add Feature to give Points per Cell which is Softdropped.
 
