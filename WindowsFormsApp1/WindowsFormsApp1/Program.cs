@@ -722,16 +722,16 @@ namespace WindowsFormsApp1
             else
                 return System.Drawing.Color.White;
         }
-        private System.Drawing.Color GetCombinedColorNext(int screenX, int screenY)
+        private System.Drawing.Color GetCombinedColorNext(int x, int y)
         {
             // Retrieve color based on nextblockscreen value at given position
-            if (nextblockscreen[screenX, screenY] == 1)
+            if (nextblockscreen[x, y] == 1)
                 return System.Drawing.Color.Black;
-            if (nextblockscreen[screenX, screenY] == 2)
+            if (nextblockscreen[x, y] == 2)
                 return System.Drawing.Color.Yellow;
-            if (nextblockscreen[screenX, screenY] == 3)
+            if (nextblockscreen[x, y] == 3)
                 return System.Drawing.Color.Blue;
-            if (nextblockscreen[screenX, screenY] == 8)
+            if (nextblockscreen[x, y] == 8)
                 return System.Drawing.Color.Red;
             else
                 return System.Drawing.Color.White;
@@ -2718,22 +2718,24 @@ namespace WindowsFormsApp1
         }
 
         object chosenblock = null;
-        object chosennextblock = null;
-        
+
         private void blockpicker()
         {
-            if (blocktype != 0 && nextblock != 0)
-            {
-                blocktype = nextblock;
-            }
             clearnextblock();
             Random rnd = new Random();
-            nextblock = rnd.Next(1, 8);
-            if(blocktype == 0)
+            if (blocktype == 0 && nextblock == 0)
             {
+                nextblock = rnd.Next(1, 8);
                 blocktype = rnd.Next(1, 8);
+                Console.WriteLine("set first Value to Blockpicker");
             }
-            //blocktype = nextblock;
+            else
+            {
+                blocktype = nextblock;
+                nextblock = rnd.Next(1, 8);
+                Console.WriteLine("Convert and set new Value to Blockpicker");
+            }
+
             updatenextblock();
             // Block type Lock:
             //int  blocktype = 7;
@@ -2768,44 +2770,9 @@ namespace WindowsFormsApp1
                     chosenblock = Zblock;
                     Console.WriteLine("Chosenblock = Zblock");
                     break;
-                default:
-                    blocktype = rnd.Next(1, 8);
-                    Console.WriteLine("Chosenblock = Random Value");
-                    blockpicker();
-                    break;
             }
-            switch (nextblock)
-            {
-                case 1:
-                    chosennextblock = Tblock;
-                    Console.WriteLine("Nextblock = Tblock1");
-                    break;
-                case 2:
-                    chosennextblock = Lblock;
-                    Console.WriteLine("Nextblock = Lblock2");
-                    break;
-                case 3:
-                    chosennextblock = Jblock;
-                    Console.WriteLine("Nextblock = Jblock3");
-                    break;
-                case 4:
-                    chosennextblock = Iblock;
-                    Console.WriteLine("Nextblock = Iblock4");
-                    break;
-                case 5:
-                    chosennextblock = Oblock;
-                    Console.WriteLine("Nextblock = Oblock5");
-                    break;
-                case 6:
-                    chosennextblock = Sblock;
-                    Console.WriteLine("Nextblock = Sblock6");
-                    break;
-                case 7:
-                    chosennextblock = Zblock;
-                    Console.WriteLine("Nextblock = Zblock7");
-                    break;
-            }
-                    drawnextblock();
+            Debug.WriteLine($"The BLocks are {blocktype} and {nextblock}");
+             drawnextblock();
         }
         private void initializenextblock()
         {
@@ -2853,28 +2820,25 @@ namespace WindowsFormsApp1
         }
         private void drawnextblock()
         {
-            Debug.WriteLine($"the next block is {nextblock}");
-            // Determine which block is chosen and update the nextblockscreen accordingly
-
-            if (nextblock == 0)
+            Debug.WriteLine("Nextblock: " + nextblock);
+            if(nextblock == 1)
             {
-                Debug.WriteLine($"1 {nextblock}");
                 for (int y = 0; y < Tblock.GetLength(0); y++)
                 {
                     for (int x = 0; x < Tblock.GetLength(1); x++)
                     {
                         if (Tblock[x, y] == 1)
                         {
-                            // Calculate the corresponding position on the next block screen
-                            int screenX = 1 + x; // Adjust as needed
-                            int screenY = 0 + y; // Adjust as needed
+                            
+                            int screenX = 1 + x;
+                            int screenY = 0 + y;
 
-                            nextblockscreen[screenY, screenX] = 1; // Set the cell to filled
+                            nextblockscreen[screenY, screenX] = 1;
                         }
                     }
                 }
             }
-            if (chosennextblock == Lblock)
+            else if(nextblock == 2)
             {
                 for (int y = 0; y < Lblock.GetLength(0); y++)
                 {
@@ -2882,19 +2846,18 @@ namespace WindowsFormsApp1
                     {
                         if (Lblock[y, x] == 1)
                         {
-                            // Calculate the corresponding position on the next block screen
-                            int screenX = 0 + x; // Adjust as needed
-                            int screenY = 1 + y; // Adjust as needed
+                            int screenX = 0 + x;
+                            int screenY = 1 + y;
 
                             if (screenX >= 0 && screenX < nextblocklimit && screenY >= 0 && screenY < nextblocklimit)
                             {
-                                nextblockscreen[screenX, screenY] = 1; // Set the cell to filled
+                                nextblockscreen[screenX, screenY] = 1;
                             }
                         }
                     }
                 }
             }
-            if(chosennextblock == Jblock)
+            else if (nextblock == 3)
             {
                 for (int y = 0; y < Jblock.GetLength(0); y++)
                 {
@@ -2902,19 +2865,18 @@ namespace WindowsFormsApp1
                     {
                         if (Jblock[y, x] == 1)
                         {
-                            // Calculate the corresponding position on the next block screen
-                            int screenX = 0 + x; // Adjust as needed
-                            int screenY = 1 + y; // Adjust as needed
+                            int screenX = 0 + x;
+                            int screenY = 1 + y;
 
                             if (screenX >= 0 && screenX < nextblocklimit && screenY >= 0 && screenY < nextblocklimit)
                             {
-                                nextblockscreen[screenX, screenY] = 1; // Set the cell to filled
+                                nextblockscreen[screenX, screenY] = 1;
                             }
                         }
                     }
                 }
             }
-            if (chosennextblock == Iblock)
+            else if (nextblock == 4)
             {
                 for (int y = 0; y < Iblock.GetLength(0); y++)
                 {
@@ -2922,19 +2884,18 @@ namespace WindowsFormsApp1
                     {
                         if (Iblock[y, x] == 1)
                         {
-                            // Calculate the corresponding position on the next block screen
-                            int screenX = 0 + x; // Adjust as needed
-                            int screenY = 0 + y; // Adjust as needed
+                            int screenX = 0 + x;
+                            int screenY = 0 + y;
 
                             if (screenX >= 0 && screenX < nextblocklimit && screenY >= 0 && screenY < nextblocklimit)
                             {
-                                nextblockscreen[screenX, screenY] = 1; // Set the cell to filled
+                                nextblockscreen[screenX, screenY] = 1;
                             }
                         }
                     }
                 }
             }
-            if(chosennextblock == Oblock)
+            else if (nextblock == 5)
             {
                 for (int y = 0; y < Oblock.GetLength(0); y++)
                 {
@@ -2942,19 +2903,18 @@ namespace WindowsFormsApp1
                     {
                         if (Oblock[y, x] == 1)
                         {
-                            // Calculate the corresponding position on the next block screen
-                            int screenX = 1 + x; // Adjust as needed
-                            int screenY = 1 + y; // Adjust as needed
+                            int screenX = 1 + x;
+                            int screenY = 1 + y;
 
                             if (screenX >= 0 && screenX < nextblocklimit && screenY >= 0 && screenY < nextblocklimit)
                             {
-                                nextblockscreen[screenX, screenY] = 1; // Set the cell to filled
+                                nextblockscreen[screenX, screenY] = 1; 
                             }
                         }
                     }
                 }
             }
-            if(chosennextblock == Sblock)
+            else if(nextblock == 6)
             {
                 for (int y = 0; y < Sblock.GetLength(0); y++)
                 {
@@ -2962,19 +2922,18 @@ namespace WindowsFormsApp1
                     {
                         if (Sblock[y, x] == 1)
                         {
-                            // Calculate the corresponding position on the next block screen
-                            int screenX = 0 + x; // Adjust as needed
-                            int screenY = 1 + y; // Adjust as needed
+                            int screenX = 0 + x;
+                            int screenY = 1 + y;
 
                             if (screenX >= 0 && screenX < nextblocklimit && screenY >= 0 && screenY < nextblocklimit)
                             {
-                                nextblockscreen[screenX, screenY] = 1; // Set the cell to filled
+                                nextblockscreen[screenX, screenY] = 1;
                             }
                         }
                     }
                 }
             }
-            if (chosennextblock == Zblock)
+            else if(nextblock == 7)
             {
                 for (int y = 0; y < Zblock.GetLength(0); y++)
                 {
@@ -2982,19 +2941,18 @@ namespace WindowsFormsApp1
                     {
                         if (Zblock[y, x] == 1)
                         {
-                            // Calculate the corresponding position on the next block screen
-                            int screenX = 0 + x; // Adjust as needed
-                            int screenY = 1 + y; // Adjust as needed
+                            int screenX = 0 + x; 
+                            int screenY = 1 + y; 
 
                             if (screenX >= 0 && screenX < nextblocklimit && screenY >= 0 && screenY < nextblocklimit)
                             {
-                                nextblockscreen[screenX, screenY] = 1; // Set the cell to filled
+                                nextblockscreen[screenX, screenY] = 1;
                             }
                         }
                     }
                 }
             }
-            // Update the PictureBox controls to reflect the changes in the next block screen
+
             updatenextblock();
         }
         private void gameovercheck()
