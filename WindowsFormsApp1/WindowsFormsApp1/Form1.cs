@@ -33,7 +33,7 @@ namespace WindowsFormsApp1
                     placeblockcheck();
                     clearblock();
                     UpdateGameBoard();
-                    drawnextblock();
+                    
 
                     newtimer = +1;
                     oldtimer = newtimer;

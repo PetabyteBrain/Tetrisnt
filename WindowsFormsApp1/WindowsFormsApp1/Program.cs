@@ -44,6 +44,7 @@ namespace WindowsFormsApp1
         int onelevelup = 0;
         int completedlines = 0;
 
+        object chosenblock = null;
         int nextblock = 0;
         int blocktype = 0;
 
@@ -246,7 +247,7 @@ namespace WindowsFormsApp1
         private void start()
         {
             InitializeComponent();
-
+            timer1.Stop();
             InitializeStartScreen();
             InitializeGameBoard();
             this.KeyDown += Form1_KeyDown;
@@ -261,6 +262,7 @@ namespace WindowsFormsApp1
             level0button.Location = new Point(10, 100);
             level0button.Size = new Size(levelbuttonwidth, levelbuttonheight);
             level0button.Click += level0button_Click;
+            level0button.Image = Properties.Resources.Homescreen;
             //Level1 Select
             this.Controls.Add(level1button);
             level1button.Text = "1";
@@ -338,16 +340,15 @@ namespace WindowsFormsApp1
             InitializeLevel();
             UpdateLevel();
             UpdateScore();
-            initializenextblock();
-            updatenextblock();
-            drawnextblock();
-            updatenextblock();
 
             timer1.Start();
             // beginning of game
+            //initializenextblock();
             blockpicker();
-            
-            UpdateGameBoard();
+            initializenextblock();
+
+
+
             drawblock(startx, starty);
             UpdateGameBoard();
 
@@ -356,28 +357,36 @@ namespace WindowsFormsApp1
         {
             //START BUTTON
             this.Controls.Add(startbutton);
-            startbutton.Text = "Start";
-            startbutton.Location = new Point(100, 200);
+            startbutton.Location = new Point(90, 330);
             startbutton.Size = new Size(150, 75);
+
+            startbutton.Image = Resource1.StartButton0;
+            startbutton.FlatStyle = FlatStyle.Flat;
+            startbutton.FlatAppearance.BorderSize = 0;
+            startbutton.TabStop = false;
 
             startbutton.Click += startbutton_Click;
 
             //QUIT BUTTON
             this.Controls.Add(quitbutton);
-            quitbutton.Text = "quit";
-            quitbutton.Location = new Point(300, 200);
+            quitbutton.Location = new Point(265, 330);
             quitbutton.Size = new Size(150, 75);
+
+            quitbutton.Image = Resource1.QuitButton1;
+            quitbutton.FlatStyle = FlatStyle.Flat;
+            quitbutton.FlatAppearance.BorderSize = 0;
+            quitbutton.TabStop = false;
 
             quitbutton.Click += quitbutton_Click;
 
             //Background Picture
             this.Controls.Add(startscreenimage);
             startscreenimage.Location = new Point(0, 0);
-            startscreenimage.Size = new Size(500, 500);
+            startscreenimage.Size = new Size(520, 540);
             Controls.Add(startscreenimage);
             startscreenimage.SizeMode = PictureBoxSizeMode.StretchImage;
 
-            startscreenimage.Image = Properties.Resources.Homescreen;
+            startscreenimage.Image = Resource1.TitleScreen;
             
         }
         void startbutton_Click(object sender, EventArgs e)
@@ -2717,11 +2726,8 @@ namespace WindowsFormsApp1
             }
         }
 
-        object chosenblock = null;
-
         private void blockpicker()
         {
-            clearnextblock();
             Random rnd = new Random();
             if (blocktype == 0 && nextblock == 0)
             {
@@ -2736,7 +2742,6 @@ namespace WindowsFormsApp1
                 Console.WriteLine("Convert and set new Value to Blockpicker");
             }
 
-            updatenextblock();
             // Block type Lock:
             //int  blocktype = 7;
 
@@ -2772,7 +2777,10 @@ namespace WindowsFormsApp1
                     break;
             }
             Debug.WriteLine($"The BLocks are {blocktype} and {nextblock}");
-             drawnextblock();
+
+            clearnextblock();
+            drawnextblock();
+            updatenextblock();
         }
         private void initializenextblock()
         {
@@ -2790,25 +2798,25 @@ namespace WindowsFormsApp1
                     nextblockscreen1.BackColor = GetCombinedColorNext(x, y); // Set background color
                 }
             }
+            Debug.WriteLine($"Initiaziled Next BLock");
         }
         private void updatenextblock()
         {
-            for (int y = 0; y < nextblocklimit; y++)
+            for (int y = 0; y < nextblocklimit; y++) 
             {
                 for (int x = 0; x < nextblocklimit; x++)
                 {
                     Control control = this.Controls[y * nextblocklimit + x];
                     if (control is PictureBox nextblockscreen1)
                     {
-                        System.Drawing.Color color = GetCombinedColor(x, y);
-                        nextblockscreen1.BackColor = color;
+                        nextblockscreen1.BackColor = GetCombinedColorNext(x, y);
                     }
                 }
             }
+            Debug.WriteLine($"Updated the Next BLock");
         }
         private void clearnextblock()
         {
-            // Clear the next block screen
             for (int y = 0; y < nextblocklimit; y++)
             {
                 for (int x = 0; x < nextblocklimit; x++)
@@ -2820,6 +2828,8 @@ namespace WindowsFormsApp1
         }
         private void drawnextblock()
         {
+            
+
             Debug.WriteLine("Nextblock: " + nextblock);
             if(nextblock == 1)
             {
@@ -2953,7 +2963,7 @@ namespace WindowsFormsApp1
                 }
             }
 
-            updatenextblock();
+            
         }
         private void gameovercheck()
         {
@@ -4501,9 +4511,9 @@ namespace WindowsFormsApp1
                 AllowMoveLeft = true;
                 AllowMoveRight = true;
                 rotation = 5;
-                blockpicker();
                 startx = 5;
                 starty = 0;
+                blockpicker();
                 drawblock(startx, starty);
                 UpdateGameBoard();
             }

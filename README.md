@@ -22,11 +22,17 @@ Tetris is a very recognised game and beloved by Generations, alot of people grew
 
 ### Important
 
+#### Top Priority
+- Show **Next Block** on right side.
+- Fix Collision (Some Blocks can still go through others)
+- Redo full Game Algorithm (so that it works without problems)
+
+#### Secondly
 - Add **Rotation Lock** if Blocks shouldnt be able to Rotate in specific position
 - Add feature so that the **Highscore** System **saves** it's **Value** after closing.
-- Show **Next Block** on right side.
 - Add **Pause**, **Resume** and **Quit** Menu Button
 - Add Feature to give Points per Cell which is Softdropped.
+- Add Feature That the more Lines cleared at the same time give more points (A Tetris)
 
 ### Extra
 - Add **Textures** (BLock Texture and Colours / Background)

@@ -38,3 +38,4 @@ C:\Github\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.
 C:\Github\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
 C:\Github\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\Github\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+C:\Github\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Resource1.resources
