@@ -23,7 +23,6 @@ Tetris is a very recognised game and beloved by Generations, alot of people grew
 ### Important
 
 #### Top Priority
-- Show **Next Block** on right side.
 - Fix Collision (Some Blocks can still go through others)
 - Redo full Game Algorithm (so that it works without problems)
 

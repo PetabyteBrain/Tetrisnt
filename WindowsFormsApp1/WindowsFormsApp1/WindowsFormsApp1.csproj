@@ -90,6 +90,18 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Image\TetrominoYellow.png" />
+    <None Include="Image\TetrominoRed.png" />
+    <None Include="Image\TetrominoPurple.png" />
+    <None Include="Image\TetrominoPink.png" />
+    <None Include="Image\TetrominoOrange.png" />
+    <None Include="Image\TetrominoLightBlue.png" />
+    <None Include="Image\TetrominoGreen.png" />
+    <None Include="Image\TetrominoBlue.png" />
+    <None Include="Image\TetrominoBlack.png" />
+    <None Include="Image\Blank0.png" />
+    <None Include="Image\Blank1.png" />
+    <None Include="Image\Blank2.png" />
     <Content Include="Image\Homescreen.jpg" />
     <Content Include="Image\Homescreen.png" />
     <None Include="Image\QuitButton1.png" />

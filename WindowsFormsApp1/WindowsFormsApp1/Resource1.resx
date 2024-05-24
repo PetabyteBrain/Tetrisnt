@@ -118,6 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Blank0" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Image\Blank0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Blank1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Image\Blank1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Blank2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Image\Blank2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="QuitButton0" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Image\QuitButton0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -129,6 +138,33 @@
   </data>
   <data name="StartButton1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Image\StartButton1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TetrominoBlack" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Image\TetrominoBlack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TetrominoBlue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Image\TetrominoBlue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TetrominoGreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Image\TetrominoGreen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TetrominoLightBlue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Image\TetrominoLightBlue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TetrominoOrange" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Image\TetrominoOrange.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TetrominoPink" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Image\TetrominoPink.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TetrominoPurple" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Image\TetrominoPurple.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TetrominoRed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Image\TetrominoRed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TetrominoYellow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Image\TetrominoYellow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TitleScreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Image\TitleScreen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

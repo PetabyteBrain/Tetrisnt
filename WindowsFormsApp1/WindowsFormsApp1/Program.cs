@@ -34,6 +34,9 @@ namespace WindowsFormsApp1
         private int[,] tempGameBoard = new int[BoardWidth, BoardHeight];
         private int[,] permanentGameBoard = new int[BoardWidth, BoardHeight];
         private int[,] nextblockscreen = new int[nextblocklimit, nextblocklimit];
+
+        private PictureBox[,] nextBlockPictureBoxes = new PictureBox[4, 4];
+
         int Score = 0;
         int Highscore = 0;
 
@@ -357,7 +360,7 @@ namespace WindowsFormsApp1
         {
             //START BUTTON
             this.Controls.Add(startbutton);
-            startbutton.Location = new Point(90, 330);
+            startbutton.Location = new Point(100, 280);
             startbutton.Size = new Size(150, 75);
 
             startbutton.Image = Resource1.StartButton0;
@@ -366,18 +369,22 @@ namespace WindowsFormsApp1
             startbutton.TabStop = false;
 
             startbutton.Click += startbutton_Click;
+            startbutton.MouseEnter += OnMouseEnterButton0;
+            startbutton.MouseLeave += OnMouseLeaveButton0;
 
             //QUIT BUTTON
             this.Controls.Add(quitbutton);
-            quitbutton.Location = new Point(265, 330);
+            quitbutton.Location = new Point(275, 280);
             quitbutton.Size = new Size(150, 75);
 
-            quitbutton.Image = Resource1.QuitButton1;
+            quitbutton.Image = Resource1.QuitButton0;
             quitbutton.FlatStyle = FlatStyle.Flat;
             quitbutton.FlatAppearance.BorderSize = 0;
             quitbutton.TabStop = false;
 
             quitbutton.Click += quitbutton_Click;
+            quitbutton.MouseEnter += OnMouseEnterButton1;
+            quitbutton.MouseLeave += OnMouseLeaveButton1;
 
             //Background Picture
             this.Controls.Add(startscreenimage);
@@ -389,6 +396,14 @@ namespace WindowsFormsApp1
             startscreenimage.Image = Resource1.TitleScreen;
             
         }
+        private void OnMouseEnterButton0(object sender, EventArgs e)
+        {
+            startbutton.Image = Resource1.StartButton1;
+        }
+        private void OnMouseLeaveButton0(object sender, EventArgs e)
+        {
+            startbutton.Image = Resource1.StartButton0;
+        }
         void startbutton_Click(object sender, EventArgs e)
         {
             this.Controls.Remove(startbutton);
@@ -398,6 +413,14 @@ namespace WindowsFormsApp1
             
 
             levelselect();
+        }
+        private void OnMouseEnterButton1(object sender, EventArgs e)
+        {
+            quitbutton.Image = Resource1.QuitButton1;
+        }
+        private void OnMouseLeaveButton1(object sender, EventArgs e)
+        {
+            quitbutton.Image = Resource1.QuitButton0;
         }
         void quitbutton_Click(object sender, EventArgs e)
         {
@@ -619,8 +642,8 @@ namespace WindowsFormsApp1
                     pictureBox1.Left =80 + x * CellSize;
                     pictureBox1.Top = y * CellSize;
                     pictureBox1.BorderStyle = BorderStyle.FixedSingle;
-                    System.Drawing.Color color = GetCombinedColor(x, y);
-                    pictureBox1.BackColor = color;
+                    pictureBox1.Image = GetCombinedColor(x, y);
+                    pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
                     this.Controls.Add(pictureBox1);
                     this.DoubleBuffered = true;
                     pictureBox1.Visible = false;
@@ -717,33 +740,62 @@ namespace WindowsFormsApp1
             string Linecounter = completedlines.ToString();
             linecount.Text = String.Format($"Lines: {Linecounter}");
         }
-        private System.Drawing.Color GetCombinedColor(int x, int y)
+        private System.Drawing.Image GetCombinedColor(int x, int y)
         {
             if (tempGameBoard[x, y] == 1 || permanentGameBoard[x, y] == 1)
-                return System.Drawing.Color.Black;
+                return Resource1.TetrominoBlack;
             if (tempGameBoard[x, y] == 2 || permanentGameBoard[x, y] == 2)
-                return System.Drawing.Color.Yellow;
+                return Resource1.TetrominoRed;
             if (tempGameBoard[x, y] == 3 || permanentGameBoard[x, y] == 3)
-                return System.Drawing.Color.Blue;
-            //Edge Pieces
+                return Resource1.TetrominoOrange;
+            if (tempGameBoard[x, y] == 4 || permanentGameBoard[x, y] == 4)
+                return Resource1.TetrominoYellow;
+            if (tempGameBoard[x, y] == 5 || permanentGameBoard[x, y] == 5)
+                return Resource1.TetrominoPurple;
+            if (tempGameBoard[x, y] == 6 || permanentGameBoard[x, y] == 6)
+                return Resource1.TetrominoPink;
+            if (tempGameBoard[x, y] == 7 || permanentGameBoard[x, y] == 7)
+                return Resource1.TetrominoBlue;
             if (tempGameBoard[x, y] == 8 || permanentGameBoard[x, y] == 8)
-                return System.Drawing.Color.Red;
+                return Resource1.TetrominoBlue;
+            if (tempGameBoard[x, y] == 9 || permanentGameBoard[x, y] == 9)
+                return Resource1.TetrominoLightBlue;
+            if (tempGameBoard[x, y] == 10 || permanentGameBoard[x, y] == 10)
+                return Resource1.Blank1;
+            if (tempGameBoard[x, y] == 11 || permanentGameBoard[x, y] == 11)
+                return Resource1.Blank2;
             else
-                return System.Drawing.Color.White;
+                return (Resource1.Blank0);
         }
-        private System.Drawing.Color GetCombinedColorNext(int x, int y)
+        private System.Drawing.Image GetCombinedColorNext(int x, int y)
         {
             // Retrieve color based on nextblockscreen value at given position
             if (nextblockscreen[x, y] == 1)
-                return System.Drawing.Color.Black;
+                return Resource1.TetrominoBlack;
             if (nextblockscreen[x, y] == 2)
-                return System.Drawing.Color.Yellow;
+                return Resource1.TetrominoRed;
             if (nextblockscreen[x, y] == 3)
-                return System.Drawing.Color.Blue;
+                return Resource1.TetrominoOrange;
+            if (nextblockscreen[x, y] == 4)
+                return Resource1.TetrominoYellow;   
+            if (nextblockscreen[x, y] == 5)
+                return Resource1.TetrominoPurple;
+            if (nextblockscreen[x, y] == 6)
+                return Resource1.TetrominoPink;
+            if (nextblockscreen[x, y] == 7)
+                return Resource1.TetrominoBlue;
             if (nextblockscreen[x, y] == 8)
-                return System.Drawing.Color.Red;
+                return Resource1.TetrominoLightBlue;
+            if (nextblockscreen[x, y] == 9)
+                return Resource1.TetrominoGreen;
+            if (nextblockscreen[x, y] == 10)
+                return Resource1.Blank1;
+            if (nextblockscreen[x, y] == 11)
+                return Resource1.Blank2;
+
             else
-                return System.Drawing.Color.White;
+                return Resource1.Blank0;
+
         }
         private void UpdateGameBoard()
         {
@@ -754,8 +806,8 @@ namespace WindowsFormsApp1
                     Control control = this.Controls[y * BoardWidth + x];
                     if (control is PictureBox pictureBox1)
                     {
-                        System.Drawing.Color color = GetCombinedColor(x, y);
-                        pictureBox1.BackColor = color;
+                        pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+                        pictureBox1.Image = GetCombinedColor(x, y);
                     }
                 }
             }
@@ -2795,7 +2847,9 @@ namespace WindowsFormsApp1
                     nextblockscreen1.Top = 300 + y * CellSize;
                     nextblockscreen1.BorderStyle = BorderStyle.FixedSingle;
                     this.Controls.Add(nextblockscreen1);
-                    nextblockscreen1.BackColor = GetCombinedColorNext(x, y); // Set background color
+                    nextblockscreen1.SizeMode = PictureBoxSizeMode.StretchImage;
+                    nextblockscreen1.Image = GetCombinedColorNext(x, y);
+                    nextBlockPictureBoxes[x, y] = nextblockscreen1; // Store reference
                 }
             }
             Debug.WriteLine($"Initiaziled Next BLock");
@@ -2806,10 +2860,11 @@ namespace WindowsFormsApp1
             {
                 for (int x = 0; x < nextblocklimit; x++)
                 {
-                    Control control = this.Controls[y * nextblocklimit + x];
-                    if (control is PictureBox nextblockscreen1)
+                    PictureBox nextblockscreen1 = nextBlockPictureBoxes[x, y];
+                    if (nextblockscreen1 != null)
                     {
-                        nextblockscreen1.BackColor = GetCombinedColorNext(x, y);
+                        nextblockscreen1.SizeMode = PictureBoxSizeMode.StretchImage;
+                        nextblockscreen1.Image = GetCombinedColorNext(x, y);
                     }
                 }
             }
