@@ -25,6 +25,7 @@ Tetris is a very recognised game and beloved by Generations, alot of people grew
 #### Top Priority
 - Fix Collision (Some Blocks can still go through others)
 - Redo full Game Algorithm (so that it works without problems)
+- **Optimize** Game so that it doesn't **Lag** (Probably lags because of the Images)
 
 #### Secondly
 - Add **Rotation Lock** if Blocks shouldnt be able to Rotate in specific position

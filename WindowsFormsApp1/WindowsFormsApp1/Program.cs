@@ -35,7 +35,7 @@ namespace WindowsFormsApp1
         private int[,] permanentGameBoard = new int[BoardWidth, BoardHeight];
         private int[,] nextblockscreen = new int[nextblocklimit, nextblocklimit];
 
-        private PictureBox[,] nextBlockPictureBoxes = new PictureBox[4, 4];
+        private PictureBox[,] nextBlockPictureBoxes = new PictureBox[nextblocklimit, nextblocklimit];
 
         int Score = 0;
         int Highscore = 0;
@@ -258,7 +258,7 @@ namespace WindowsFormsApp1
         private void levelselect()
         {
             int levelbuttonwidth = 100;
-            int levelbuttonheight = 75;
+            int levelbuttonheight = 64;
             //Level0 Select
             this.Controls.Add(level0button);
             level0button.Text = "0";
@@ -639,8 +639,8 @@ namespace WindowsFormsApp1
                     PictureBox pictureBox1 = new PictureBox();
                     pictureBox1.Width = CellSize;
                     pictureBox1.Height = CellSize;
-                    pictureBox1.Left =80 + x * CellSize;
-                    pictureBox1.Top = y * CellSize;
+                    pictureBox1.Left =40 + x * CellSize;
+                    pictureBox1.Top = 70 + y * CellSize;
                     pictureBox1.BorderStyle = BorderStyle.FixedSingle;
                     pictureBox1.Image = GetCombinedColor(x, y);
                     pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -708,7 +708,7 @@ namespace WindowsFormsApp1
         private void InitializeLinecount()
         {
             //completedlines
-            linecount.Location = new Point(370, 0);
+            linecount.Location = new Point(120, 0);
             linecount.AutoSize = true;
             linecount.Font = new Font("Calibri", 18);
             linecount.ForeColor = Color.Black;
@@ -738,7 +738,7 @@ namespace WindowsFormsApp1
         private void UpdateLinecount()
         {
             string Linecounter = completedlines.ToString();
-            linecount.Text = String.Format($"Lines: {Linecounter}");
+            linecount.Text = String.Format($"Lines - {Linecounter}");
         }
         private System.Drawing.Image GetCombinedColor(int x, int y)
         {
@@ -4543,6 +4543,7 @@ namespace WindowsFormsApp1
                         break;
                 }
             }
+            UpdateGameBoard();
         }
 
         private void placeblock()
