@@ -29,10 +29,11 @@ namespace WindowsFormsApp1
             {
                 if (newtimer > oldtimer | newtimer == oldtimer)
                 {
+                    UpdateGameBoard();
                     CheckCollision();
                     placeblockcheck();
                     clearblock();
-                    UpdateGameBoard();
+                    
                     
 
                     newtimer = +1;
@@ -53,8 +54,8 @@ namespace WindowsFormsApp1
                 }
                 else
                 {
-                    clearblock();
                     UpdateGameBoard();
+                    clearblock();
 
                     newtimer = +1;
                     if (starty <= BoardHeight - 1)

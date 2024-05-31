@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,6 +28,8 @@ namespace WindowsFormsApp1
     }
     public partial class Form1 : Form
     {
+        private Panel gameBoardPanel;
+        private Panel nextBlockPanel;
         private const int BoardWidth = 14;
         private const int BoardHeight = 23;
         private const int CellSize = 20;
@@ -35,7 +38,12 @@ namespace WindowsFormsApp1
         private int[,] permanentGameBoard = new int[BoardWidth, BoardHeight];
         private int[,] nextblockscreen = new int[nextblocklimit, nextblocklimit];
 
-        private PictureBox[,] nextBlockPictureBoxes = new PictureBox[nextblocklimit, nextblocklimit];
+        private int[,] permanentGameBoardOld = new int[BoardWidth, BoardHeight];
+        private int[,] tempGameBoardOld = new int[BoardWidth, BoardHeight];
+        private int[,] nextblockscreenOld = new int[nextblocklimit, nextblocklimit];
+
+
+
 
         int Score = 0;
         int Highscore = 0;
@@ -82,162 +90,162 @@ namespace WindowsFormsApp1
         // TBLOCK ORIENTATIONS
         private int[,] Tblock = new int[,]
         {
-            { 0, 1, 0 },
-            { 1, 1, 1 },
+            { 0, 3, 0 },
+            { 3, 3, 3 },
             { 0, 0, 0 }
         };
         private int[,] Tblock90 = new int[,]
         {
-            { 0, 1, 0 },
-            { 0, 1, 1 },
-            { 0, 1, 0 }
+            { 0, 3, 0 },
+            { 0, 3, 3 },
+            { 0, 3, 0 }
         };
         private int[,] Tblock180 = new int[,]
         {
             { 0, 0, 0 },
-            { 1, 1, 1 },
-            { 0, 1, 0 }
+            { 3, 3, 3 },
+            { 0, 3, 0 }
         };
         private int[,] Tblock270 = new int[,]
         {
-            { 0, 1, 0 },
-            { 1, 1, 0 },
-            { 0, 1, 0 }
+            { 0, 3, 0 },
+            { 3, 3, 0 },
+            { 0, 3, 0 }
         };
         // LBLOCK ORIENTATIONS
         private int[,] Lblock = new int[,]
         {
-            { 0, 0, 1 },
-            { 1, 1, 1 },
+            { 0, 0, 7 },
+            { 7, 7, 7 },
             { 0, 0, 0 }
         };
         private int[,] Lblock90 = new int[,]
         {
-            { 0, 1, 0 },
-            { 0, 1, 0 },
-            { 0, 1, 1 }
+            { 0, 7, 0 },
+            { 0, 7, 0 },
+            { 0, 7, 7 }
         };
         private int[,] Lblock180 = new int[,]
         {
             { 0, 0, 0 },
-            { 1, 1, 1 },
-            { 1, 0, 0 }
+            { 7, 7, 7 },
+            { 7, 0, 0 }
         };
         private int[,] Lblock270 = new int[,]
         {
-            { 1, 1, 0 },
-            { 0, 1, 0 },
-            { 0, 1, 0 }
+            { 7, 7, 0 },
+            { 0, 7, 0 },
+            { 0, 7, 0 }
         };
         // JBLOCK ORIENTATIONS
         private int[,] Jblock = new int[,]
         {
-            { 1, 0, 0 },
-            { 1, 1, 1 },
+            { 9, 0, 0 },
+            { 9, 9, 9 },
             { 0, 0, 0 }
         };
         private int[,] Jblock90 = new int[,]
         {
-            { 0, 1, 1 },
-            { 0, 1, 0 },
-            { 0, 1, 0 }
+            { 0, 9, 9 },
+            { 0, 9, 0 },
+            { 0, 9, 0 }
         };
         private int[,] Jblock180 = new int[,]
         {
             { 0, 0, 0 },
-            { 1, 1, 1 },
-            { 0, 0, 1 }
+            { 9, 9, 9 },
+            { 0, 0, 9 }
         };
         private int[,] Jblock270 = new int[,]
         {
-            { 0, 1, 0 },
-            { 0, 1, 0 },
-            { 1, 1, 0 }
+            { 0, 9, 0 },
+            { 0, 9, 0 },
+            { 9, 9, 0 }
         };
         // OBLOCK ORIENTATIONS
         private int[,] Oblock = new int[,]
         {
-            { 1, 1 },
-            { 1, 1 }
+            { 2, 2 },
+            { 2, 2 }
         };
         // IBLOCK ORIENTATIONS
         private int[,] Iblock = new int[,]
         {
             { 0, 0, 0, 0 },
-            { 1, 1, 1, 1 },
+            { 4, 4, 4, 4 },
             { 0, 0, 0, 0 },
             { 0, 0, 0, 0 }
         };
         private int[,] Iblock90 = new int[,]
         {
-            { 0, 0, 1, 0 },
-            { 0, 0, 1, 0 },
-            { 0, 0, 1, 0 },
-            { 0, 0, 1, 0 }
+            { 0, 0, 4, 0 },
+            { 0, 0, 4, 0 },
+            { 0, 0, 4, 0 },
+            { 0, 0, 4, 0 }
         };
         private int[,] Iblock180 = new int[,]
         {
             { 0, 0, 0, 0 },
             { 0, 0, 0, 0 },
-            { 1, 1, 1, 1 },
+            { 4, 4, 4, 4 },
             { 0, 0, 0, 0 }
         };
         private int[,] Iblock270 = new int[,]
         {
-            { 0, 1, 0, 0 },
-            { 0, 1, 0, 0 },
-            { 0, 1, 0, 0 },
-            { 0, 1, 0, 0 }
+            { 0, 4, 0, 0 },
+            { 0, 4, 0, 0 },
+            { 0, 4, 0, 0 },
+            { 0, 4, 0, 0 }
         };
         // SBLOCK ORIENTATIONS
         private int[,] Sblock = new int[,]
         {
-            { 0, 1, 1 },
-            { 1, 1, 0 },
+            { 0, 5, 5 },
+            { 5, 5, 0 },
             { 0, 0, 0 }
         };
         private int[,] Sblock90 = new int[,]
         {
-            { 0, 1, 0 },
-            { 0, 1, 1 },
-            { 0, 0, 1 }
+            { 0, 5, 0 },
+            { 0, 5, 5 },
+            { 0, 0, 5 }
         };
         private int[,] Sblock180 = new int[,]
         {
             { 0, 0, 0 },
-            { 0, 1, 1 },
-            { 1, 1, 0 }
+            { 0, 5, 5 },
+            { 5, 5, 0 }
         };
         private int[,] Sblock270 = new int[,]
         {
-            { 1, 0, 0 },
-            { 1, 1, 0 },
-            { 0, 1, 0 }
+            { 5, 0, 0 },
+            { 5, 5, 0 },
+            { 0, 5, 0 }
         };
         // ZBLOCK ORIENTATIONS
         private int[,] Zblock = new int[,]
         {
-            { 1, 1, 0 },
-            { 0, 1, 1 },
+            { 6, 6, 0 },
+            { 0, 6, 6 },
             { 0, 0, 0 }
         };
         private int[,] Zblock90 = new int[,]
         {
-            { 0, 0, 1 },
-            { 0, 1, 1 },
-            { 0, 1, 0 }
+            { 0, 0, 6 },
+            { 0, 6, 6 },
+            { 0, 6, 0 }
         };
         private int[,] Zblock180 = new int[,]
         {
             { 0, 0, 0 },
-            { 1, 1, 0 },
-            { 0, 1, 1 }
+            { 6, 6, 0 },
+            { 0, 6, 6 }
         };
         private int[,] Zblock270 = new int[,]
         {
-            { 0, 1, 0 },
-            { 1, 1, 0 },
-            { 1, 0, 0 }
+            { 0, 6, 0 },
+            { 6, 6, 0 },
+            { 6, 0, 0 }
         };
 
         public Form1()
@@ -252,8 +260,34 @@ namespace WindowsFormsApp1
             InitializeComponent();
             timer1.Stop();
             InitializeStartScreen();
-            InitializeGameBoard();
+
+            this.DoubleBuffered = true;
+
             this.KeyDown += Form1_KeyDown;
+        }
+        private void InitializePanels()
+        {
+            // Initialize game board panel
+            gameBoardPanel = new Panel
+            {
+                Width = BoardWidth * CellSize,
+                Height = BoardHeight * CellSize,
+                Left = 40,
+                Top = 70
+            };
+            gameBoardPanel.Paint += GameBoardPanel_Paint;
+            this.Controls.Add(gameBoardPanel);
+
+            // Initialize next block panel
+            nextBlockPanel = new Panel
+            {
+                Width = nextblocklimit * CellSize,
+                Height = nextblocklimit * CellSize,
+                Left = 400,
+                Top = 300
+            };
+            nextBlockPanel.Paint += NextBlockPanel_Paint;
+            this.Controls.Add(nextBlockPanel);
         }
         private void levelselect()
         {
@@ -335,6 +369,13 @@ namespace WindowsFormsApp1
             // Initiate & Update
 
             gameover = false;
+            InitializePanels();  // Ensure panels are initialized first
+            InitializeGameBoard();
+            initializenextblock();
+            // Trigger initial updates to display the initial state
+            UpdateGameBoard();
+            updatenextblock();
+
             InitializeScore();
             Initializehighscore();
             Updatehighscore();
@@ -348,7 +389,6 @@ namespace WindowsFormsApp1
             // beginning of game
             //initializenextblock();
             blockpicker();
-            initializenextblock();
 
 
 
@@ -381,6 +421,7 @@ namespace WindowsFormsApp1
             quitbutton.FlatStyle = FlatStyle.Flat;
             quitbutton.FlatAppearance.BorderSize = 0;
             quitbutton.TabStop = false;
+            quitbutton.BringToFront();
 
             quitbutton.Click += quitbutton_Click;
             quitbutton.MouseEnter += OnMouseEnterButton1;
@@ -527,18 +568,46 @@ namespace WindowsFormsApp1
             {
                 for (int y = 0; y < BoardHeight; y++)
                 {
+                    permanentGameBoardOld[x, y] = 0;
+                    tempGameBoardOld[x, y] = 0;
                     permanentGameBoard[x, y] = 0;
                     tempGameBoard[x, y] = 0;
                 }
             }
-
-            foreach (Control control in this.Controls)
+            for (int x = 0; x < nextblocklimit; x++)
             {
-                if (control is PictureBox)
+                for (int y = 0; y < nextblocklimit; y++)
                 {
-                    control.Visible = false;
+                    nextblockscreen[x, y] = 0;
+                    nextblockscreenOld[x, y] = 0;
                 }
             }
+            gameBoardPanel.Invalidate();
+            nextBlockPanel.Invalidate();
+        }
+        private void RemoveGameBoard(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            for (int x = 0; x < BoardWidth; x++)
+            {
+                for (int y = 0; y < BoardHeight; y++)
+                {
+                    using (Image img = Resource1.Blank0)
+                    {
+                        g.DrawImage(img, x * CellSize, y * CellSize, CellSize, CellSize);
+
+                    }
+                }
+            }
+            for (int x = 0; x < nextblocklimit; x++)
+            {
+                for (int y = 0; y < nextblocklimit; y++)
+                {
+
+                }
+            }            
+            gameBoardPanel.Invalidate();
+            nextBlockPanel.Invalidate();
         }
         private void ShowGameOverScreen()
         {
@@ -565,14 +634,7 @@ namespace WindowsFormsApp1
         {
             Score = 0;
             Highscore = 0;
-            for (int x = 0; x < BoardWidth; x++)
-            {
-                for (int y = 0; y < BoardHeight; y++)
-                {
-                    permanentGameBoard[x, y] = 0;
-                    tempGameBoard[x, y] = 0;
-                }
-            }
+            
             this.Controls.Remove(quitbutton);
             this.Controls.Remove(restartbutton);
             this.Controls.Remove(finalhighscorep);
@@ -584,7 +646,6 @@ namespace WindowsFormsApp1
         private void Finalhighscorev()
         {
             //Gameover Highscore
-
             finalhighscorep.Visible = true;
             finalhighscorep.Location = new Point(150, 120);
             finalhighscorep.AutoSize = true;
@@ -595,12 +656,11 @@ namespace WindowsFormsApp1
             string Endhighscore = FinalHighScore.ToString();
             finalhighscorep.Text = String.Format($"Highscore: {Endhighscore}");
             finalhighscorep.Refresh();
-            
+            finalhighscorep.BringToFront();
         }
         private void Finalscorev()
         {
             //Gameover Score
-
             finalscorep.Visible = true;
             finalscorep.Location = new Point(150, 60);
             finalscorep.AutoSize = true;
@@ -611,11 +671,13 @@ namespace WindowsFormsApp1
             string Endscore = FinalScore.ToString();
             finalscorep.Text = String.Format($"Score: {Endscore}");
             finalscorep.Refresh();
-            
+            finalscorep.BringToFront();
+
         }
         private void InitializeGameOver()
         {
-            HideGameBoard();
+            
+            //gameBoardPanel.Paint += RemoveGameBoard;
             timer1.Stop();
             this.Controls.Remove(scoreboard);
             this.Controls.Remove(highscore);
@@ -628,27 +690,20 @@ namespace WindowsFormsApp1
             
             FinalScore = Score;
             ShowGameOverScreen();
+            HideGameBoard();
 
         }
         private void InitializeGameBoard()
         {
-            for (int y = 0; y < BoardHeight; y++)
+            for (int x = 0; x < BoardWidth; x++)
             {
-                for (int x = 0; x < BoardWidth; x++)
+                for (int y = 0; y < BoardHeight; y++)
                 {
-                    PictureBox pictureBox1 = new PictureBox();
-                    pictureBox1.Width = CellSize;
-                    pictureBox1.Height = CellSize;
-                    pictureBox1.Left =40 + x * CellSize;
-                    pictureBox1.Top = 70 + y * CellSize;
-                    pictureBox1.BorderStyle = BorderStyle.FixedSingle;
-                    pictureBox1.Image = GetCombinedColor(x, y);
-                    pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-                    this.Controls.Add(pictureBox1);
-                    this.DoubleBuffered = true;
-                    pictureBox1.Visible = false;
+                    tempGameBoard[x, y] = 0;  // Initialize with empty cells
+                    permanentGameBoard[x, y] = 0;
                 }
             }
+            UpdateGameBoard();
         }
         private void InitializeScore()
         {
@@ -757,19 +812,18 @@ namespace WindowsFormsApp1
             if (tempGameBoard[x, y] == 7 || permanentGameBoard[x, y] == 7)
                 return Resource1.TetrominoBlue;
             if (tempGameBoard[x, y] == 8 || permanentGameBoard[x, y] == 8)
-                return Resource1.TetrominoBlue;
-            if (tempGameBoard[x, y] == 9 || permanentGameBoard[x, y] == 9)
                 return Resource1.TetrominoLightBlue;
+            if (tempGameBoard[x, y] == 9 || permanentGameBoard[x, y] == 9)
+                return Resource1.TetrominoGreen;
             if (tempGameBoard[x, y] == 10 || permanentGameBoard[x, y] == 10)
                 return Resource1.Blank1;
             if (tempGameBoard[x, y] == 11 || permanentGameBoard[x, y] == 11)
                 return Resource1.Blank2;
             else
-                return (Resource1.Blank0);
+                return Resource1.Blank0;
         }
         private System.Drawing.Image GetCombinedColorNext(int x, int y)
         {
-            // Retrieve color based on nextblockscreen value at given position
             if (nextblockscreen[x, y] == 1)
                 return Resource1.TetrominoBlack;
             if (nextblockscreen[x, y] == 2)
@@ -777,7 +831,7 @@ namespace WindowsFormsApp1
             if (nextblockscreen[x, y] == 3)
                 return Resource1.TetrominoOrange;
             if (nextblockscreen[x, y] == 4)
-                return Resource1.TetrominoYellow;   
+                return Resource1.TetrominoYellow;
             if (nextblockscreen[x, y] == 5)
                 return Resource1.TetrominoPurple;
             if (nextblockscreen[x, y] == 6)
@@ -792,26 +846,29 @@ namespace WindowsFormsApp1
                 return Resource1.Blank1;
             if (nextblockscreen[x, y] == 11)
                 return Resource1.Blank2;
-
             else
                 return Resource1.Blank0;
-
         }
         private void UpdateGameBoard()
         {
-            for (int y = 0; y < BoardHeight; y++)
+            // Clear previous positions
+            if (gameover == false)
             {
                 for (int x = 0; x < BoardWidth; x++)
                 {
-                    Control control = this.Controls[y * BoardWidth + x];
-                    if (control is PictureBox pictureBox1)
+                    for (int y = 0; y < BoardHeight; y++)
                     {
-                        pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-                        pictureBox1.Image = GetCombinedColor(x, y);
+                        if (permanentGameBoardOld[x, y] != permanentGameBoard[x, y] || tempGameBoardOld[x, y] != tempGameBoard[x, y])
+                        {
+                            Rectangle rect = new Rectangle(x * CellSize, y * CellSize, CellSize, CellSize);
+                            gameBoardPanel.Invalidate(rect);
+                        }
+                        permanentGameBoardOld[x, y] = permanentGameBoard[x, y];
+                        tempGameBoardOld[x, y] = tempGameBoard[x, y];
                     }
                 }
             }
-            UpdateLevelcount();
+            Debug.WriteLine("Updated the Game Board");
         }
         // Example usage
         private void Form1_Load(object sender, EventArgs e)
@@ -2836,39 +2893,59 @@ namespace WindowsFormsApp1
         }
         private void initializenextblock()
         {
-            for (int y = 0; y < nextblocklimit; y++)
+            for (int x = 0; x < nextblocklimit; x++)
             {
-                for (int x = 0; x < nextblocklimit; x++)
+                for (int y = 0; y < nextblocklimit; y++)
                 {
-                    PictureBox nextblockscreen1 = new PictureBox();
-                    nextblockscreen1.Width = CellSize;
-                    nextblockscreen1.Height = CellSize;
-                    nextblockscreen1.Left = 400 + x * CellSize;
-                    nextblockscreen1.Top = 300 + y * CellSize;
-                    nextblockscreen1.BorderStyle = BorderStyle.FixedSingle;
-                    this.Controls.Add(nextblockscreen1);
-                    nextblockscreen1.SizeMode = PictureBoxSizeMode.StretchImage;
-                    nextblockscreen1.Image = GetCombinedColorNext(x, y);
-                    nextBlockPictureBoxes[x, y] = nextblockscreen1; // Store reference
+                    nextblockscreen[x, y] = 0;  // Initialize with empty cells
                 }
             }
-            Debug.WriteLine($"Initiaziled Next BLock");
+            Debug.WriteLine("Initialized Next Block");
         }
-        private void updatenextblock()
+        private void GameBoardPanel_Paint(object sender, PaintEventArgs e)
         {
-            for (int y = 0; y < nextblocklimit; y++) 
+            Graphics g = e.Graphics;
+            if(gameover == false)
             {
-                for (int x = 0; x < nextblocklimit; x++)
+                for (int x = 0; x < BoardWidth; x++)
                 {
-                    PictureBox nextblockscreen1 = nextBlockPictureBoxes[x, y];
-                    if (nextblockscreen1 != null)
+                    for (int y = 0; y < BoardHeight; y++)
                     {
-                        nextblockscreen1.SizeMode = PictureBoxSizeMode.StretchImage;
-                        nextblockscreen1.Image = GetCombinedColorNext(x, y);
+                        Image image = GetCombinedColor(x, y);
+                        g.DrawImage(image, x * CellSize, y * CellSize, CellSize, CellSize);
                     }
                 }
             }
-            Debug.WriteLine($"Updated the Next BLock");
+        }
+
+        private void NextBlockPanel_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            for (int x = 0; x < nextblocklimit; x++)
+            {
+                for (int y = 0; y < nextblocklimit; y++)
+                {
+                    Image image = GetCombinedColorNext(x, y);
+                    g.DrawImage(image, x * CellSize, y * CellSize, CellSize, CellSize);
+                }
+            }
+        }
+        private void updatenextblock()
+        {
+            for (int x = 0; x < nextblocklimit; x++)
+            {
+                for (int y = 0; y < nextblocklimit; y++)
+                {
+                    if (nextblockscreenOld[x, y] != nextblockscreen[x, y])
+                    {
+                        Rectangle rect = new Rectangle(x * CellSize, y * CellSize, CellSize, CellSize);
+                        nextBlockPanel.Invalidate(rect);
+                    }
+
+                    nextblockscreenOld[x, y] = nextblockscreen[x, y];
+                }
+            }
+            Debug.WriteLine("Updated the Next Block");
         }
         private void clearnextblock()
         {
@@ -2883,8 +2960,6 @@ namespace WindowsFormsApp1
         }
         private void drawnextblock()
         {
-            
-
             Debug.WriteLine("Nextblock: " + nextblock);
             if(nextblock == 1)
             {
@@ -2892,13 +2967,13 @@ namespace WindowsFormsApp1
                 {
                     for (int x = 0; x < Tblock.GetLength(1); x++)
                     {
-                        if (Tblock[x, y] == 1)
+                        if (Tblock[x, y] != 0)
                         {
                             
                             int screenX = 1 + x;
                             int screenY = 0 + y;
 
-                            nextblockscreen[screenY, screenX] = 1;
+                            nextblockscreen[screenY, screenX] = Tblock[x, y];
                         }
                     }
                 }
@@ -2909,14 +2984,14 @@ namespace WindowsFormsApp1
                 {
                     for (int x = 0; x < Lblock.GetLength(1); x++)
                     {
-                        if (Lblock[y, x] == 1)
+                        if (Lblock[y, x] != 0)
                         {
                             int screenX = 0 + x;
                             int screenY = 1 + y;
 
                             if (screenX >= 0 && screenX < nextblocklimit && screenY >= 0 && screenY < nextblocklimit)
                             {
-                                nextblockscreen[screenX, screenY] = 1;
+                                nextblockscreen[screenX, screenY] = Lblock[y, x];
                             }
                         }
                     }
@@ -2928,14 +3003,14 @@ namespace WindowsFormsApp1
                 {
                     for (int x = 0; x < Jblock.GetLength(1); x++)
                     {
-                        if (Jblock[y, x] == 1)
+                        if (Jblock[y, x] != 0)
                         {
                             int screenX = 0 + x;
                             int screenY = 1 + y;
 
                             if (screenX >= 0 && screenX < nextblocklimit && screenY >= 0 && screenY < nextblocklimit)
                             {
-                                nextblockscreen[screenX, screenY] = 1;
+                                nextblockscreen[screenX, screenY] = Jblock[y, x];
                             }
                         }
                     }
@@ -2947,14 +3022,14 @@ namespace WindowsFormsApp1
                 {
                     for (int x = 0; x < Iblock.GetLength(1); x++)
                     {
-                        if (Iblock[y, x] == 1)
+                        if (Iblock[y, x] != 0)
                         {
                             int screenX = 0 + x;
                             int screenY = 0 + y;
 
                             if (screenX >= 0 && screenX < nextblocklimit && screenY >= 0 && screenY < nextblocklimit)
                             {
-                                nextblockscreen[screenX, screenY] = 1;
+                                nextblockscreen[screenX, screenY] = Iblock[y, x];
                             }
                         }
                     }
@@ -2966,14 +3041,14 @@ namespace WindowsFormsApp1
                 {
                     for (int x = 0; x < Oblock.GetLength(1); x++)
                     {
-                        if (Oblock[y, x] == 1)
+                        if (Oblock[y, x] != 0)
                         {
                             int screenX = 1 + x;
                             int screenY = 1 + y;
 
                             if (screenX >= 0 && screenX < nextblocklimit && screenY >= 0 && screenY < nextblocklimit)
                             {
-                                nextblockscreen[screenX, screenY] = 1; 
+                                nextblockscreen[screenX, screenY] = Oblock[y, x]; 
                             }
                         }
                     }
@@ -2985,14 +3060,14 @@ namespace WindowsFormsApp1
                 {
                     for (int x = 0; x < Sblock.GetLength(1); x++)
                     {
-                        if (Sblock[y, x] == 1)
+                        if (Sblock[y, x] != 0)
                         {
                             int screenX = 0 + x;
                             int screenY = 1 + y;
 
                             if (screenX >= 0 && screenX < nextblocklimit && screenY >= 0 && screenY < nextblocklimit)
                             {
-                                nextblockscreen[screenX, screenY] = 1;
+                                nextblockscreen[screenX, screenY] = Sblock[y, x];
                             }
                         }
                     }
@@ -3004,14 +3079,14 @@ namespace WindowsFormsApp1
                 {
                     for (int x = 0; x < Zblock.GetLength(1); x++)
                     {
-                        if (Zblock[y, x] == 1)
+                        if (Zblock[y, x] != 0)
                         {
                             int screenX = 0 + x; 
                             int screenY = 1 + y; 
 
                             if (screenX >= 0 && screenX < nextblocklimit && screenY >= 0 && screenY < nextblocklimit)
                             {
-                                nextblockscreen[screenX, screenY] = 1;
+                                nextblockscreen[screenX, screenY] = Zblock[y, x];
                             }
                         }
                     }
@@ -3605,13 +3680,13 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Tblock90.GetLength(1); x++)
                             {
-                                if (Tblock90[y, x] == 1)
+                                if (Tblock90[y, x] != 0)
                                 {
                                     int fieldX = startX + x;
                                     int fieldY = startY + y;
                                     if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                                     {
-                                        tempGameBoard[fieldX, fieldY] = 1;
+                                        tempGameBoard[fieldX, fieldY] = Tblock90[y, x];
                                     }
                                 }
                             }
@@ -3623,13 +3698,13 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Tblock180.GetLength(1); x++)
                             {
-                                if (Tblock180[y, x] == 1)
+                                if (Tblock180[y, x] != 0)
                                 {
                                     int fieldX = startX + x;
                                     int fieldY = startY + y;
                                     if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                                     {
-                                        tempGameBoard[fieldX, fieldY] = 1;
+                                        tempGameBoard[fieldX, fieldY] = Tblock180[y, x];
                                     }
                                 }
                             }
@@ -3641,13 +3716,13 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Tblock270.GetLength(1); x++)
                             {
-                                if (Tblock270[y, x] == 1)
+                                if (Tblock270[y, x] != 0)
                                 {
                                     int fieldX = startX + x;
                                     int fieldY = startY + y;
                                     if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                                     {
-                                        tempGameBoard[fieldX, fieldY] = 1;
+                                        tempGameBoard[fieldX, fieldY] = Tblock270[y, x];
                                     }
                                 }
                             }
@@ -3659,13 +3734,13 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Tblock.GetLength(1); x++)
                             {
-                                if (Tblock[y, x] == 1)
+                                if (Tblock[y, x] != 0)
                                 {
                                     int fieldX = startX + x;
                                     int fieldY = startY + y;
                                     if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                                     {
-                                        tempGameBoard[fieldX, fieldY] = 1;
+                                        tempGameBoard[fieldX, fieldY] = Tblock[y, x];
                                     }
                                 }
                             }
@@ -3682,13 +3757,13 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Lblock90.GetLength(1); x++)
                             {
-                                if (Lblock90[y, x] == 1)
+                                if (Lblock90[y, x] != 0)
                                 {
                                     int fieldX = startX + x;
                                     int fieldY = startY + y;
                                     if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                                     {
-                                        tempGameBoard[fieldX, fieldY] = 1;
+                                        tempGameBoard[fieldX, fieldY] = Lblock90[y, x];
                                     }
                                 }
                             }
@@ -3699,13 +3774,13 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Lblock180.GetLength(1); x++)
                             {
-                                if (Lblock180[y, x] == 1)
+                                if (Lblock180[y, x] != 0)
                                 {
                                     int fieldX = startX + x;
                                     int fieldY = startY + y;
                                     if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                                     {
-                                        tempGameBoard[fieldX, fieldY] = 1;
+                                        tempGameBoard[fieldX, fieldY] = Lblock180[y, x];
                                     }
                                 }
                             }
@@ -3716,13 +3791,13 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Lblock270.GetLength(1); x++)
                             {
-                                if (Lblock270[y, x] == 1)
+                                if (Lblock270[y, x] != 0)
                                 {
                                     int fieldX = startX + x;
                                     int fieldY = startY + y;
                                     if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                                     {
-                                        tempGameBoard[fieldX, fieldY] = 1;
+                                        tempGameBoard[fieldX, fieldY] = Lblock270[y, x];
                                     }
                                 }
                             }
@@ -3733,13 +3808,13 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Lblock.GetLength(1); x++)
                             {
-                                if (Lblock[y, x] == 1)
+                                if (Lblock[y, x] != 0)
                                 {
                                     int fieldX = startX + x;
                                     int fieldY = startY + y;
                                     if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                                     {
-                                        tempGameBoard[fieldX, fieldY] = 1;
+                                        tempGameBoard[fieldX, fieldY] = Lblock[y, x];
                                     }
                                 }
                             }
@@ -3756,13 +3831,13 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Jblock90.GetLength(1); x++)
                             {
-                                if (Jblock90[y, x] == 1)
+                                if (Jblock90[y, x] != 0)
                                 {
                                     int fieldX = startX + x;
                                     int fieldY = startY + y;
                                     if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                                     {
-                                        tempGameBoard[fieldX, fieldY] = 1;
+                                        tempGameBoard[fieldX, fieldY] = Jblock90[y, x];
                                     }
                                 }
                             }
@@ -3773,13 +3848,13 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Jblock180.GetLength(1); x++)
                             {
-                                if (Jblock180[y, x] == 1)
+                                if (Jblock180[y, x] != 0)
                                 {
                                     int fieldX = startX + x;
                                     int fieldY = startY + y;
                                     if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                                     {
-                                        tempGameBoard[fieldX, fieldY] = 1;
+                                        tempGameBoard[fieldX, fieldY] = Jblock180[y, x];
                                     }
                                 }
                             }
@@ -3790,13 +3865,13 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Jblock270.GetLength(1); x++)
                             {
-                                if (Jblock270[y, x] == 1)
+                                if (Jblock270[y, x] != 0)
                                 {
                                     int fieldX = startX + x;
                                     int fieldY = startY + y;
                                     if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                                     {
-                                        tempGameBoard[fieldX, fieldY] = 1;
+                                        tempGameBoard[fieldX, fieldY] = Jblock270[y, x];
                                     }
                                 }
                             }
@@ -3807,13 +3882,13 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Jblock.GetLength(1); x++)
                             {
-                                if (Jblock[y, x] == 1)
+                                if (Jblock[y, x] != 0)
                                 {
                                     int fieldX = startX + x;
                                     int fieldY = startY + y;
                                     if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                                     {
-                                        tempGameBoard[fieldX, fieldY] = 1;
+                                        tempGameBoard[fieldX, fieldY] = Jblock[y, x];
                                     }
                                 }
                             }
@@ -3830,13 +3905,13 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Iblock90.GetLength(1); x++)
                             {
-                                if (Iblock90[y, x] == 1)
+                                if (Iblock90[y, x] != 0)
                                 {
                                     int fieldX = startX + x;
                                     int fieldY = startY + y;
                                     if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                                     {
-                                        tempGameBoard[fieldX, fieldY] = 1;
+                                        tempGameBoard[fieldX, fieldY] = Iblock90[y, x];
                                     }
                                 }
                             }
@@ -3847,13 +3922,13 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Iblock180.GetLength(1); x++)
                             {
-                                if (Iblock180[y, x] == 1)
+                                if (Iblock180[y, x] != 0)
                                 {
                                     int fieldX = startX + x;
                                     int fieldY = startY + y;
                                     if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                                     {
-                                        tempGameBoard[fieldX, fieldY] = 1;
+                                        tempGameBoard[fieldX, fieldY] = Iblock180[y, x];
                                     }
                                 }
                             }
@@ -3864,13 +3939,13 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Iblock270.GetLength(1); x++)
                             {
-                                if (Iblock270[y, x] == 1)
+                                if (Iblock270[y, x] != 0)
                                 {
                                     int fieldX = startX + x;
                                     int fieldY = startY + y;
                                     if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                                     {
-                                        tempGameBoard[fieldX, fieldY] = 1;
+                                        tempGameBoard[fieldX, fieldY] = Iblock270[y, x];
                                     }
                                 }
                             }
@@ -3881,13 +3956,13 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Iblock.GetLength(1); x++)
                             {
-                                if (Iblock[y, x] == 1)
+                                if (Iblock[y, x] != 0)
                                 {
                                     int fieldX = startX + x;
                                     int fieldY = startY + y;
                                     if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                                     {
-                                        tempGameBoard[fieldX, fieldY] = 1;
+                                        tempGameBoard[fieldX, fieldY] = Iblock[y, x];
                                     }
                                 }
                             }
@@ -3901,13 +3976,13 @@ namespace WindowsFormsApp1
                 {
                     for (int x = 0; x < Oblock.GetLength(1); x++)
                     {
-                        if (Oblock[y, x] == 1)
+                        if (Oblock[y, x] != 0)
                         {
                             int fieldX = startX + x;
                             int fieldY = startY + y;
                             if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                             {
-                                tempGameBoard[fieldX, fieldY] = 1;
+                                tempGameBoard[fieldX, fieldY] = Oblock[y, x];
                             }
                         }
                     }
@@ -3923,13 +3998,13 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Sblock90.GetLength(1); x++)
                             {
-                                if (Sblock90[y, x] == 1)
+                                if (Sblock90[y, x] != 0)
                                 {
                                     int fieldX = startX + x;
                                     int fieldY = startY + y;
                                     if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                                     {
-                                        tempGameBoard[fieldX, fieldY] = 1;
+                                        tempGameBoard[fieldX, fieldY] = Sblock90[y, x];
                                     }
                                 }
                             }
@@ -3941,13 +4016,13 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Sblock180.GetLength(1); x++)
                             {
-                                if (Sblock180[y, x] == 1)
+                                if (Sblock180[y, x] != 0)
                                 {
                                     int fieldX = startX + x;
                                     int fieldY = startY + y;
                                     if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                                     {
-                                        tempGameBoard[fieldX, fieldY] = 1;
+                                        tempGameBoard[fieldX, fieldY] = Sblock180[y, x];
                                     }
                                 }
                             }
@@ -3959,13 +4034,13 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Sblock270.GetLength(1); x++)
                             {
-                                if (Sblock270[y, x] == 1)
+                                if (Sblock270[y, x] != 0)
                                 {
                                     int fieldX = startX + x;
                                     int fieldY = startY + y;
                                     if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                                     {
-                                        tempGameBoard[fieldX, fieldY] = 1;
+                                        tempGameBoard[fieldX, fieldY] = Sblock270[y, x];
                                     }
                                 }
                             }
@@ -3977,13 +4052,13 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Sblock.GetLength(1); x++)
                             {
-                                if (Sblock[y, x] == 1)
+                                if (Sblock[y, x] != 0)
                                 {
                                     int fieldX = startX + x;
                                     int fieldY = startY + y;
                                     if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                                     {
-                                        tempGameBoard[fieldX, fieldY] = 1;
+                                        tempGameBoard[fieldX, fieldY] = Sblock[y, x];
                                     }
                                 }
                             }
@@ -4001,13 +4076,13 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Zblock90.GetLength(1); x++)
                             {
-                                if (Zblock90[y, x] == 1)
+                                if (Zblock90[y, x] != 0)
                                 {
                                     int fieldX = startX + x;
                                     int fieldY = startY + y;
                                     if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                                     {
-                                        tempGameBoard[fieldX, fieldY] = 1;
+                                        tempGameBoard[fieldX, fieldY] = Zblock90[y, x];
                                     }
                                 }
                             }
@@ -4019,13 +4094,13 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Zblock180.GetLength(1); x++)
                             {
-                                if (Zblock180[y, x] == 1)
+                                if (Zblock180[y, x] != 0)
                                 {
                                     int fieldX = startX + x;
                                     int fieldY = startY + y;
                                     if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                                     {
-                                        tempGameBoard[fieldX, fieldY] = 1;
+                                        tempGameBoard[fieldX, fieldY] = Zblock180[y, x];
                                     }
                                 }
                             }
@@ -4037,13 +4112,13 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Zblock270.GetLength(1); x++)
                             {
-                                if (Zblock270[y, x] == 1)
+                                if (Zblock270[y, x] != 0)
                                 {
                                     int fieldX = startX + x;
                                     int fieldY = startY + y;
                                     if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                                     {
-                                        tempGameBoard[fieldX, fieldY] = 1;
+                                        tempGameBoard[fieldX, fieldY] = Zblock270[y, x];
                                     }
                                 }
                             }
@@ -4055,13 +4130,13 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Zblock.GetLength(1); x++)
                             {
-                                if (Zblock[y, x] == 1)
+                                if (Zblock[y, x] != 0)
                                 {
                                     int fieldX = startX + x;
                                     int fieldY = startY + y;
                                     if (fieldX >= 0 && fieldX < BoardWidth && fieldY >= 0 && fieldY < BoardHeight)
                                     {
-                                        tempGameBoard[fieldX, fieldY] = 1;
+                                        tempGameBoard[fieldX, fieldY] = Zblock[y, x];
                                     }
                                 }
                             }
@@ -4082,7 +4157,7 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Tblock90.GetLength(1); x++)
                             {
-                                if (Tblock90[y, x] == 1)
+                                if (Tblock90[y, x] != 0)
                                 {
                                     int fieldX = startx + x;
                                     int fieldY = starty + y;
@@ -4099,7 +4174,7 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Tblock180.GetLength(1); x++)
                             {
-                                if (Tblock180[y, x] == 1)
+                                if (Tblock180[y, x] != 0)
                                 {
                                     int fieldX = startx + x;
                                     int fieldY = starty + y;
@@ -4116,7 +4191,7 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Tblock270.GetLength(1); x++)
                             {
-                                if (Tblock270[y, x] == 1)
+                                if (Tblock270[y, x] != 0)
                                 {
                                     int fieldX = startx + x;
                                     int fieldY = starty + y;
@@ -4133,7 +4208,7 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Tblock.GetLength(1); x++)
                             {
-                                if (Tblock[y, x] == 1)
+                                if (Tblock[y, x] != 0)
                                 {
                                     int fieldX = startx + x;
                                     int fieldY = starty + y;
@@ -4156,7 +4231,7 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Lblock90.GetLength(1); x++)
                             {
-                                if (Lblock90[y, x] == 1)
+                                if (Lblock90[y, x] != 0)
                                 {
                                     int fieldX = startx + x;
                                     int fieldY = starty + y;
@@ -4173,7 +4248,7 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Lblock180.GetLength(1); x++)
                             {
-                                if (Lblock180[y, x] == 1)
+                                if (Lblock180[y, x] != 0)
                                 {
                                     int fieldX = startx + x;
                                     int fieldY = starty + y;
@@ -4190,7 +4265,7 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Lblock270.GetLength(1); x++)
                             {
-                                if (Lblock270[y, x] == 1)
+                                if (Lblock270[y, x] != 0)
                                 {
                                     int fieldX = startx + x;
                                     int fieldY = starty + y;
@@ -4207,7 +4282,7 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Lblock.GetLength(1); x++)
                             {
-                                if (Lblock[y, x] == 1)
+                                if (Lblock[y, x] != 0)
                                 {
                                     int fieldX = startx + x;
                                     int fieldY = starty + y;
@@ -4230,7 +4305,7 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Jblock90.GetLength(1); x++)
                             {
-                                if (Jblock90[y, x] == 1)
+                                if (Jblock90[y, x] != 0)
                                 {
                                     int fieldX = startx + x;
                                     int fieldY = starty + y;
@@ -4247,7 +4322,7 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Jblock180.GetLength(1); x++)
                             {
-                                if (Jblock180[y, x] == 1)
+                                if (Jblock180[y, x] != 0)
                                 {
                                     int fieldX = startx + x;
                                     int fieldY = starty + y;
@@ -4264,7 +4339,7 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Jblock270.GetLength(1); x++)
                             {
-                                if (Jblock270[y, x] == 1)
+                                if (Jblock270[y, x] != 0)
                                 {
                                     int fieldX = startx + x;
                                     int fieldY = starty + y;
@@ -4281,7 +4356,7 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Jblock.GetLength(1); x++)
                             {
-                                if (Jblock[y, x] == 1)
+                                if (Jblock[y, x] != 0)
                                 {
                                     int fieldX = startx + x;
                                     int fieldY = starty + y;
@@ -4304,7 +4379,7 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Iblock90.GetLength(1); x++)
                             {
-                                if (Iblock90[y, x] == 1)
+                                if (Iblock90[y, x] != 0)
                                 {
                                     int fieldX = startx + x;
                                     int fieldY = starty + y;
@@ -4321,7 +4396,7 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Iblock180.GetLength(1); x++)
                             {
-                                if (Iblock180[y, x] == 1)
+                                if (Iblock180[y, x] != 0)
                                 {
                                     int fieldX = startx + x;
                                     int fieldY = starty + y;
@@ -4338,7 +4413,7 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Iblock270.GetLength(1); x++)
                             {
-                                if (Iblock270[y, x] == 1)
+                                if (Iblock270[y, x] != 0)
                                 {
                                     int fieldX = startx + x;
                                     int fieldY = starty + y;
@@ -4355,7 +4430,7 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Iblock.GetLength(1); x++)
                             {
-                                if (Iblock[y, x] == 1)
+                                if (Iblock[y, x] != 0)
                                 {
                                     int fieldX = startx + x;
                                     int fieldY = starty + y;
@@ -4375,7 +4450,7 @@ namespace WindowsFormsApp1
                 {
                     for (int x = 0; x < Oblock.GetLength(1); x++)
                     {
-                        if (Oblock[y, x] == 1)
+                        if (Oblock[y, x] != 0)
                         {
                             int fieldX = startx + x;
                             int fieldY = starty + y;
@@ -4397,7 +4472,7 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Sblock90.GetLength(1); x++)
                             {
-                                if (Sblock90[y, x] == 1)
+                                if (Sblock90[y, x] != 0)
                                 {
                                     int fieldX = startx + x;
                                     int fieldY = starty + y;
@@ -4415,7 +4490,7 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Sblock180.GetLength(1); x++)
                             {
-                                if (Sblock180[y, x] == 1)
+                                if (Sblock180[y, x] != 0)
                                 {
                                     int fieldX = startx + x;
                                     int fieldY = starty + y;
@@ -4433,7 +4508,7 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Sblock270.GetLength(1); x++)
                             {
-                                if (Sblock270[y, x] == 1)
+                                if (Sblock270[y, x] != 0)
                                 {
                                     int fieldX = startx + x;
                                     int fieldY = starty + y;
@@ -4451,7 +4526,7 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Sblock.GetLength(1); x++)
                             {
-                                if (Sblock[y, x] == 1)
+                                if (Sblock[y, x] != 0)
                                 {
                                     int fieldX = startx + x;
                                     int fieldY = starty + y;
@@ -4475,7 +4550,7 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Zblock90.GetLength(1); x++)
                             {
-                                if (Zblock90[y, x] == 1)
+                                if (Zblock90[y, x] != 0)
                                 {
                                     int fieldX = startx + x;
                                     int fieldY = starty + y;
@@ -4493,7 +4568,7 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Zblock180.GetLength(1); x++)
                             {
-                                if (Zblock180[y, x] == 1)
+                                if (Zblock180[y, x] != 0)
                                 {
                                     int fieldX = startx + x;
                                     int fieldY = starty + y;
@@ -4511,7 +4586,7 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Zblock270.GetLength(1); x++)
                             {
-                                if (Zblock270[y, x] == 1)
+                                if (Zblock270[y, x] != 0)
                                 {
                                     int fieldX = startx + x;
                                     int fieldY = starty + y;
@@ -4529,7 +4604,7 @@ namespace WindowsFormsApp1
                         {
                             for (int x = 0; x < Zblock.GetLength(1); x++)
                             {
-                                if (Zblock[y, x] == 1)
+                                if (Zblock[y, x] != 0)
                                 {
                                     int fieldX = startx + x;
                                     int fieldY = starty + y;
@@ -4554,9 +4629,9 @@ namespace WindowsFormsApp1
                 {
                     for (int x = 0; x < BoardWidth; x++)
                     {
-                        if (tempGameBoard[x, y] == 1)
+                        if (tempGameBoard[x, y] != 0)
                         {
-                            permanentGameBoard[x, y] = 1;
+                            permanentGameBoard[x, y] = tempGameBoard[x, y];
                         }
                     }
                 }
@@ -4591,13 +4666,12 @@ namespace WindowsFormsApp1
                 if (rowCompleted)
                 {
                     RemoveCompletedRow(y);
-                    y++;
+                    y++; // Check the same row again as rows have been shifted down
                 }
             }
-            
             UpdateLevel();
-            
         }
+
         private void RemoveCompletedRow(int rowIndex)
         {
             for (int y = rowIndex; y > 0; y--)
@@ -4607,6 +4681,12 @@ namespace WindowsFormsApp1
                     permanentGameBoard[x, y] = permanentGameBoard[x, y - 1];
                 }
             }
+            // Clear the top row
+            for (int x = 0; x < BoardWidth; x++)
+            {
+                permanentGameBoard[x, 0] = 0;
+            }
+
             Score += 40 + ((Level + 1) * 40);
             completedlines += 1;
             UpdateLinecount();
