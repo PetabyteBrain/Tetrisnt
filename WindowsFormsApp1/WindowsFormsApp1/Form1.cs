@@ -18,7 +18,7 @@ namespace WindowsFormsApp1
 
         private void Form_Load(object sender, EventArgs e)
         {
-
+            this.DoubleBuffered = true;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -29,10 +29,11 @@ namespace WindowsFormsApp1
             {
                 if (newtimer > oldtimer | newtimer == oldtimer)
                 {
+                    UpdateGameBoard();
                     CheckCollision();
                     placeblockcheck();
                     clearblock();
-                    UpdateGameBoard();
+                    
                     
 
                     newtimer = +1;
@@ -53,8 +54,8 @@ namespace WindowsFormsApp1
                 }
                 else
                 {
-                    clearblock();
                     UpdateGameBoard();
+                    clearblock();
 
                     newtimer = +1;
                     if (starty <= BoardHeight - 1)
@@ -71,6 +72,10 @@ namespace WindowsFormsApp1
             
         }
 
+        private void Form1_Paint(object sender, PaintEventArgs e)
+        {
+            
+        }
     }
 
 

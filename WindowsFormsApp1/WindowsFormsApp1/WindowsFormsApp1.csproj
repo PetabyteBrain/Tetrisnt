@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>WindowsFormsApp1.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -59,6 +62,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
+    <Compile Include="Tetris.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tetris.Designer.cs">
+      <DependentUpon>Tetris.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -70,6 +79,10 @@
     <EmbeddedResource Include="Resource1.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tetris.resx">
+      <DependentUpon>Tetris.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -90,6 +103,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Image\RestartButton1.png" />
+    <None Include="Image\RestartButton0.png" />
+    <None Include="Image\levelselectscreen.png" />
     <None Include="Image\TetrominoYellow.png" />
     <None Include="Image\TetrominoRed.png" />
     <None Include="Image\TetrominoPurple.png" />
@@ -102,6 +118,26 @@
     <None Include="Image\Blank0.png" />
     <None Include="Image\Blank1.png" />
     <None Include="Image\Blank2.png" />
+    <None Include="Image\0button0.png" />
+    <None Include="Image\0button1.png" />
+    <None Include="Image\1button0.png" />
+    <None Include="Image\1button1.png" />
+    <None Include="Image\2button0.png" />
+    <None Include="Image\2button1.png" />
+    <None Include="Image\3button0.png" />
+    <None Include="Image\3button1.png" />
+    <None Include="Image\4button0.png" />
+    <None Include="Image\4button1.png" />
+    <None Include="Image\5button0.png" />
+    <None Include="Image\5button1.png" />
+    <None Include="Image\6button0.png" />
+    <None Include="Image\6button1.png" />
+    <None Include="Image\7button0.png" />
+    <None Include="Image\7button1.png" />
+    <None Include="Image\8button0.png" />
+    <None Include="Image\8button1.png" />
+    <None Include="Image\9button0.png" />
+    <None Include="Image\9button1.png" />
     <Content Include="Image\Homescreen.jpg" />
     <Content Include="Image\Homescreen.png" />
     <None Include="Image\QuitButton1.png" />
