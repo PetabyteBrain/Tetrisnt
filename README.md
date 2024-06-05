@@ -25,18 +25,16 @@ Tetris is a very recognised game and beloved by Generations, alot of people grew
 #### Top Priority
 - Fix Collision (Some Blocks can still go through others)
 - Redo full Game Algorithm (so that it works without problems)
-- **Optimize** Game so that it doesn't **Lag** (Probably lags because of the Images)
+- Add **Rotation Lock** if Blocks shouldnt be able to Rotate in specific position
 
 #### Secondly
-- Add **Rotation Lock** if Blocks shouldnt be able to Rotate in specific position
 - Add feature so that the **Highscore** System **saves** it's **Value** after closing.
 - Add **Pause**, **Resume** and **Quit** Menu Button
 - Add Feature to give Points per Cell which is Softdropped.
 - Add Feature That the more Lines cleared at the same time give more points (A Tetris)
 
 ### Extra
-- Add **Textures** (BLock Texture and Colours / Background)
-- change **Gui design** (Start / Death Screen, Buttons)
+- Update **Gui design** (Start / Death Screen, Buttons, Colour Scheme(similar to NES))
 - Maybe **add Animations**
 - Balance Level System (Point distribution / Tick Speed)
 - Add **Harddrop Feature**.

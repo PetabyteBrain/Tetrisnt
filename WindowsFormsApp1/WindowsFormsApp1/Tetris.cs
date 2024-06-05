@@ -1,44 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Threading;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Windows.Forms;
-using System.Xml.Linq;
 using static System.Windows.Forms.AxHost;
 
 namespace WindowsFormsApp1
 {
-
-    static class Program
-    {
-        [STAThread]
-        static void Main()
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-
-            // Create an instance of your main form and run it
-            Form1 mainForm = new Form1();
-            Application.Run(mainForm);
-        }
-    }
-    public class DoubleBufferedPanel : Panel
-    {
-        public DoubleBufferedPanel()
-        {
-            this.DoubleBuffered = true;
-            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            this.SetStyle(ControlStyles.UserPaint, true);
-            this.UpdateStyles();
-        }
-    }
-
-    public partial class Form1 : Form
+    public partial class Tetris : Form
     {
         private Panel gameBoardPanel;
         private Panel nextBlockPanel;
@@ -54,8 +28,11 @@ namespace WindowsFormsApp1
         private int[,] tempGameBoardOld = new int[BoardWidth, BoardHeight];
         private int[,] nextblockscreenOld = new int[nextblocklimit, nextblocklimit];
 
+        int startx = 5;
+        int starty = 0;
 
-
+        bool AllowMoveLeft = true;
+        bool AllowMoveRight = true;
 
         int Score = 0;
         int Highscore = 0;
@@ -97,6 +74,9 @@ namespace WindowsFormsApp1
         Button level9button = new Button();
 
         PictureBox startscreenimage = new PictureBox();
+
+        decimal oldtimer = 0;
+        decimal newtimer = 1;
 
         // BLOCKS
         // TBLOCK ORIENTATIONS
@@ -260,804 +240,15 @@ namespace WindowsFormsApp1
             { 6, 0, 0 }
         };
 
-        public Form1()
-        {
-            //start
-
-            start();
-
-        }
-        private void start()
+        public Tetris()
         {
             InitializeComponent();
             timer1.Stop();
             InitializeStartScreen();
-            InitializePanels();
-
             this.DoubleBuffered = true;
-
-            this.KeyDown += Form1_KeyDown;
-        }
-        private void InitializePanels()
-        {
-            // Initialize game board panel
-            gameBoardPanel = new DoubleBufferedPanel
-            {
-                Width = BoardWidth * CellSize,
-                Height = BoardHeight * CellSize,
-                Left = 40,
-                Top = 70
-            };
-            gameBoardPanel.Paint += GameBoardPanel_Paint;
-            this.Controls.Add(gameBoardPanel);
-
-            // Initialize next block panel
-            nextBlockPanel = new DoubleBufferedPanel
-            {
-                Width = nextblocklimit * CellSize,
-                Height = nextblocklimit * CellSize,
-                Left = 400,
-                Top = 300
-            };
-            nextBlockPanel.Paint += NextBlockPanel_Paint;
-            this.Controls.Add(nextBlockPanel);
         }
 
-
-        private void levelselect()
-        {
-            int levelbuttonwidth = 100;
-            int levelbuttonheight = 64;
-
-            int distancex = 100;
-            int distancey = 175;
-            //Level0 Select
-            this.Controls.Add(level0button);
-            level0button.Location = new Point(10 + 0 * distancex, distancey);
-            level0button.Size = new Size(levelbuttonwidth, levelbuttonheight);
-            level0button.Click += level0button_Click;
-            level0button.MouseEnter += OnMouseEnterButtonLevel0;
-            level0button.MouseLeave += OnMouseLeaveButtonLevel0;
-            level0button.Image = Resource1._0button0;
-            level0button.BringToFront();
-
-            level0button.FlatStyle = FlatStyle.Flat;
-            level0button.FlatAppearance.BorderSize = 0;
-            level0button.TabStop = false;
-            //Level1 Select
-            this.Controls.Add(level1button);
-            level1button.Location = new Point(10 + 1 * distancex, distancey);
-            level1button.Size = new Size(levelbuttonwidth, levelbuttonheight);
-            level1button.Click += level1button_Click;
-            level1button.MouseEnter += OnMouseEnterButtonLevel1;
-            level1button.MouseLeave += OnMouseLeaveButtonLevel1;
-            level1button.Image = Resource1._1button0;
-            level1button.BringToFront();
-
-            level1button.FlatStyle = FlatStyle.Flat;
-            level1button.FlatAppearance.BorderSize = 0;
-            level1button.TabStop = false;
-            //Level2 Select
-            this.Controls.Add(level2button);
-            level2button.Location = new Point(10 + 2 * distancex, distancey);
-            level2button.Size = new Size(levelbuttonwidth, levelbuttonheight);
-            level2button.Click += level2button_Click;
-            level2button.MouseEnter += OnMouseEnterButtonLevel2;
-            level2button.MouseLeave += OnMouseLeaveButtonLevel2;
-            level2button.Image = Resource1._2button0;
-            level2button.BringToFront();
-
-            level2button.FlatStyle = FlatStyle.Flat;
-            level2button.FlatAppearance.BorderSize = 0;
-            level2button.TabStop = false;
-            //Level3 Select
-            this.Controls.Add(level3button);
-            level3button.Location = new Point(10 + 3 * distancex, distancey);
-            level3button.Size = new Size(levelbuttonwidth, levelbuttonheight);
-            level3button.Click += level3button_Click;
-            level3button.MouseEnter += OnMouseEnterButtonLevel3;
-            level3button.MouseLeave += OnMouseLeaveButtonLevel3;
-            level3button.Image = Resource1._3button0;
-            level3button.BringToFront();
-
-            level3button.FlatStyle = FlatStyle.Flat;
-            level3button.FlatAppearance.BorderSize = 0;
-            level3button.TabStop = false;
-            //Level4 Select
-            this.Controls.Add(level4button);
-            level4button.Location = new Point(10 + 4 * distancex, distancey);
-            level4button.Size = new Size(levelbuttonwidth, levelbuttonheight);
-            level4button.Click += level4button_Click;
-            level4button.MouseEnter += OnMouseEnterButtonLevel4;
-            level4button.MouseLeave += OnMouseLeaveButtonLevel4;
-            level4button.Image = Resource1._4button0;
-            level4button.BringToFront();
-
-            level4button.FlatStyle = FlatStyle.Flat;
-            level4button.FlatAppearance.BorderSize = 0;
-            level4button.TabStop = false;
-            //Level5 Select
-            this.Controls.Add(level5button);
-            level5button.Location = new Point(10 + 0 * distancex, 100 + distancey);
-            level5button.Size = new Size(levelbuttonwidth, levelbuttonheight);
-            level5button.Click += level5button_Click;
-            level5button.MouseEnter += OnMouseEnterButtonLevel5;
-            level5button.MouseLeave += OnMouseLeaveButtonLevel5;
-            level5button.Image = Resource1._5button0;
-            level5button.BringToFront();
-
-            level5button.FlatStyle = FlatStyle.Flat;
-            level5button.FlatAppearance.BorderSize = 0;
-            level5button.TabStop = false;
-            //Level6 Select
-            this.Controls.Add(level6button);
-            level6button.Location = new Point(10 + 1 * distancex, 100 + distancey);
-            level6button.Size = new Size(levelbuttonwidth, levelbuttonheight);
-            level6button.Click += level6button_Click;
-            level6button.MouseEnter += OnMouseEnterButtonLevel6;
-            level6button.MouseLeave += OnMouseLeaveButtonLevel6;
-            level6button.Image = Resource1._6button0;
-            level6button.BringToFront();
-
-            level6button.FlatStyle = FlatStyle.Flat;
-            level6button.FlatAppearance.BorderSize = 0;
-            level6button.TabStop = false;
-            //Level7 Select
-            this.Controls.Add(level7button);
-            level7button.Location = new Point(10 + 2 * distancex, 100 + distancey);
-            level7button.Size = new Size(levelbuttonwidth, levelbuttonheight);
-            level7button.Click += level7button_Click;
-            level7button.MouseEnter += OnMouseEnterButtonLevel7;
-            level7button.MouseLeave += OnMouseLeaveButtonLevel7;
-            level7button.Image = Resource1._7button0;
-            level7button.BringToFront();
-
-            level7button.FlatStyle = FlatStyle.Flat;
-            level7button.FlatAppearance.BorderSize = 0;
-            level7button.TabStop = false;
-            //Level8 Select
-            this.Controls.Add(level8button);
-            level8button.Location = new Point(10 + 3 * distancex, 100 + distancey);
-            level8button.Size = new Size(levelbuttonwidth, levelbuttonheight);
-            level8button.Click += level8button_Click;
-            level8button.MouseEnter += OnMouseEnterButtonLevel8;
-            level8button.MouseLeave += OnMouseLeaveButtonLevel8;
-            level8button.Image = Resource1._8button0;
-            level8button.BringToFront();
-
-            level8button.FlatStyle = FlatStyle.Flat;
-            level8button.FlatAppearance.BorderSize = 0;
-            level8button.TabStop = false;
-            //Level9 Select
-            this.Controls.Add(level9button);
-            level9button.Location = new Point(10 + 4 * distancex, 100 + distancey);
-            level9button.Size = new Size(levelbuttonwidth, levelbuttonheight);
-            level9button.Click += level9button_Click;
-            level9button.MouseEnter += OnMouseEnterButtonLevel9;
-            level9button.MouseLeave += OnMouseLeaveButtonLevel9;
-            level9button.Image = Resource1._9button0;
-            level9button.BringToFront();
-
-            level9button.FlatStyle = FlatStyle.Flat;
-            level9button.FlatAppearance.BorderSize = 0;
-            level9button.TabStop = false;
-        }
-        private void OnMouseEnterButtonLevel0(object sender, EventArgs e)
-        {
-            level0button.Image = Resource1._0button1;
-        }
-        private void OnMouseLeaveButtonLevel0(object sender, EventArgs e)
-        {
-            level0button.Image = Resource1._0button0;
-        }
-        private void OnMouseEnterButtonLevel1(object sender, EventArgs e)
-        {
-            level1button.Image = Resource1._1button1;
-        }
-        private void OnMouseLeaveButtonLevel1(object sender, EventArgs e)
-        {
-            level1button.Image = Resource1._1button0;
-        }
-        private void OnMouseEnterButtonLevel2(object sender, EventArgs e)
-        {
-            level2button.Image = Resource1._2button1;
-        }
-        private void OnMouseLeaveButtonLevel2(object sender, EventArgs e)
-        {
-            level2button.Image = Resource1._2button0;
-        }
-        private void OnMouseEnterButtonLevel3(object sender, EventArgs e)
-        {
-            level3button.Image = Resource1._3button1;
-        }
-        private void OnMouseLeaveButtonLevel3(object sender, EventArgs e)
-        {
-            level3button.Image = Resource1._3button0;
-        }
-        private void OnMouseEnterButtonLevel4(object sender, EventArgs e)
-        {
-            level4button.Image = Resource1._4button1;
-        }
-        private void OnMouseLeaveButtonLevel4(object sender, EventArgs e)
-        {
-            level4button.Image = Resource1._4button0;
-        }
-        private void OnMouseEnterButtonLevel5(object sender, EventArgs e)
-        {
-            level5button.Image = Resource1._5button1;
-        }
-        private void OnMouseLeaveButtonLevel5(object sender, EventArgs e)
-        {
-            level5button.Image = Resource1._5button0;
-        }
-        private void OnMouseEnterButtonLevel6(object sender, EventArgs e)
-        {
-            level6button.Image = Resource1._6button1;
-        }
-        private void OnMouseLeaveButtonLevel6(object sender, EventArgs e)
-        {
-            level6button.Image = Resource1._6button0;
-        }
-        private void OnMouseEnterButtonLevel7(object sender, EventArgs e)
-        {
-            level7button.Image = Resource1._7button1;
-        }
-        private void OnMouseLeaveButtonLevel7(object sender, EventArgs e)
-        {
-            level7button.Image = Resource1._7button0;
-        }
-        private void OnMouseEnterButtonLevel8(object sender, EventArgs e)
-        {
-            level8button.Image = Resource1._8button1;
-        }
-        private void OnMouseLeaveButtonLevel8(object sender, EventArgs e)
-        {
-            level8button.Image = Resource1._8button0;
-        }
-        private void OnMouseEnterButtonLevel9(object sender, EventArgs e)
-        {
-            level9button.Image = Resource1._9button1;
-        }
-        private void OnMouseLeaveButtonLevel9(object sender, EventArgs e)
-        {
-            level9button.Image = Resource1._9button0;
-        }
-        private void gameplay()
-        {
-            gameover = false;
-            // Ensure panels are initialized first
-            InitializeGameBoard();
-            initializenextblock();
-            ShowGameBoard();
-
-            // Trigger initial updates to display the initial state
-            UpdateGameBoard();
-            updatenextblock();
-
-            InitializeScore();
-            Initializehighscore();
-            Updatehighscore();
-            InitializeLinecount();
-            UpdateLinecount();
-            InitializeLevel();
-            UpdateLevel();
-            UpdateScore();
-
-            timer1.Start();
-
-            blockpicker();
-
-            drawblock(startx, starty);
-            UpdateGameBoard();
-        }
-
-        private void InitializeStartScreen()
-        {
-            //START BUTTON
-            this.Controls.Add(startbutton);
-            startbutton.Location = new Point(100, 280);
-            startbutton.Size = new Size(150, 75);
-
-            startbutton.Image = Resource1.StartButton0;
-            startbutton.FlatStyle = FlatStyle.Flat;
-            startbutton.FlatAppearance.BorderSize = 0;
-            startbutton.TabStop = false;
-
-            startbutton.Click += startbutton_Click;
-            startbutton.MouseEnter += OnMouseEnterButton0;
-            startbutton.MouseLeave += OnMouseLeaveButton0;
-
-            //QUIT BUTTON
-            QuitButton();
-
-            quitbutton.Click += quitbutton_Click;
-            quitbutton.MouseEnter += OnMouseEnterButton1;
-            quitbutton.MouseLeave += OnMouseLeaveButton1;
-
-            //Background Picture
-            BackroundImage();
-            startscreenimage.Image = Resource1.TitleScreen;
-            startbutton.BringToFront();
-            quitbutton.BringToFront();
-        }
-        private void BackroundImage()
-        {
-            this.Controls.Add(startscreenimage);
-            startscreenimage.Location = new Point(0, 0);
-            startscreenimage.Size = new Size(520, 540);
-            Controls.Add(startscreenimage);
-            startscreenimage.SizeMode = PictureBoxSizeMode.StretchImage;
-            startscreenimage.BringToFront();
-        }
-        private void OnMouseEnterButton0(object sender, EventArgs e)
-        {
-            startbutton.Image = Resource1.StartButton1;
-        }
-        private void OnMouseLeaveButton0(object sender, EventArgs e)
-        {
-            startbutton.Image = Resource1.StartButton0;
-        }
-        void startbutton_Click(object sender, EventArgs e)
-        {
-            this.Controls.Remove(startbutton);
-            this.Controls.Remove(quitbutton);
-            this.Controls.Remove(restartbutton);
-
-            BackroundImage();
-            startscreenimage.Image = Resource1.levelselectscreen;
-            levelselect();
-        }
-        private void OnMouseEnterButton1(object sender, EventArgs e)
-        {
-            quitbutton.Image = Resource1.QuitButton1;
-        }
-        private void OnMouseLeaveButton1(object sender, EventArgs e)
-        {
-            quitbutton.Image = Resource1.QuitButton0;
-        }
-        void quitbutton_Click(object sender, EventArgs e)
-        {
-            timer1.Stop();
-            this.Close();
-        }
-        void level0button_Click(object sender, EventArgs e)
-        {
-            startscriptremove();
-            Level = 0;
-            gameplay();
-        }
-        void level1button_Click(object sender, EventArgs e)
-        {
-            startscriptremove();
-            Level = 1;
-            gameplay();
-        }
-        void level2button_Click(object sender, EventArgs e)
-        {
-            startscriptremove();
-            Level = 2;
-            gameplay();
-        }
-        void level3button_Click(object sender, EventArgs e)
-        {
-            startscriptremove();
-            Level = 3;
-            gameplay();
-        }
-        void level4button_Click(object sender, EventArgs e)
-        {
-            startscriptremove();
-            Level = 4;
-            gameplay();
-        }
-        void level5button_Click(object sender, EventArgs e)
-        {
-            startscriptremove();
-            Level = 5;
-            gameplay();
-        }
-        void level6button_Click(object sender, EventArgs e)
-        {
-            startscriptremove();
-            Level = 6;
-            gameplay();
-        }
-        void level7button_Click(object sender, EventArgs e)
-        {
-            startscriptremove();
-            Level = 7;
-            gameplay();
-        }
-        void level8button_Click(object sender, EventArgs e)
-        {
-            startscriptremove();
-            Level = 8;
-            gameplay();
-        }
-        void level9button_Click(object sender, EventArgs e)
-        {
-            startscriptremove();
-            Level = 9;
-            gameplay();
-        }
-        private void startscriptremove()
-        {
-            this.Controls.Remove(startbutton);
-            this.Controls.Remove(quitbutton);
-            this.Controls.Remove(restartbutton);
-            this.Controls.Remove(startscreenimage);
-
-            this.Controls.Remove(level0button);
-            this.Controls.Remove(level1button);
-            this.Controls.Remove(level2button);
-            this.Controls.Remove(level3button);
-            this.Controls.Remove(level4button);
-            this.Controls.Remove(level5button);
-            this.Controls.Remove(level6button);
-            this.Controls.Remove(level7button);
-            this.Controls.Remove(level8button);
-            this.Controls.Remove(level9button);
-        }
-
-
-        private void ShowGameBoard()
-        {
-            gameBoardPanel.Invalidate();
-            nextBlockPanel.Invalidate();
-
-            // Reinitialize game components if necessary
-            //InitializeComponent();
-        }
-        private void HideGameBoard()
-        {
-            for (int x = 0; x < BoardWidth; x++)
-            {
-                for (int y = 0; y < BoardHeight; y++)
-                {
-                    permanentGameBoardOld[x, y] = 0;
-                    tempGameBoardOld[x, y] = 0;
-                    permanentGameBoard[x, y] = 0;
-                    tempGameBoard[x, y] = 0;
-                }
-            }
-            for (int x = 0; x < nextblocklimit; x++)
-            {
-                for (int y = 0; y < nextblocklimit; y++)
-                {
-                    nextblockscreen[x, y] = 0;
-                    nextblockscreenOld[x, y] = 0;
-                }
-            }
-            gameBoardPanel.Invalidate();
-            nextBlockPanel.Invalidate();
-            //this.Invalidate(); // Ensure the form is redrawn
-        }
-        private void RemoveGameBoard(object sender, PaintEventArgs e)
-        {
-            /*Graphics g = e.Graphics;
-            for (int x = 0; x < BoardWidth; x++)
-            {
-                for (int y = 0; y < BoardHeight; y++)
-                {
-                    using (Image img = Resource1.Blank0)
-                    {
-                        g.DrawImage(img, x * CellSize, y * CellSize, CellSize, CellSize);
-                    }
-                }
-            }*/
-            gameBoardPanel.Invalidate();
-            nextBlockPanel.Invalidate();
-            this.Invalidate();
-        }
-        private void ShowGameOverScreen()
-        {
-            //Gameover Score
-            Finalscorev();
-
-            //Gameover Highscore
-            Finalhighscorev();
-            // Generate Quit Button
-            QuitButton();
-
-            RestartButton();
-
-        }
-        private void RestartButton()
-        {
-            this.Controls.Add(restartbutton);
-            restartbutton.Location = new Point(100, 280);
-            restartbutton.Size = new Size(150, 75);
-
-            restartbutton.Click += restartbutton_Click;
-            restartbutton.MouseEnter += OnMouseEnterRestartButton;
-            restartbutton.MouseLeave += OnMouseLeaveRestartButton;
-            restartbutton.Image = Resource1.RestartButton0;
-            restartbutton.FlatStyle = FlatStyle.Flat;
-            restartbutton.FlatAppearance.BorderSize = 0;
-            restartbutton.TabStop = false;
-            restartbutton.BringToFront();
-        }
-        private void OnMouseEnterRestartButton(object sender, EventArgs e)
-        {
-            restartbutton.Image = Resource1.RestartButton1;
-        }
-        private void OnMouseLeaveRestartButton(object sender, EventArgs e)
-        {
-            restartbutton.Image = Resource1.RestartButton0;
-        }
-        private void QuitButton()
-        {
-            this.Controls.Add(quitbutton);
-            quitbutton.Location = new Point(275, 280);
-            quitbutton.Size = new Size(150, 75);
-
-            quitbutton.Image = Resource1.QuitButton0;
-            quitbutton.FlatStyle = FlatStyle.Flat;
-            quitbutton.FlatAppearance.BorderSize = 0;
-            quitbutton.TabStop = false;
-            quitbutton.BringToFront();
-        }
-        void restartbutton_Click(object sender, EventArgs e)
-        {
-            Score = 0;
-            Highscore = 0;
-
-            this.Controls.Remove(quitbutton);
-            this.Controls.Remove(restartbutton);
-            this.Controls.Remove(finalhighscorep);
-            this.Controls.Remove(finalscorep);
-
-            Level = 0;
-            completedlines = 0;
-
-            levelselect();
-            BackroundImage();
-            startscreenimage.Image = Resource1.levelselectscreen; //BUGS
-            startscreenimage.SendToBack();
-            gameBoardPanel.SendToBack();
-            nextBlockPanel.SendToBack();
-        }
-
-        private void Finalhighscorev()
-        {
-            //Gameover Highscore
-            finalhighscorep.Visible = true;
-            finalhighscorep.Location = new Point(150, 120);
-            finalhighscorep.AutoSize = true;
-            finalhighscorep.Font = new Font("Calibri", 25);
-            finalhighscorep.ForeColor = Color.Black;
-            finalhighscorep.Padding = new Padding(6);
-            this.Controls.Add(finalhighscorep);
-            string Endhighscore = FinalHighScore.ToString();
-            finalhighscorep.Text = String.Format($"Highscore: {Endhighscore}");
-            finalhighscorep.Refresh();
-            finalhighscorep.BringToFront();
-        }
-        private void Finalscorev()
-        {
-            //Gameover Score
-            finalscorep.Visible = true;
-            finalscorep.Location = new Point(150, 60);
-            finalscorep.AutoSize = true;
-            finalscorep.Font = new Font("Calibri", 25);
-            finalscorep.ForeColor = Color.Black;
-            finalscorep.Padding = new Padding(6);
-            this.Controls.Add(finalscorep);
-            string Endscore = FinalScore.ToString();
-            finalscorep.Text = String.Format($"Score: {Endscore}");
-            finalscorep.Refresh();
-            finalscorep.BringToFront();
-
-        }
-        private void InitializeGameOver()
-        {
-            
-            //gameBoardPanel.Paint += RemoveGameBoard;
-            timer1.Stop();
-            this.Controls.Remove(scoreboard);
-            this.Controls.Remove(highscore);
-            this.Controls.Remove(linecount);
-            this.Controls.Remove(levelcount);
-            if(Highscore >= FinalHighScore)
-            {
-                FinalHighScore = Highscore;
-            }
-            
-            FinalScore = Score;
-            HideGameBoard();
-            ShowGameOverScreen();
-
-        }
-        private void InitializeGameBoard()
-        {
-            for (int x = 0; x < BoardWidth; x++)
-            {
-                for (int y = 0; y < BoardHeight; y++)
-                {
-                    tempGameBoard[x, y] = 0;  // Initialize with empty cells
-                    permanentGameBoard[x, y] = 0;
-                }
-            }
-            UpdateGameBoard();
-        }
-        private void InitializeScore()
-        {
-
-            scoreboard.Location = new Point(370, 120);
-            scoreboard.AutoSize = true;
-            scoreboard.Font = new Font("Calibri", 18);
-            scoreboard.ForeColor = Color.Black;
-            scoreboard.Padding = new Padding(6);
-            this.Controls.Add(scoreboard);
-            scoreboard.Refresh();
-
-        }
-        private void UpdateScore()
-        {
-            string finalscore = Score.ToString();
-            scoreboard.Text = String.Format($"Score {finalscore}");
-            if(Score > Highscore)
-            {
-                Updatehighscore();
-            }
-        }
-        private void Initializehighscore()
-        {
-            highscore.Location = new Point(370, 50);
-            highscore.AutoSize = true;
-            highscore.Font = new Font("Calibri", 18);
-            highscore.ForeColor = Color.Black;
-            highscore.Padding = new Padding(6);
-            this.Controls.Add(highscore);
-            highscore.Refresh();
-        }
-        private void Updatehighscore()
-        {
-            Highscore = Score;
-            string finalhighscore = Highscore.ToString();
-            highscore.Text = String.Format($"Highscore: {finalhighscore}");
-        }
-        private void InitializeLevel()
-        {
-
-            levelcount.Location = new Point(370, 180);
-            levelcount.AutoSize = true;
-            levelcount.Font = new Font("Calibri", 18);
-            levelcount.ForeColor = Color.Black;
-            levelcount.Padding = new Padding(6);
-            this.Controls.Add(levelcount);
-            levelcount.Refresh();
-            levelcount.Visible = true;
-
-        }
-        private void UpdateLevel()
-        {
-            string Levelachieved = Level.ToString();
-            levelcount.Text = String.Format($"Level {Levelachieved}");
-        }
-        private void InitializeLinecount()
-        {
-            //completedlines
-            linecount.Location = new Point(120, 0);
-            linecount.AutoSize = true;
-            linecount.Font = new Font("Calibri", 18);
-            linecount.ForeColor = Color.Black;
-            linecount.Padding = new Padding(6);
-            this.Controls.Add(linecount);
-            linecount.Refresh();
-        }
-        private void UpdateLevelcount()
-        {
-            if(onelevelup >= 10)
-            {
-                Level += 1;
-                onelevelup = 0;
-            }
-            
-            UpdateTimerInterval();
-            UpdateLevel();
-        }
-        private void UpdateTimerInterval()
-        {
-            if(timer1.Interval > 0)
-            {
-                //Choose Speed
-                timer1.Interval = 1000 - (Level * 100);
-            }
-        }
-        private void UpdateLinecount()
-        {
-            string Linecounter = completedlines.ToString();
-            linecount.Text = String.Format($"Lines - {Linecounter}");
-        }
-        private System.Drawing.Image GetCombinedColor(int x, int y)
-        {
-            if (tempGameBoard[x, y] == 1 || permanentGameBoard[x, y] == 1)
-                return Resource1.TetrominoBlack;
-            if (tempGameBoard[x, y] == 2 || permanentGameBoard[x, y] == 2)
-                return Resource1.TetrominoRed;
-            if (tempGameBoard[x, y] == 3 || permanentGameBoard[x, y] == 3)
-                return Resource1.TetrominoOrange;
-            if (tempGameBoard[x, y] == 4 || permanentGameBoard[x, y] == 4)
-                return Resource1.TetrominoYellow;
-            if (tempGameBoard[x, y] == 5 || permanentGameBoard[x, y] == 5)
-                return Resource1.TetrominoPurple;
-            if (tempGameBoard[x, y] == 6 || permanentGameBoard[x, y] == 6)
-                return Resource1.TetrominoPink;
-            if (tempGameBoard[x, y] == 7 || permanentGameBoard[x, y] == 7)
-                return Resource1.TetrominoBlue;
-            if (tempGameBoard[x, y] == 8 || permanentGameBoard[x, y] == 8)
-                return Resource1.TetrominoLightBlue;
-            if (tempGameBoard[x, y] == 9 || permanentGameBoard[x, y] == 9)
-                return Resource1.TetrominoGreen;
-            if (tempGameBoard[x, y] == 10 || permanentGameBoard[x, y] == 10)
-                return Resource1.Blank1;
-            if (tempGameBoard[x, y] == 11 || permanentGameBoard[x, y] == 11)
-                return Resource1.Blank2;
-            else
-                return Resource1.Blank0;
-        }
-        private System.Drawing.Image GetCombinedColorNext(int x, int y)
-        {
-            if (nextblockscreen[x, y] == 1)
-                return Resource1.TetrominoBlack;
-            if (nextblockscreen[x, y] == 2)
-                return Resource1.TetrominoRed;
-            if (nextblockscreen[x, y] == 3)
-                return Resource1.TetrominoOrange;
-            if (nextblockscreen[x, y] == 4)
-                return Resource1.TetrominoYellow;
-            if (nextblockscreen[x, y] == 5)
-                return Resource1.TetrominoPurple;
-            if (nextblockscreen[x, y] == 6)
-                return Resource1.TetrominoPink;
-            if (nextblockscreen[x, y] == 7)
-                return Resource1.TetrominoBlue;
-            if (nextblockscreen[x, y] == 8)
-                return Resource1.TetrominoLightBlue;
-            if (nextblockscreen[x, y] == 9)
-                return Resource1.TetrominoGreen;
-            if (nextblockscreen[x, y] == 10)
-                return Resource1.Blank1;
-            if (nextblockscreen[x, y] == 11)
-                return Resource1.Blank2;
-            else
-                return Resource1.Blank0;
-        }
-        private void UpdateGameBoard()
-        {
-            // Clear previous positions
-            if (!gameover)
-            {
-                for (int x = 0; x < BoardWidth; x++)
-                {
-                    for (int y = 0; y < BoardHeight; y++)
-                    {
-                        if (permanentGameBoardOld[x, y] != permanentGameBoard[x, y] || tempGameBoardOld[x, y] != tempGameBoard[x, y])
-                        {
-                            Rectangle rect = new Rectangle(x * CellSize, y * CellSize, CellSize, CellSize);
-                            gameBoardPanel.Invalidate(rect);
-                        }
-                        permanentGameBoardOld[x, y] = permanentGameBoard[x, y];
-                        tempGameBoardOld[x, y] = tempGameBoard[x, y];
-                    }
-                }
-            }
-            Debug.WriteLine("Updated the Game Board");
-        }
-
-
-        // Example usage
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-
-        int startx = 5;
-        int starty = 0;
-
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        private void Tetris_KeyDown(object sender, KeyEventArgs e)
         {
             int blockSizeX = 0;
             int blockSizeY = 0;
@@ -2133,11 +1324,739 @@ namespace WindowsFormsApp1
             }
             CheckCollision();
         }
-        bool AllowMoveLeft = true;
-        bool AllowMoveRight = true;
+        private void InitializePanels()
+        {
+            // Initialize game board panel
+            gameBoardPanel = new Panel
+            {
+                Width = BoardWidth * CellSize,
+                Height = BoardHeight * CellSize,
+                Left = 40,
+                Top = 70
+            };
+            gameBoardPanel.Paint += Tetris_Paint;
+            this.Controls.Add(gameBoardPanel);
+
+            // Initialize next block panel
+            nextBlockPanel = new Panel
+            {
+                Width = nextblocklimit * CellSize,
+                Height = nextblocklimit * CellSize,
+                Left = 400,
+                Top = 300
+            };
+            nextBlockPanel.Paint += Tetris_Paint;
+            this.Controls.Add(nextBlockPanel);
+        }
+        private void levelselect()
+        {
+            int levelbuttonwidth = 100;
+            int levelbuttonheight = 64;
+
+            int distancex = 100;
+            int distancey = 175;
+            //Level0 Select
+            this.Controls.Add(level0button);
+            level0button.Location = new Point(10 + 0 * distancex, distancey);
+            level0button.Size = new Size(levelbuttonwidth, levelbuttonheight);
+            level0button.Click += level0button_Click;
+            level0button.MouseEnter += OnMouseEnterButtonLevel0;
+            level0button.MouseLeave += OnMouseLeaveButtonLevel0;
+            level0button.Image = Resource1._0button0;
+            level0button.BringToFront();
+
+            level0button.FlatStyle = FlatStyle.Flat;
+            level0button.FlatAppearance.BorderSize = 0;
+            level0button.TabStop = false;
+            //Level1 Select
+            this.Controls.Add(level1button);
+            level1button.Location = new Point(10 + 1 * distancex, distancey);
+            level1button.Size = new Size(levelbuttonwidth, levelbuttonheight);
+            level1button.Click += level1button_Click;
+            level1button.MouseEnter += OnMouseEnterButtonLevel1;
+            level1button.MouseLeave += OnMouseLeaveButtonLevel1;
+            level1button.Image = Resource1._1button0;
+            level1button.BringToFront();
+
+            level1button.FlatStyle = FlatStyle.Flat;
+            level1button.FlatAppearance.BorderSize = 0;
+            level1button.TabStop = false;
+            //Level2 Select
+            this.Controls.Add(level2button);
+            level2button.Location = new Point(10 + 2 * distancex, distancey);
+            level2button.Size = new Size(levelbuttonwidth, levelbuttonheight);
+            level2button.Click += level2button_Click;
+            level2button.MouseEnter += OnMouseEnterButtonLevel2;
+            level2button.MouseLeave += OnMouseLeaveButtonLevel2;
+            level2button.Image = Resource1._2button0;
+            level2button.BringToFront();
+
+            level2button.FlatStyle = FlatStyle.Flat;
+            level2button.FlatAppearance.BorderSize = 0;
+            level2button.TabStop = false;
+            //Level3 Select
+            this.Controls.Add(level3button);
+            level3button.Location = new Point(10 + 3 * distancex, distancey);
+            level3button.Size = new Size(levelbuttonwidth, levelbuttonheight);
+            level3button.Click += level3button_Click;
+            level3button.MouseEnter += OnMouseEnterButtonLevel3;
+            level3button.MouseLeave += OnMouseLeaveButtonLevel3;
+            level3button.Image = Resource1._3button0;
+            level3button.BringToFront();
+
+            level3button.FlatStyle = FlatStyle.Flat;
+            level3button.FlatAppearance.BorderSize = 0;
+            level3button.TabStop = false;
+            //Level4 Select
+            this.Controls.Add(level4button);
+            level4button.Location = new Point(10 + 4 * distancex, distancey);
+            level4button.Size = new Size(levelbuttonwidth, levelbuttonheight);
+            level4button.Click += level4button_Click;
+            level4button.MouseEnter += OnMouseEnterButtonLevel4;
+            level4button.MouseLeave += OnMouseLeaveButtonLevel4;
+            level4button.Image = Resource1._4button0;
+            level4button.BringToFront();
+
+            level4button.FlatStyle = FlatStyle.Flat;
+            level4button.FlatAppearance.BorderSize = 0;
+            level4button.TabStop = false;
+            //Level5 Select
+            this.Controls.Add(level5button);
+            level5button.Location = new Point(10 + 0 * distancex, 100 + distancey);
+            level5button.Size = new Size(levelbuttonwidth, levelbuttonheight);
+            level5button.Click += level5button_Click;
+            level5button.MouseEnter += OnMouseEnterButtonLevel5;
+            level5button.MouseLeave += OnMouseLeaveButtonLevel5;
+            level5button.Image = Resource1._5button0;
+            level5button.BringToFront();
+
+            level5button.FlatStyle = FlatStyle.Flat;
+            level5button.FlatAppearance.BorderSize = 0;
+            level5button.TabStop = false;
+            //Level6 Select
+            this.Controls.Add(level6button);
+            level6button.Location = new Point(10 + 1 * distancex, 100 + distancey);
+            level6button.Size = new Size(levelbuttonwidth, levelbuttonheight);
+            level6button.Click += level6button_Click;
+            level6button.MouseEnter += OnMouseEnterButtonLevel6;
+            level6button.MouseLeave += OnMouseLeaveButtonLevel6;
+            level6button.Image = Resource1._6button0;
+            level6button.BringToFront();
+
+            level6button.FlatStyle = FlatStyle.Flat;
+            level6button.FlatAppearance.BorderSize = 0;
+            level6button.TabStop = false;
+            //Level7 Select
+            this.Controls.Add(level7button);
+            level7button.Location = new Point(10 + 2 * distancex, 100 + distancey);
+            level7button.Size = new Size(levelbuttonwidth, levelbuttonheight);
+            level7button.Click += level7button_Click;
+            level7button.MouseEnter += OnMouseEnterButtonLevel7;
+            level7button.MouseLeave += OnMouseLeaveButtonLevel7;
+            level7button.Image = Resource1._7button0;
+            level7button.BringToFront();
+
+            level7button.FlatStyle = FlatStyle.Flat;
+            level7button.FlatAppearance.BorderSize = 0;
+            level7button.TabStop = false;
+            //Level8 Select
+            this.Controls.Add(level8button);
+            level8button.Location = new Point(10 + 3 * distancex, 100 + distancey);
+            level8button.Size = new Size(levelbuttonwidth, levelbuttonheight);
+            level8button.Click += level8button_Click;
+            level8button.MouseEnter += OnMouseEnterButtonLevel8;
+            level8button.MouseLeave += OnMouseLeaveButtonLevel8;
+            level8button.Image = Resource1._8button0;
+            level8button.BringToFront();
+
+            level8button.FlatStyle = FlatStyle.Flat;
+            level8button.FlatAppearance.BorderSize = 0;
+            level8button.TabStop = false;
+            //Level9 Select
+            this.Controls.Add(level9button);
+            level9button.Location = new Point(10 + 4 * distancex, 100 + distancey);
+            level9button.Size = new Size(levelbuttonwidth, levelbuttonheight);
+            level9button.Click += level9button_Click;
+            level9button.MouseEnter += OnMouseEnterButtonLevel9;
+            level9button.MouseLeave += OnMouseLeaveButtonLevel9;
+            level9button.Image = Resource1._9button0;
+            level9button.BringToFront();
+
+            level9button.FlatStyle = FlatStyle.Flat;
+            level9button.FlatAppearance.BorderSize = 0;
+            level9button.TabStop = false;
+        }
+        private void OnMouseEnterButtonLevel0(object sender, EventArgs e)
+        {
+            level0button.Image = Resource1._0button1;
+        }
+        private void OnMouseLeaveButtonLevel0(object sender, EventArgs e)
+        {
+            level0button.Image = Resource1._0button0;
+        }
+        private void OnMouseEnterButtonLevel1(object sender, EventArgs e)
+        {
+            level1button.Image = Resource1._1button1;
+        }
+        private void OnMouseLeaveButtonLevel1(object sender, EventArgs e)
+        {
+            level1button.Image = Resource1._1button0;
+        }
+        private void OnMouseEnterButtonLevel2(object sender, EventArgs e)
+        {
+            level2button.Image = Resource1._2button1;
+        }
+        private void OnMouseLeaveButtonLevel2(object sender, EventArgs e)
+        {
+            level2button.Image = Resource1._2button0;
+        }
+        private void OnMouseEnterButtonLevel3(object sender, EventArgs e)
+        {
+            level3button.Image = Resource1._3button1;
+        }
+        private void OnMouseLeaveButtonLevel3(object sender, EventArgs e)
+        {
+            level3button.Image = Resource1._3button0;
+        }
+        private void OnMouseEnterButtonLevel4(object sender, EventArgs e)
+        {
+            level4button.Image = Resource1._4button1;
+        }
+        private void OnMouseLeaveButtonLevel4(object sender, EventArgs e)
+        {
+            level4button.Image = Resource1._4button0;
+        }
+        private void OnMouseEnterButtonLevel5(object sender, EventArgs e)
+        {
+            level5button.Image = Resource1._5button1;
+        }
+        private void OnMouseLeaveButtonLevel5(object sender, EventArgs e)
+        {
+            level5button.Image = Resource1._5button0;
+        }
+        private void OnMouseEnterButtonLevel6(object sender, EventArgs e)
+        {
+            level6button.Image = Resource1._6button1;
+        }
+        private void OnMouseLeaveButtonLevel6(object sender, EventArgs e)
+        {
+            level6button.Image = Resource1._6button0;
+        }
+        private void OnMouseEnterButtonLevel7(object sender, EventArgs e)
+        {
+            level7button.Image = Resource1._7button1;
+        }
+        private void OnMouseLeaveButtonLevel7(object sender, EventArgs e)
+        {
+            level7button.Image = Resource1._7button0;
+        }
+        private void OnMouseEnterButtonLevel8(object sender, EventArgs e)
+        {
+            level8button.Image = Resource1._8button1;
+        }
+        private void OnMouseLeaveButtonLevel8(object sender, EventArgs e)
+        {
+            level8button.Image = Resource1._8button0;
+        }
+        private void OnMouseEnterButtonLevel9(object sender, EventArgs e)
+        {
+            level9button.Image = Resource1._9button1;
+        }
+        private void OnMouseLeaveButtonLevel9(object sender, EventArgs e)
+        {
+            level9button.Image = Resource1._9button0;
+        }
+        private void gameplay()
+        {
+
+            gameover = false;
+            InitializePanels();  // Ensure panels are initialized first
+            InitializeGameBoard();
+            initializenextblock();
+            ShowGameBoard();
+            // Trigger initial updates to display the initial state
+            UpdateGameBoard();
+            updatenextblock();
+
+            InitializeScore();
+            Initializehighscore();
+            Updatehighscore();
+            InitializeLinecount();
+            UpdateLinecount();
+            InitializeLevel();
+            UpdateLevel();
+            UpdateScore();
+
+            timer1.Start();
+            // beginning of game
+            //initializenextblock();
+            blockpicker();
+
+
+
+            drawblock(startx, starty);
+            UpdateGameBoard();
+
+        }
+        private void InitializeStartScreen()
+        {
+            //START BUTTON
+            this.Controls.Add(startbutton);
+            startbutton.Location = new Point(100, 280);
+            startbutton.Size = new Size(150, 75);
+
+            startbutton.Image = Resource1.StartButton0;
+            startbutton.FlatStyle = FlatStyle.Flat;
+            startbutton.FlatAppearance.BorderSize = 0;
+            startbutton.TabStop = false;
+
+            startbutton.Click += startbutton_Click;
+            startbutton.MouseEnter += OnMouseEnterButton0;
+            startbutton.MouseLeave += OnMouseLeaveButton0;
+
+            //QUIT BUTTON
+            QuitButton();
+
+            quitbutton.Click += quitbutton_Click;
+            quitbutton.MouseEnter += OnMouseEnterButton1;
+            quitbutton.MouseLeave += OnMouseLeaveButton1;
+
+            //Background Picture
+            BackroundImage();
+            startscreenimage.Image = Resource1.TitleScreen;
+        }
+        private void BackroundImage()
+        {
+            this.Controls.Add(startscreenimage);
+            startscreenimage.Location = new Point(0, 0);
+            startscreenimage.Size = new Size(520, 540);
+            Controls.Add(startscreenimage);
+            startscreenimage.SizeMode = PictureBoxSizeMode.StretchImage;
+            startscreenimage.SendToBack();
+        }
+        private void OnMouseEnterButton0(object sender, EventArgs e)
+        {
+            startbutton.Image = Resource1.StartButton1;
+        }
+        private void OnMouseLeaveButton0(object sender, EventArgs e)
+        {
+            startbutton.Image = Resource1.StartButton0;
+        }
+        void startbutton_Click(object sender, EventArgs e)
+        {
+            this.Controls.Remove(startbutton);
+            this.Controls.Remove(quitbutton);
+            this.Controls.Remove(restartbutton);
+
+            BackroundImage();
+            startscreenimage.Image = Resource1.levelselectscreen;
+            levelselect();
+        }
+        private void OnMouseEnterButton1(object sender, EventArgs e)
+        {
+            quitbutton.Image = Resource1.QuitButton1;
+        }
+        private void OnMouseLeaveButton1(object sender, EventArgs e)
+        {
+            quitbutton.Image = Resource1.QuitButton0;
+        }
+        void quitbutton_Click(object sender, EventArgs e)
+        {
+            timer1.Stop();
+            this.Close();
+        }
+        void level0button_Click(object sender, EventArgs e)
+        {
+            startscriptremove();
+            Level = 0;
+            gameplay();
+        }
+        void level1button_Click(object sender, EventArgs e)
+        {
+            startscriptremove();
+            Level = 1;
+            gameplay();
+        }
+        void level2button_Click(object sender, EventArgs e)
+        {
+            startscriptremove();
+            Level = 2;
+            gameplay();
+        }
+        void level3button_Click(object sender, EventArgs e)
+        {
+            startscriptremove();
+            Level = 3;
+            gameplay();
+        }
+        void level4button_Click(object sender, EventArgs e)
+        {
+            startscriptremove();
+            Level = 4;
+            gameplay();
+        }
+        void level5button_Click(object sender, EventArgs e)
+        {
+            startscriptremove();
+            Level = 5;
+            gameplay();
+        }
+        void level6button_Click(object sender, EventArgs e)
+        {
+            startscriptremove();
+            Level = 6;
+            gameplay();
+        }
+        void level7button_Click(object sender, EventArgs e)
+        {
+            startscriptremove();
+            Level = 7;
+            gameplay();
+        }
+        void level8button_Click(object sender, EventArgs e)
+        {
+            startscriptremove();
+            Level = 8;
+            gameplay();
+        }
+        void level9button_Click(object sender, EventArgs e)
+        {
+            startscriptremove();
+            Level = 9;
+            gameplay();
+        }
+        private void startscriptremove()
+        {
+            this.Controls.Remove(startbutton);
+            this.Controls.Remove(quitbutton);
+            this.Controls.Remove(restartbutton);
+            this.Controls.Remove(startscreenimage);
+
+            this.Controls.Remove(level0button);
+            this.Controls.Remove(level1button);
+            this.Controls.Remove(level2button);
+            this.Controls.Remove(level3button);
+            this.Controls.Remove(level4button);
+            this.Controls.Remove(level5button);
+            this.Controls.Remove(level6button);
+            this.Controls.Remove(level7button);
+            this.Controls.Remove(level8button);
+            this.Controls.Remove(level9button);
+        }
+
+
+        private void ShowGameBoard()
+        {
+            gameBoardPanel.Invalidate();
+            nextBlockPanel.Invalidate();
+
+            // Reinitialize game components if necessary
+            //InitializeComponent();
+        }
+        private void HideGameBoard()
+        {
+            for (int x = 0; x < BoardWidth; x++)
+            {
+                for (int y = 0; y < BoardHeight; y++)
+                {
+                    permanentGameBoardOld[x, y] = 0;
+                    tempGameBoardOld[x, y] = 0;
+                    permanentGameBoard[x, y] = 0;
+                    tempGameBoard[x, y] = 0;
+                }
+            }
+            for (int x = 0; x < nextblocklimit; x++)
+            {
+                for (int y = 0; y < nextblocklimit; y++)
+                {
+                    nextblockscreen[x, y] = 0;
+                    nextblockscreenOld[x, y] = 0;
+                }
+            }
+            gameBoardPanel.Invalidate();
+            nextBlockPanel.Invalidate();
+            this.Invalidate(); // Ensure the form is redrawn
+        }
+        private void ShowGameOverScreen()
+        {
+            //Gameover Score
+            Finalscorev();
+
+            //Gameover Highscore
+            Finalhighscorev();
+            // Generate Quit Button
+            QuitButton();
+
+            RestartButton();
+
+        }
+        private void RestartButton()
+        {
+            this.Controls.Add(restartbutton);
+            restartbutton.Text = "Restart";
+            restartbutton.Location = new Point(100, 280);
+            restartbutton.Size = new Size(150, 75);
+
+            restartbutton.Click += restartbutton_Click;
+            restartbutton.BringToFront();
+        }
+        private void QuitButton()
+        {
+            this.Controls.Add(quitbutton);
+            quitbutton.Location = new Point(275, 280);
+            quitbutton.Size = new Size(150, 75);
+
+            quitbutton.Image = Resource1.QuitButton0;
+            quitbutton.FlatStyle = FlatStyle.Flat;
+            quitbutton.FlatAppearance.BorderSize = 0;
+            quitbutton.TabStop = false;
+            quitbutton.BringToFront();
+        }
+        void restartbutton_Click(object sender, EventArgs e)
+        {
+            Score = 0;
+            Highscore = 0;
+
+            this.Controls.Remove(quitbutton);
+            this.Controls.Remove(restartbutton);
+            this.Controls.Remove(finalhighscorep);
+            this.Controls.Remove(finalscorep);
+            Level = 0;
+            completedlines = 0;
+            levelselect();
+            BackroundImage();
+            startscreenimage.Image = Resource1.TitleScreen;
+        }
+        private void Finalhighscorev()
+        {
+            //Gameover Highscore
+            finalhighscorep.Visible = true;
+            finalhighscorep.Location = new Point(150, 120);
+            finalhighscorep.AutoSize = true;
+            finalhighscorep.Font = new Font("Calibri", 25);
+            finalhighscorep.ForeColor = Color.Black;
+            finalhighscorep.Padding = new Padding(6);
+            this.Controls.Add(finalhighscorep);
+            string Endhighscore = FinalHighScore.ToString();
+            finalhighscorep.Text = String.Format($"Highscore: {Endhighscore}");
+            finalhighscorep.Refresh();
+            finalhighscorep.BringToFront();
+        }
+        private void Finalscorev()
+        {
+            //Gameover Score
+            finalscorep.Visible = true;
+            finalscorep.Location = new Point(150, 60);
+            finalscorep.AutoSize = true;
+            finalscorep.Font = new Font("Calibri", 25);
+            finalscorep.ForeColor = Color.Black;
+            finalscorep.Padding = new Padding(6);
+            this.Controls.Add(finalscorep);
+            string Endscore = FinalScore.ToString();
+            finalscorep.Text = String.Format($"Score: {Endscore}");
+            finalscorep.Refresh();
+            finalscorep.BringToFront();
+
+        }
+        private void InitializeGameOver()
+        {
+
+            //gameBoardPanel.Paint += RemoveGameBoard;
+            timer1.Stop();
+            this.Controls.Remove(scoreboard);
+            this.Controls.Remove(highscore);
+            this.Controls.Remove(linecount);
+            this.Controls.Remove(levelcount);
+            if (Highscore >= FinalHighScore)
+            {
+                FinalHighScore = Highscore;
+            }
+
+            FinalScore = Score;
+            HideGameBoard();
+            ShowGameOverScreen();
+
+        }
+        private void InitializeGameBoard()
+        {
+            for (int x = 0; x < BoardWidth; x++)
+            {
+                for (int y = 0; y < BoardHeight; y++)
+                {
+                    tempGameBoard[x, y] = 0;  // Initialize with empty cells
+                    permanentGameBoard[x, y] = 0;
+                }
+            }
+            UpdateGameBoard();
+        }
+        private void InitializeScore()
+        {
+
+            scoreboard.Location = new Point(370, 120);
+            scoreboard.AutoSize = true;
+            scoreboard.Font = new Font("Calibri", 18);
+            scoreboard.ForeColor = Color.Black;
+            scoreboard.Padding = new Padding(6);
+            this.Controls.Add(scoreboard);
+            scoreboard.Refresh();
+
+        }
+        private void UpdateScore()
+        {
+            string finalscore = Score.ToString();
+            scoreboard.Text = String.Format($"Score {finalscore}");
+            if (Score > Highscore)
+            {
+                Updatehighscore();
+            }
+        }
+        private void Initializehighscore()
+        {
+            highscore.Location = new Point(370, 50);
+            highscore.AutoSize = true;
+            highscore.Font = new Font("Calibri", 18);
+            highscore.ForeColor = Color.Black;
+            highscore.Padding = new Padding(6);
+            this.Controls.Add(highscore);
+            highscore.Refresh();
+        }
+        private void Updatehighscore()
+        {
+            Highscore = Score;
+            string finalhighscore = Highscore.ToString();
+            highscore.Text = String.Format($"Highscore: {finalhighscore}");
+        }
+        private void InitializeLevel()
+        {
+
+            levelcount.Location = new Point(370, 180);
+            levelcount.AutoSize = true;
+            levelcount.Font = new Font("Calibri", 18);
+            levelcount.ForeColor = Color.Black;
+            levelcount.Padding = new Padding(6);
+            this.Controls.Add(levelcount);
+            levelcount.Refresh();
+            levelcount.Visible = true;
+
+        }
+        private void UpdateLevel()
+        {
+            string Levelachieved = Level.ToString();
+            levelcount.Text = String.Format($"Level {Levelachieved}");
+        }
+        private void InitializeLinecount()
+        {
+            //completedlines
+            linecount.Location = new Point(120, 0);
+            linecount.AutoSize = true;
+            linecount.Font = new Font("Calibri", 18);
+            linecount.ForeColor = Color.Black;
+            linecount.Padding = new Padding(6);
+            this.Controls.Add(linecount);
+            linecount.Refresh();
+        }
+        private void UpdateLevelcount()
+        {
+            if (onelevelup >= 10)
+            {
+                Level += 1;
+                onelevelup = 0;
+            }
+
+            UpdateTimerInterval();
+            UpdateLevel();
+        }
+        private void UpdateTimerInterval()
+        {
+            if (timer1.Interval > 0)
+            {
+                //Choose Speed
+                timer1.Interval = 1000 - (Level * 100);
+            }
+        }
+        private void UpdateLinecount()
+        {
+            string Linecounter = completedlines.ToString();
+            linecount.Text = String.Format($"Lines - {Linecounter}");
+        }
+        private System.Drawing.Image GetCombinedColor(int x, int y)
+        {
+            if (tempGameBoard[x, y] == 1 || permanentGameBoard[x, y] == 1)
+                return Resource1.TetrominoBlack;
+            if (tempGameBoard[x, y] == 2 || permanentGameBoard[x, y] == 2)
+                return Resource1.TetrominoRed;
+            if (tempGameBoard[x, y] == 3 || permanentGameBoard[x, y] == 3)
+                return Resource1.TetrominoOrange;
+            if (tempGameBoard[x, y] == 4 || permanentGameBoard[x, y] == 4)
+                return Resource1.TetrominoYellow;
+            if (tempGameBoard[x, y] == 5 || permanentGameBoard[x, y] == 5)
+                return Resource1.TetrominoPurple;
+            if (tempGameBoard[x, y] == 6 || permanentGameBoard[x, y] == 6)
+                return Resource1.TetrominoPink;
+            if (tempGameBoard[x, y] == 7 || permanentGameBoard[x, y] == 7)
+                return Resource1.TetrominoBlue;
+            if (tempGameBoard[x, y] == 8 || permanentGameBoard[x, y] == 8)
+                return Resource1.TetrominoLightBlue;
+            if (tempGameBoard[x, y] == 9 || permanentGameBoard[x, y] == 9)
+                return Resource1.TetrominoGreen;
+            if (tempGameBoard[x, y] == 10 || permanentGameBoard[x, y] == 10)
+                return Resource1.Blank1;
+            if (tempGameBoard[x, y] == 11 || permanentGameBoard[x, y] == 11)
+                return Resource1.Blank2;
+            else
+                return Resource1.Blank0;
+        }
+        private System.Drawing.Image GetCombinedColorNext(int x, int y)
+        {
+            if (nextblockscreen[x, y] == 1)
+                return Resource1.TetrominoBlack;
+            if (nextblockscreen[x, y] == 2)
+                return Resource1.TetrominoRed;
+            if (nextblockscreen[x, y] == 3)
+                return Resource1.TetrominoOrange;
+            if (nextblockscreen[x, y] == 4)
+                return Resource1.TetrominoYellow;
+            if (nextblockscreen[x, y] == 5)
+                return Resource1.TetrominoPurple;
+            if (nextblockscreen[x, y] == 6)
+                return Resource1.TetrominoPink;
+            if (nextblockscreen[x, y] == 7)
+                return Resource1.TetrominoBlue;
+            if (nextblockscreen[x, y] == 8)
+                return Resource1.TetrominoLightBlue;
+            if (nextblockscreen[x, y] == 9)
+                return Resource1.TetrominoGreen;
+            if (nextblockscreen[x, y] == 10)
+                return Resource1.Blank1;
+            if (nextblockscreen[x, y] == 11)
+                return Resource1.Blank2;
+            else
+                return Resource1.Blank0;
+        }
+        private void UpdateGameBoard()
+        {
+            // Clear previous positions
+            if (gameover == false)
+            {
+                for (int x = 0; x < BoardWidth; x++)
+                {
+                    for (int y = 0; y < BoardHeight; y++)
+                    {
+                        if (permanentGameBoardOld[x, y] != permanentGameBoard[x, y] || tempGameBoardOld[x, y] != tempGameBoard[x, y])
+                        {
+                            Rectangle rect = new Rectangle(x * CellSize, y * CellSize, CellSize, CellSize);
+                            gameBoardPanel.Invalidate(rect);
+                        }
+                        permanentGameBoardOld[x, y] = permanentGameBoard[x, y];
+                        tempGameBoardOld[x, y] = tempGameBoard[x, y];
+                    }
+                }
+            }
+            Debug.WriteLine("Updated the Game Board");
+        }
         private void CheckCollision()
         {
-            if(chosenblock == Oblock)
+            if (chosenblock == Oblock)
             {
                 for (int y = starty; y <= starty + 1; y++)
                 {
@@ -2476,7 +2395,7 @@ namespace WindowsFormsApp1
                             {
                                 AllowMoveRight = false;
                             }
-                            
+
                             else
                             {
                                 AllowMoveRight = true;
@@ -2983,11 +2902,11 @@ namespace WindowsFormsApp1
         int rotation = 5;
         private void Rotate()
         {
-            if(rotation > 5)
+            if (rotation > 5)
             {
                 rotation = 2;
             }
-            else if(rotation < 2)
+            else if (rotation < 2)
             {
                 rotation = 5;
             }
@@ -3079,10 +2998,11 @@ namespace WindowsFormsApp1
             }
             Debug.WriteLine("Initialized Next Block");
         }
-        private void GameBoardPanel_Paint(object sender, PaintEventArgs e)
+
+        private void Tetris_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            if (!gameover)
+            if (gameover == false)
             {
                 for (int x = 0; x < BoardWidth; x++)
                 {
@@ -3093,23 +3013,19 @@ namespace WindowsFormsApp1
                     }
                 }
             }
-        }
-
-        private void NextBlockPanel_Paint(object sender, PaintEventArgs e)
-        {
-            Graphics g = e.Graphics;
-
-            for (int x = 0; x < nextblocklimit; x++)
+            if (gameover == false)
             {
-                for (int y = 0; y < nextblocklimit; y++)
+                for (int x = 0; x < nextblocklimit; x++)
                 {
-                    Image image = GetCombinedColorNext(x, y);
-                    g.DrawImage(image, x * CellSize, y * CellSize, CellSize, CellSize);
+                    for (int y = 0; y < nextblocklimit; y++)
+                    {
+                        Image image = GetCombinedColorNext(x, y);
+                        g.DrawImage(image, x * CellSize, y * CellSize, CellSize, CellSize);
+
+                    }
                 }
             }
         }
-
-
         private void updatenextblock()
         {
             for (int x = 0; x < nextblocklimit; x++)
@@ -3141,7 +3057,7 @@ namespace WindowsFormsApp1
         private void drawnextblock()
         {
             Debug.WriteLine("Nextblock: " + nextblock);
-            if(nextblock == 1)
+            if (nextblock == 1)
             {
                 for (int y = 0; y < Tblock.GetLength(0); y++)
                 {
@@ -3149,7 +3065,7 @@ namespace WindowsFormsApp1
                     {
                         if (Tblock[x, y] != 0)
                         {
-                            
+
                             int screenX = 1 + x;
                             int screenY = 0 + y;
 
@@ -3158,7 +3074,7 @@ namespace WindowsFormsApp1
                     }
                 }
             }
-            else if(nextblock == 2)
+            else if (nextblock == 2)
             {
                 for (int y = 0; y < Lblock.GetLength(0); y++)
                 {
@@ -3228,13 +3144,13 @@ namespace WindowsFormsApp1
 
                             if (screenX >= 0 && screenX < nextblocklimit && screenY >= 0 && screenY < nextblocklimit)
                             {
-                                nextblockscreen[screenX, screenY] = Oblock[y, x]; 
+                                nextblockscreen[screenX, screenY] = Oblock[y, x];
                             }
                         }
                     }
                 }
             }
-            else if(nextblock == 6)
+            else if (nextblock == 6)
             {
                 for (int y = 0; y < Sblock.GetLength(0); y++)
                 {
@@ -3253,7 +3169,7 @@ namespace WindowsFormsApp1
                     }
                 }
             }
-            else if(nextblock == 7)
+            else if (nextblock == 7)
             {
                 for (int y = 0; y < Zblock.GetLength(0); y++)
                 {
@@ -3261,8 +3177,8 @@ namespace WindowsFormsApp1
                     {
                         if (Zblock[y, x] != 0)
                         {
-                            int screenX = 0 + x; 
-                            int screenY = 1 + y; 
+                            int screenX = 0 + x;
+                            int screenY = 1 + y;
 
                             if (screenX >= 0 && screenX < nextblocklimit && screenY >= 0 && screenY < nextblocklimit)
                             {
@@ -3273,7 +3189,7 @@ namespace WindowsFormsApp1
                 }
             }
 
-            
+
         }
         private void gameovercheck()
         {
@@ -3285,7 +3201,7 @@ namespace WindowsFormsApp1
                     gameover = true;
                 }
             }
-            if(gameover)
+            if (gameover)
             {
                 InitializeGameOver();
             }
@@ -3300,7 +3216,7 @@ namespace WindowsFormsApp1
                 {
                     case 2:
                         //90
-                        if(starty >= BoardHeight - 4)
+                        if (starty >= BoardHeight - 4)
                         {
                             placeblock();
                             UpdateScore();
@@ -3466,7 +3382,7 @@ namespace WindowsFormsApp1
 
                 }
             }
-            if(chosenblock == Oblock)
+            if (chosenblock == Oblock)
             {
                 if (starty >= BoardHeight - 3)
                 {
@@ -3723,7 +3639,7 @@ namespace WindowsFormsApp1
                         break;
                 }
             }
-            else if(chosenblock == Tblock)
+            else if (chosenblock == Tblock)
             {
                 switch (rotation)
                 {
@@ -3829,7 +3745,7 @@ namespace WindowsFormsApp1
                         break;
                     default:
                         //0 -- works
-                        if (permanentGameBoard[startx , starty + 1] != 0 || permanentGameBoard[startx + 1, starty + 1] != 0 || permanentGameBoard[startx + 1, starty + 2] != 0 || permanentGameBoard[startx + 2, starty + 2] != 0)
+                        if (permanentGameBoard[startx, starty + 1] != 0 || permanentGameBoard[startx + 1, starty + 1] != 0 || permanentGameBoard[startx + 1, starty + 2] != 0 || permanentGameBoard[startx + 2, starty + 2] != 0)
                         {
                             isBlocked = true;
                             break;
@@ -3840,7 +3756,7 @@ namespace WindowsFormsApp1
             if (isBlocked)
             {
                 placeblock();
-                
+
             }
             UpdateScore();
 
@@ -4803,7 +4719,7 @@ namespace WindowsFormsApp1
 
         private void placeblock()
         {
-            if (starty >= 2 )
+            if (starty >= 2)
             {
                 for (int y = 0; y < BoardHeight; y++)
                 {
@@ -4873,6 +4789,68 @@ namespace WindowsFormsApp1
             UpdateLevel();
             onelevelup += 1;
             UpdateLevel();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            oldtimer = newtimer;
+            if (starty <= BoardHeight - 2)
+            {
+                if (newtimer > oldtimer | newtimer == oldtimer)
+                {
+                    UpdateGameBoard();
+                    CheckCollision();
+                    placeblockcheck();
+                    clearblock();
+
+
+
+                    newtimer = +1;
+                    oldtimer = newtimer;
+                    if (starty <= BoardHeight - 1)
+                    {
+                        starty += 1;
+                    }
+
+                    drawblock(startx, starty);
+                    UpdateGameBoard();
+
+                    if (starty == BoardHeight - 2)
+                    {
+                        placeblock();
+                    }
+                    placeblockcheck();
+                }
+                else
+                {
+                    UpdateGameBoard();
+                    clearblock();
+
+                    newtimer = +1;
+                    if (starty <= BoardHeight - 1)
+                    {
+                        starty += 1;
+                    }
+
+                    drawblock(startx, starty);
+                    UpdateGameBoard();
+                    placeblockcheck();
+                    UpdateLevel();
+                }
+            }
+        }
+    }
+    static class ProgramTetris
+    {
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            // Create an instance of your main form and run it
+            Tetris mainForm = new Tetris();
+            Application.Run(mainForm);
         }
     }
 }

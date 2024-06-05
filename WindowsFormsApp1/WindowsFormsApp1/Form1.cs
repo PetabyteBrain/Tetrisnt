@@ -18,7 +18,7 @@ namespace WindowsFormsApp1
 
         private void Form_Load(object sender, EventArgs e)
         {
-
+            this.DoubleBuffered = true;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -72,6 +72,10 @@ namespace WindowsFormsApp1
             
         }
 
+        private void Form1_Paint(object sender, PaintEventArgs e)
+        {
+            
+        }
     }
 
 
