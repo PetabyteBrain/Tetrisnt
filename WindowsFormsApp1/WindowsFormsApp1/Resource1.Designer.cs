@@ -301,6 +301,16 @@ namespace WindowsFormsApp1 {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
+        public static byte[] PressStart2P_Regular {
+            get {
+                object obj = ResourceManager.GetObject("PressStart2P_Regular", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap QuitButton0 {

@@ -62,12 +62,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
-    <Compile Include="Tetris.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Tetris.Designer.cs">
-      <DependentUpon>Tetris.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -81,9 +75,7 @@
       <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tetris.resx">
-      <DependentUpon>Tetris.cs</DependentUpon>
-    </EmbeddedResource>
+    <None Include="fonts\Press_Start_2P\PressStart2P-Regular.ttf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -147,5 +139,6 @@
     <None Include="Image\TitleScreen.png" />
     <None Include="Resources\Homescreen.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

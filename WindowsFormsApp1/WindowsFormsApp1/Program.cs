@@ -2,7 +2,9 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Drawing.Text;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
@@ -54,7 +56,11 @@ namespace WindowsFormsApp1
         private int[,] tempGameBoardOld = new int[BoardWidth, BoardHeight];
         private int[,] nextblockscreenOld = new int[nextblocklimit, nextblocklimit];
 
+        bool AllowMoveLeft = true;
+        bool AllowMoveRight = true;
 
+        bool AllowRotationLeft = true;
+        bool AllowRotationRight = true;
 
 
         int Score = 0;
@@ -263,9 +269,7 @@ namespace WindowsFormsApp1
         public Form1()
         {
             //start
-
             start();
-
         }
         private void start()
         {
@@ -824,7 +828,9 @@ namespace WindowsFormsApp1
             finalhighscorep.Visible = true;
             finalhighscorep.Location = new Point(150, 120);
             finalhighscorep.AutoSize = true;
-            finalhighscorep.Font = new Font("Calibri", 25);
+            var pfc = new PrivateFontCollection();
+            pfc.AddFontFile(@"C:\Github\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\fonts\Press_Start_2P\PressStart2P-Regular.ttf");
+            finalhighscorep.Font = new Font(pfc.Families[0], 20, FontStyle.Regular);
             finalhighscorep.ForeColor = Color.Black;
             finalhighscorep.Padding = new Padding(6);
             this.Controls.Add(finalhighscorep);
@@ -839,7 +845,9 @@ namespace WindowsFormsApp1
             finalscorep.Visible = true;
             finalscorep.Location = new Point(150, 60);
             finalscorep.AutoSize = true;
-            finalscorep.Font = new Font("Calibri", 25);
+            var pfc = new PrivateFontCollection();
+            pfc.AddFontFile(@"C:\Github\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\fonts\Press_Start_2P\PressStart2P-Regular.ttf");
+            finalscorep.Font = new Font(pfc.Families[0], 20, FontStyle.Regular);
             finalscorep.ForeColor = Color.Black;
             finalscorep.Padding = new Padding(6);
             this.Controls.Add(finalscorep);
@@ -870,7 +878,7 @@ namespace WindowsFormsApp1
         }
         private void InitializeGameBoard()
         {
-            for (int x = 0; x < BoardWidth; x++)
+            for (int x = 2; x < BoardWidth - 2; x++)
             {
                 for (int y = 0; y < BoardHeight; y++)
                 {
@@ -878,14 +886,37 @@ namespace WindowsFormsApp1
                     permanentGameBoard[x, y] = 0;
                 }
             }
+            for(int x = 0; x < 2; x++)
+            {
+                for(int y = 0; y < BoardHeight; y++)
+                {
+                    permanentGameBoard[x, y] = 11;
+                }
+            }
+            for (int x = BoardWidth - 2; x < BoardWidth; x++)
+            {
+                for (int y = 0; y < BoardHeight; y++)
+                {
+                    permanentGameBoard[x, y] = 11;
+                }
+            }
+            for (int x = 0; x < BoardWidth; x++)
+            {
+                for (int y = BoardHeight - 1; y < BoardHeight; y++)
+                {
+                    permanentGameBoard[x, y] = 11;
+                }
+            }
             UpdateGameBoard();
         }
         private void InitializeScore()
         {
 
-            scoreboard.Location = new Point(370, 120);
+            scoreboard.Location = new Point(320, 120);
             scoreboard.AutoSize = true;
-            scoreboard.Font = new Font("Calibri", 18);
+            var pfc = new PrivateFontCollection();
+            pfc.AddFontFile(@"C:\Github\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\fonts\Press_Start_2P\PressStart2P-Regular.ttf");
+            scoreboard.Font = new Font(pfc.Families[0], 13, FontStyle.Regular);
             scoreboard.ForeColor = Color.Black;
             scoreboard.Padding = new Padding(6);
             this.Controls.Add(scoreboard);
@@ -903,9 +934,11 @@ namespace WindowsFormsApp1
         }
         private void Initializehighscore()
         {
-            highscore.Location = new Point(370, 50);
+            highscore.Location = new Point(320, 50);
             highscore.AutoSize = true;
-            highscore.Font = new Font("Calibri", 18);
+            var pfc = new PrivateFontCollection();
+            pfc.AddFontFile(@"C:\Github\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\fonts\Press_Start_2P\PressStart2P-Regular.ttf");
+            highscore.Font = new Font(pfc.Families[0], 13, FontStyle.Regular);
             highscore.ForeColor = Color.Black;
             highscore.Padding = new Padding(6);
             this.Controls.Add(highscore);
@@ -920,9 +953,11 @@ namespace WindowsFormsApp1
         private void InitializeLevel()
         {
 
-            levelcount.Location = new Point(370, 180);
+            levelcount.Location = new Point(320, 180);
             levelcount.AutoSize = true;
-            levelcount.Font = new Font("Calibri", 18);
+            var pfc = new PrivateFontCollection();
+            pfc.AddFontFile(@"C:\Github\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\fonts\Press_Start_2P\PressStart2P-Regular.ttf");
+            levelcount.Font = new Font(pfc.Families[0], 13, FontStyle.Regular);
             levelcount.ForeColor = Color.Black;
             levelcount.Padding = new Padding(6);
             this.Controls.Add(levelcount);
@@ -938,9 +973,11 @@ namespace WindowsFormsApp1
         private void InitializeLinecount()
         {
             //completedlines
-            linecount.Location = new Point(120, 0);
+            linecount.Location = new Point(75, 20);
             linecount.AutoSize = true;
-            linecount.Font = new Font("Calibri", 18);
+            var pfc = new PrivateFontCollection();
+            pfc.AddFontFile(@"C:\Github\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\fonts\Press_Start_2P\PressStart2P-Regular.ttf");
+            linecount.Font = new Font(pfc.Families[0], 15, FontStyle.Regular);
             linecount.ForeColor = Color.Black;
             linecount.Padding = new Padding(6);
             this.Controls.Add(linecount);
@@ -961,7 +998,6 @@ namespace WindowsFormsApp1
         {
             if(timer1.Interval > 0)
             {
-                //Choose Speed
                 timer1.Interval = 1000 - (Level * 100);
             }
         }
@@ -1029,7 +1065,7 @@ namespace WindowsFormsApp1
             // Clear previous positions
             if (!gameover)
             {
-                for (int x = 0; x < BoardWidth; x++)
+                for (int x = 2; x < BoardWidth - 2; x++)
                 {
                     for (int y = 0; y < BoardHeight; y++)
                     {
@@ -2106,7 +2142,7 @@ namespace WindowsFormsApp1
                 switch (e.KeyCode)
                 {
                     case Keys.Y:
-                        if (starty < maxY)
+                        if (starty < maxY && AllowRotationLeft == true)
                         {
                             clearblock();
                             rotation += 1;
@@ -2118,7 +2154,7 @@ namespace WindowsFormsApp1
                         }
                         break;
                     case Keys.X:
-                        if (starty < maxY)
+                        if (starty < maxY && AllowRotationRight == true)
                         {
                             clearblock();
                             rotation -= 1;
@@ -2132,9 +2168,8 @@ namespace WindowsFormsApp1
                 }
             }
             CheckCollision();
+            RotationLock(startx, starty);
         }
-        bool AllowMoveLeft = true;
-        bool AllowMoveRight = true;
         private void CheckCollision()
         {
             if(chosenblock == Oblock)
@@ -2145,19 +2180,19 @@ namespace WindowsFormsApp1
                     {
                         for (int xright = startx + 2; xright <= startx + 2; xright++)
                         {
-                            if (permanentGameBoard[xright, y] == 1 && permanentGameBoard[xright, y] != 0)//BLock Right movement if collision
+                            if (permanentGameBoard[xright, y] != 0)//BLock Right movement if collision
                             {
                                 AllowMoveRight = false;
                             }
-                            if (permanentGameBoard[xright, y] != 1 && permanentGameBoard[xright, y] == 0)
+                            if (permanentGameBoard[xright, y] == 0)
                             {
                                 AllowMoveRight = true;
                             }
-                            if (permanentGameBoard[xleft, y] == 1 && permanentGameBoard[xleft, y] != 0)//BLock Left movement if collision
+                            if (permanentGameBoard[xleft, y] != 0)//BLock Left movement if collision
                             {
                                 AllowMoveLeft = false;
                             }
-                            if (permanentGameBoard[xleft, y] != 1 && permanentGameBoard[xleft, y] == 0)
+                            if (permanentGameBoard[xleft, y] == 0)
                             {
                                 AllowMoveLeft = true;
                             }
@@ -2177,19 +2212,19 @@ namespace WindowsFormsApp1
                                 {
                                     for (int xright = startx + 3; xright <= startx + 3; xright++)
                                     {
-                                        if (permanentGameBoard[xright, y] == 1 && permanentGameBoard[xright, y] != 0)//BLock Right movement if collision
+                                        if (permanentGameBoard[xright, y] != 0)//BLock Right movement if collision
                                         {
                                             AllowMoveRight = false;
                                         }
-                                        if (permanentGameBoard[xright, y] != 1 && permanentGameBoard[xright, y] == 0)
+                                        if (permanentGameBoard[xright, y] == 0)
                                         {
                                             AllowMoveRight = true;
                                         }
-                                        if (permanentGameBoard[xleft, y] == 1 && permanentGameBoard[xleft, y] != 0)//BLock Left movement if collision
+                                        if (permanentGameBoard[xleft, y] != 0)//BLock Left movement if collision
                                         {
                                             AllowMoveLeft = false;
                                         }
-                                        if (permanentGameBoard[xleft, y] != 1 && permanentGameBoard[xleft, y] == 0)
+                                        if (permanentGameBoard[xleft, y] == 0)
                                         {
                                             AllowMoveLeft = true;
                                         }
@@ -2206,19 +2241,19 @@ namespace WindowsFormsApp1
                                 {
                                     for (int xright = startx + 4; xright <= startx + 4; xright++)
                                     {
-                                        if (permanentGameBoard[xright, y] == 1 && permanentGameBoard[xright, y] != 0)//BLock Right movement if collision
+                                        if (permanentGameBoard[xright, y] != 0)//BLock Right movement if collision
                                         {
                                             AllowMoveRight = false;
                                         }
-                                        if (permanentGameBoard[xright, y] != 1 && permanentGameBoard[xright, y] == 0)
+                                        if (permanentGameBoard[xright, y] == 0)
                                         {
                                             AllowMoveRight = true;
                                         }
-                                        if (permanentGameBoard[xleft, y] == 1 && permanentGameBoard[xleft, y] != 0)//BLock Left movement if collision
+                                        if (permanentGameBoard[xleft, y] != 0)//BLock Left movement if collision
                                         {
                                             AllowMoveLeft = false;
                                         }
-                                        if (permanentGameBoard[xleft, y] != 1 && permanentGameBoard[xleft, y] == 0)
+                                        if (permanentGameBoard[xleft, y] == 0)
                                         {
                                             AllowMoveLeft = true;
                                         }
@@ -2235,19 +2270,19 @@ namespace WindowsFormsApp1
                                 {
                                     for (int xright = startx + 2; xright <= startx + 2; xright++)
                                     {
-                                        if (permanentGameBoard[xright, y] == 1 && permanentGameBoard[xright, y] != 0)//BLock Right movement if collision
+                                        if (permanentGameBoard[xright, y] != 0)//BLock Right movement if collision
                                         {
                                             AllowMoveRight = false;
                                         }
-                                        if (permanentGameBoard[xright, y] != 1 && permanentGameBoard[xright, y] == 0)
+                                        if (permanentGameBoard[xright, y] == 0)
                                         {
                                             AllowMoveRight = true;
                                         }
-                                        if (permanentGameBoard[xleft, y] == 1 && permanentGameBoard[xleft, y] != 0)//BLock Left movement if collision
+                                        if (permanentGameBoard[xleft, y] != 0)//BLock Left movement if collision
                                         {
                                             AllowMoveLeft = false;
                                         }
-                                        if (permanentGameBoard[xleft, y] != 1 && permanentGameBoard[xleft, y] == 0)
+                                        if (permanentGameBoard[xleft, y] == 0)
                                         {
                                             AllowMoveLeft = true;
                                         }
@@ -2264,19 +2299,19 @@ namespace WindowsFormsApp1
                                 {
                                     for (int xright = startx + 4; xright <= startx + 4; xright++)
                                     {
-                                        if (permanentGameBoard[xright, y] == 1 && permanentGameBoard[xright, y] != 0)//BLock Right movement if collision
+                                        if (permanentGameBoard[xright, y] != 0)//BLock Right movement if collision
                                         {
                                             AllowMoveRight = false;
                                         }
-                                        if (permanentGameBoard[xright, y] != 1 && permanentGameBoard[xright, y] == 0)
+                                        if (permanentGameBoard[xright, y] == 0)
                                         {
                                             AllowMoveRight = true;
                                         }
-                                        if (permanentGameBoard[xleft, y] == 1 && permanentGameBoard[xleft, y] != 0)//BLock Left movement if collision
+                                        if (permanentGameBoard[xleft, y] != 0)//BLock Left movement if collision
                                         {
                                             AllowMoveLeft = false;
                                         }
-                                        if (permanentGameBoard[xleft, y] != 1 && permanentGameBoard[xleft, y] == 0)
+                                        if (permanentGameBoard[xleft, y] == 0)
                                         {
                                             AllowMoveLeft = true;
                                         }
@@ -2408,7 +2443,6 @@ namespace WindowsFormsApp1
                             {
                                 AllowMoveRight = true;
                             }
-
                             if (permanentGameBoard[startx, starty] != 0)//BLock Left movement if collision
                             {
                                 AllowMoveLeft = false;
@@ -2514,7 +2548,6 @@ namespace WindowsFormsApp1
                             {
                                 AllowMoveRight = true;
                             }
-
                             if (permanentGameBoard[startx - 1, starty] != 0)//BLock Left movement if collision
                             {
                                 AllowMoveLeft = false;
@@ -2547,7 +2580,6 @@ namespace WindowsFormsApp1
                             {
                                 AllowMoveRight = true;
                             }
-
                             if (permanentGameBoard[startx + 1, starty] != 0)//BLock Left movement if collision
                             {
                                 AllowMoveLeft = false;
@@ -2685,7 +2717,6 @@ namespace WindowsFormsApp1
                             {
                                 AllowMoveRight = true;
                             }
-
                             if (permanentGameBoard[startx - 1, starty] != 0)//BLock Left movement if collision
                             {
                                 AllowMoveLeft = false;
@@ -2979,6 +3010,176 @@ namespace WindowsFormsApp1
                 }
             }
         }
+        int Rotationlockcountright = 0;
+        int Rotationlockcountleft = 0;
+        private void RotationLock(int x, int y)
+        {
+            Rotationlockcountright = 0;
+            Rotationlockcountleft = 0;
+            if (chosenblock == Iblock)
+            {
+                switch (rotation)
+                {
+                    case 2:
+                        //90
+                        for(int i = 0; i < 4; i++)
+                        {
+                            if (permanentGameBoard[x + i, y + 2] != 0)//180
+                            {
+                                Rotationlockcountright += 1;
+                            }
+                            if (permanentGameBoard[x + i, y + 1] != 0)//0
+                            {
+                                Rotationlockcountleft += 1;
+                            }
+                        }
+                        break;
+                    case 3:
+                        //180
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (permanentGameBoard[x + 1, y + i] != 0)//270
+                            {
+                                Rotationlockcountright += 1;
+                            }
+                            if (permanentGameBoard[x + 2, y + i] != 0)//90
+                            {
+                                Rotationlockcountleft += 1;
+                            }
+                        }
+                        break;
+                    case 4:
+                        //270
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (permanentGameBoard[x + i, y + 1] != 0)//0
+                            {
+                                Rotationlockcountright += 1;
+                            }
+                            if (permanentGameBoard[x + i, y + 2] != 0)//180
+                            {
+                                Rotationlockcountleft += 1;
+                            }
+                        }
+                        break;
+                    default:
+                        //0
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (permanentGameBoard[x + 2, y + i] != 0)//90
+                            {
+                                Rotationlockcountright += 1;
+                            }
+                            if (permanentGameBoard[x + 1, y + i] != 0)//270
+                            {
+                                Rotationlockcountleft += 1;
+                            }
+                        }
+                        break;
+
+                }
+            }
+            else if (chosenblock == Tblock)
+            {
+                switch (rotation)
+                {
+                    case 2:
+                        //90
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (permanentGameBoard[x + i, y + 1] != 0 && permanentGameBoard[x + 1, y + 2] != 0)//180
+                            {
+                                Rotationlockcountright += 1;
+                            }
+                            if (permanentGameBoard[x + i, y + 1] != 0 && permanentGameBoard[x + 1, y + 1] != 0)//0
+                            {
+                                Rotationlockcountleft += 1;
+                            }
+                        }
+                        break;
+                    case 3:
+                        //180
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (permanentGameBoard[x + 1, y + i] != 0 && permanentGameBoard[x, y + 1] != 0)//270
+                            {
+                                Rotationlockcountright += 1;
+                            }
+                            if (permanentGameBoard[x + 1, y + i] != 0 && permanentGameBoard[x + 2, y + 1] != 0)//90
+                            {
+                                Rotationlockcountleft += 1;
+                            }
+                        }
+                        break;
+                    case 4:
+                        //270
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (permanentGameBoard[x + i, y + 1] != 0 && permanentGameBoard[x + 1, y + 1] != 0)//0
+                            {
+                                Rotationlockcountright += 1;
+                            }
+                            if (permanentGameBoard[x + i, y + 1] != 0 && permanentGameBoard[x + 1, y + 2] != 0)//180
+                            {
+                                Rotationlockcountleft += 1;
+                            }
+                        }
+                        break;
+                    default:
+                        //0
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (permanentGameBoard[x + 1, y + i] != 0 && permanentGameBoard[x + 2, y + 1] != 0)//90
+                            {
+                                Rotationlockcountright += 1;
+                            }
+                            if (permanentGameBoard[x + 1, y + i] != 0 && permanentGameBoard[x, y + 1] != 0)//270
+                            {
+                                Rotationlockcountleft += 1;
+                            }
+                        }
+                        break;
+
+                }
+            }
+            else if (chosenblock == Lblock)
+            {
+
+            }
+            else if (chosenblock == Jblock)
+            {
+
+            }
+            else if (chosenblock == Sblock)
+            {
+
+            }
+            else if (chosenblock == Zblock)
+            {
+
+            }
+            else
+            {
+
+            }
+
+            if (Rotationlockcountleft > 0)
+            {
+                AllowRotationLeft = false;
+            }
+            else
+            {
+                AllowRotationLeft = true;
+            }
+            if (Rotationlockcountright > 0)
+            {
+                AllowRotationRight = false;
+            }
+            else
+            {
+                AllowRotationRight = true;
+            }
+        }
 
         int rotation = 5;
         private void Rotate()
@@ -3094,17 +3295,18 @@ namespace WindowsFormsApp1
                 }
             }
         }
-
         private void NextBlockPanel_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-
-            for (int x = 0; x < nextblocklimit; x++)
+            if (!gameover)
             {
-                for (int y = 0; y < nextblocklimit; y++)
+                for (int x = 0; x < nextblocklimit; x++)
                 {
-                    Image image = GetCombinedColorNext(x, y);
-                    g.DrawImage(image, x * CellSize, y * CellSize, CellSize, CellSize);
+                    for (int y = 0; y < nextblocklimit; y++)
+                    {
+                        Image image = GetCombinedColorNext(x, y);
+                        g.DrawImage(image, x * CellSize, y * CellSize, CellSize, CellSize);
+                    }
                 }
             }
         }
@@ -3278,7 +3480,7 @@ namespace WindowsFormsApp1
         private void gameovercheck()
         {
 
-            for (int x = 0; x < BoardWidth; x++)
+            for (int x = 2; x < BoardWidth - 2; x++)
             {
                 if (permanentGameBoard[x, 3] != 0)
                 {
@@ -4821,6 +5023,10 @@ namespace WindowsFormsApp1
 
                 AllowMoveLeft = true;
                 AllowMoveRight = true;
+                AllowRotationLeft = true;
+                AllowRotationRight = true;
+                Rotationlockcountright = 0;
+                Rotationlockcountleft = 0;
                 rotation = 5;
                 startx = 5;
                 starty = 0;
@@ -4832,7 +5038,7 @@ namespace WindowsFormsApp1
 
         private void CheckCompletedRows()
         {
-            for (int y = BoardHeight - 1; y >= 0; y--)
+            for (int y = BoardHeight - 2; y >= 0; y--)
             {
                 bool rowCompleted = true;
                 for (int x = 2; x < BoardWidth - 2; x++)

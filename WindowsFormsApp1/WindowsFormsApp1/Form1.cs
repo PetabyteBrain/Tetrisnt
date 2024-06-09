@@ -30,11 +30,11 @@ namespace WindowsFormsApp1
                 if (newtimer > oldtimer | newtimer == oldtimer)
                 {
                     UpdateGameBoard();
+                    UpdateLevelcount();
                     CheckCollision();
+                    RotationLock(startx, starty);
                     placeblockcheck();
                     clearblock();
-                    
-                    
 
                     newtimer = +1;
                     oldtimer = newtimer;
@@ -50,11 +50,13 @@ namespace WindowsFormsApp1
                     {
                         placeblock();
                     }
+                    RotationLock(startx, starty);
                     placeblockcheck();
                 }
                 else
                 {
                     UpdateGameBoard();
+                    UpdateLevelcount();
                     clearblock();
 
                     newtimer = +1;
@@ -65,6 +67,7 @@ namespace WindowsFormsApp1
 
                     drawblock(startx, starty);
                     UpdateGameBoard();
+                    RotationLock(startx, starty);
                     placeblockcheck();
                     UpdateLevel();
                 }
