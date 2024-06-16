@@ -3087,11 +3087,11 @@ namespace WindowsFormsApp1
                         //90
                         for (int i = 0; i < 3; i++)
                         {
-                            if (permanentGameBoard[x + i, y + 1] != 0 && permanentGameBoard[x + 1, y + 2] != 0)//180
+                            if (permanentGameBoard[x + i, y + 1] != 0 || permanentGameBoard[x + 1, y + 2] != 0)//180
                             {
                                 Rotationlockcountright += 1;
                             }
-                            if (permanentGameBoard[x + i, y + 1] != 0 && permanentGameBoard[x + 1, y + 1] != 0)//0
+                            if (permanentGameBoard[x + i, y + 1] != 0 || permanentGameBoard[x + 1, y] != 0)//0
                             {
                                 Rotationlockcountleft += 1;
                             }
@@ -3099,13 +3099,13 @@ namespace WindowsFormsApp1
                         break;
                     case 3:
                         //180
-                        for (int i = 0; i < 4; i++)
+                        for (int i = 0; i < 3; i++)
                         {
-                            if (permanentGameBoard[x + 1, y + i] != 0 && permanentGameBoard[x, y + 1] != 0)//270
+                            if (permanentGameBoard[x + 1, y + i] != 0 || permanentGameBoard[x, y + 1] != 0)//270
                             {
                                 Rotationlockcountright += 1;
                             }
-                            if (permanentGameBoard[x + 1, y + i] != 0 && permanentGameBoard[x + 2, y + 1] != 0)//90
+                            if (permanentGameBoard[x + 1, y + i] != 0 || permanentGameBoard[x + 2, y + 1] != 0)//90
                             {
                                 Rotationlockcountleft += 1;
                             }
@@ -3113,13 +3113,13 @@ namespace WindowsFormsApp1
                         break;
                     case 4:
                         //270
-                        for (int i = 0; i < 4; i++)
+                        for (int i = 0; i < 3; i++)
                         {
-                            if (permanentGameBoard[x + i, y + 1] != 0 && permanentGameBoard[x + 1, y + 1] != 0)//0
+                            if (permanentGameBoard[x + i, y + 1] != 0 || permanentGameBoard[x + 1, y] != 0)//0
                             {
                                 Rotationlockcountright += 1;
                             }
-                            if (permanentGameBoard[x + i, y + 1] != 0 && permanentGameBoard[x + 1, y + 2] != 0)//180
+                            if (permanentGameBoard[x + i, y + 1] != 0 || permanentGameBoard[x + 1, y + 2] != 0)//180
                             {
                                 Rotationlockcountleft += 1;
                             }
@@ -3127,13 +3127,13 @@ namespace WindowsFormsApp1
                         break;
                     default:
                         //0
-                        for (int i = 0; i < 4; i++)
+                        for (int i = 0; i < 3; i++)
                         {
-                            if (permanentGameBoard[x + 1, y + i] != 0 && permanentGameBoard[x + 2, y + 1] != 0)//90
+                            if (permanentGameBoard[x + 1, y + i] != 0 || permanentGameBoard[x + 2, y + 1] != 0)//90
                             {
                                 Rotationlockcountright += 1;
                             }
-                            if (permanentGameBoard[x + 1, y + i] != 0 && permanentGameBoard[x, y + 1] != 0)//270
+                            if (permanentGameBoard[x + 1, y + i] != 0 || permanentGameBoard[x, y + 1] != 0)//270
                             {
                                 Rotationlockcountleft += 1;
                             }
@@ -3144,19 +3144,253 @@ namespace WindowsFormsApp1
             }
             else if (chosenblock == Lblock)
             {
+                switch (rotation)
+                {
+                    case 2:
+                        //90
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (permanentGameBoard[x + i, y + 1] != 0 || permanentGameBoard[x, y + 2] != 0)//180
+                            {
+                                Rotationlockcountright += 1;
+                            }
+                            if (permanentGameBoard[x + i, y + 1] != 0 || permanentGameBoard[x + 2, y] != 0)//0
+                            {
+                                Rotationlockcountleft += 1;
+                            }
+                        }
+                        break;
+                    case 3:
+                        //180
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (permanentGameBoard[x + 1, y + i] != 0 || permanentGameBoard[x, y] != 0)//270
+                            {
+                                Rotationlockcountright += 1;
+                            }
+                            if (permanentGameBoard[x + 1, y + i] != 0 || permanentGameBoard[x + 2, y + 2] != 0)//90
+                            {
+                                Rotationlockcountleft += 1;
+                            }
+                        }
+                        break;
+                    case 4:
+                        //270
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (permanentGameBoard[x + i, y + 1] != 0 || permanentGameBoard[x + 2, y] != 0)//0
+                            {
+                                Rotationlockcountright += 1;
+                            }
+                            if (permanentGameBoard[x + i, y + 1] != 0 || permanentGameBoard[x, y + 2] != 0)//180
+                            {
+                                Rotationlockcountleft += 1;
+                            }
+                        }
+                        break;
+                    default:
+                        //0
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (permanentGameBoard[x + 1, y + i] != 0 || permanentGameBoard[x + 2, y + 2] != 0)//90
+                            {
+                                Rotationlockcountright += 1;
+                            }
+                            if (permanentGameBoard[x + 1, y + i] != 0 || permanentGameBoard[x, y] != 0)//270
+                            {
+                                Rotationlockcountleft += 1;
+                            }
+                        }
+                        break;
 
+                }
             }
             else if (chosenblock == Jblock)
             {
+                switch (rotation)
+                {
+                    case 2:
+                        //90
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (permanentGameBoard[x + i, y + 1] != 0 || permanentGameBoard[x + 2, y + 2] != 0)//180
+                            {
+                                Rotationlockcountright += 1;
+                            }
+                            if (permanentGameBoard[x + i, y + 1] != 0 || permanentGameBoard[x, y] != 0)//0
+                            {
+                                Rotationlockcountleft += 1;
+                            }
+                        }
+                        break;
+                    case 3:
+                        //180
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (permanentGameBoard[x + 1, y + i] != 0 || permanentGameBoard[x, y + 2] != 0)//270
+                            {
+                                Rotationlockcountright += 1;
+                            }
+                            if (permanentGameBoard[x + 1, y + i] != 0 || permanentGameBoard[x + 2, y] != 0)//90
+                            {
+                                Rotationlockcountleft += 1;
+                            }
+                        }
+                        break;
+                    case 4:
+                        //270
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (permanentGameBoard[x + i, y + 1] != 0 || permanentGameBoard[x, y] != 0)//0
+                            {
+                                Rotationlockcountright += 1;
+                            }
+                            if (permanentGameBoard[x + i, y + 1] != 0 || permanentGameBoard[x + 2, y + 2] != 0)//180
+                            {
+                                Rotationlockcountleft += 1;
+                            }
+                        }
+                        break;
+                    default:
+                        //0
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (permanentGameBoard[x + 1, y + i] != 0 || permanentGameBoard[x + 2, y] != 0)//90
+                            {
+                                Rotationlockcountright += 1;
+                            }
+                            if (permanentGameBoard[x + 1, y + i] != 0 || permanentGameBoard[x, y + 2] != 0)//270
+                            {
+                                Rotationlockcountleft += 1;
+                            }
+                        }
+                        break;
 
+                }
             }
             else if (chosenblock == Sblock)
             {
-
+                switch (rotation)
+                {
+                    case 2:
+                        //90
+                        for (int i = 0; i < 2; i++)
+                        {
+                            if (permanentGameBoard[x + 1 + i, y + 1] != 0 || permanentGameBoard[x + i, y + 2] != 0)//180
+                            {
+                                Rotationlockcountright += 1;
+                            }
+                            if (permanentGameBoard[x + 1 + i, y] != 0 || permanentGameBoard[x + i, y + 1] != 0)//0
+                            {
+                                Rotationlockcountleft += 1;
+                            }
+                        }
+                        break;
+                    case 3:
+                        //180
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (permanentGameBoard[x, y + i] != 0 || permanentGameBoard[x + 1, y + 1 + i] != 0)//270
+                            {
+                                Rotationlockcountright += 1;
+                            }
+                            if (permanentGameBoard[x + 1, y + i] != 0 || permanentGameBoard[x + 2, y + 1 + i] != 0)//90
+                            {
+                                Rotationlockcountleft += 1;
+                            }
+                        }
+                        break;
+                    case 4:
+                        //270
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (permanentGameBoard[x + 1 + i, y] != 0 || permanentGameBoard[x + i, y + 1] != 0)//0
+                            {
+                                Rotationlockcountright += 1;
+                            }
+                            if (permanentGameBoard[x + 1 + i, y + 1] != 0 || permanentGameBoard[x + i, y + 2] != 0)//180
+                            {
+                                Rotationlockcountleft += 1;
+                            }
+                        }
+                        break;
+                    default:
+                        //0
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (permanentGameBoard[x + 1, y + i] != 0 || permanentGameBoard[x + 2, y + 1 + i] != 0)//90
+                            {
+                                Rotationlockcountright += 1;
+                            }
+                            if (permanentGameBoard[x, y + i] != 0 || permanentGameBoard[x + 1, y + 1 + i] != 0)//270
+                            {
+                                Rotationlockcountleft += 1;
+                            }
+                        }
+                        break;
+                }
             }
             else if (chosenblock == Zblock)
             {
-
+                switch (rotation)
+                {
+                    case 2:
+                        //90
+                        for (int i = 0; i < 2; i++)
+                        {
+                            if (permanentGameBoard[x + i, y + 1] != 0 || permanentGameBoard[x + 1 + i, y + 2] != 0)//180
+                            {
+                                Rotationlockcountright += 1;
+                            }
+                            if (permanentGameBoard[x + i, y] != 0 || permanentGameBoard[x + 1 + i, y + 1] != 0)//0
+                            {
+                                Rotationlockcountleft += 1;
+                            }
+                        }
+                        break;
+                    case 3:
+                        //180
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (permanentGameBoard[x + 1, y + i] != 0 || permanentGameBoard[x, y + 1 + i] != 0)//270
+                            {
+                                Rotationlockcountright += 1;
+                            }
+                            if (permanentGameBoard[x + 2, y + i] != 0 || permanentGameBoard[x + 1, y + 1 + i] != 0)//90
+                            {
+                                Rotationlockcountleft += 1;
+                            }
+                        }
+                        break;
+                    case 4:
+                        //270
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (permanentGameBoard[x + i, y] != 0 || permanentGameBoard[x + 1 + i, y + 1] != 0)//0
+                            {
+                                Rotationlockcountright += 1;
+                            }
+                            if (permanentGameBoard[x + i, y + 1] != 0 || permanentGameBoard[x + 1 + i, y + 2] != 0)//180
+                            {
+                                Rotationlockcountleft += 1;
+                            }
+                        }
+                        break;
+                    default:
+                        //0
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (permanentGameBoard[x + 2, y + i] != 0 || permanentGameBoard[x + 1, y + 1 + i] != 0)//90
+                            {
+                                Rotationlockcountright += 1;
+                            }
+                            if (permanentGameBoard[x + 1, y + i] != 0 || permanentGameBoard[x, y + 1 + i] != 0)//270
+                            {
+                                Rotationlockcountleft += 1;
+                            }
+                        }
+                        break;
+                }
             }
             else
             {
