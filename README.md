@@ -23,9 +23,8 @@ Tetris is a very recognised game and beloved by Generations, alot of people grew
 ### Important
 
 #### Top Priority
-- Redo full Game Algorithm (so that it works without problems)
-- Add **Rotation Lock** if Blocks shouldnt be able to Rotate in specific position
-- Add **Left** and **Right** Side Movement **Locks**
+- Redo full Game Algorithm (so that it works without problems, True to the Real Tetris)
+- 2 Tick system for Block placement and Movement
 
 #### Secondly
 - Add feature so that the **Highscore** System **saves** it's **Value** after closing.
