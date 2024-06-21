@@ -16,6 +16,8 @@ namespace WindowsFormsApp1
         decimal oldtimer = 0;
         decimal newtimer = 1;
 
+        int Tickdelay = 0;
+
         private void Form_Load(object sender, EventArgs e)
         {
             this.DoubleBuffered = true;
@@ -23,57 +25,137 @@ namespace WindowsFormsApp1
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+
+            oldtimer = newtimer;
+            if (starty <= BoardHeight - 2)
+            {
+                if (newtimer > oldtimer || newtimer == oldtimer)
+                {
+                    RotationLock(startx, starty);
+                    if (Tickdelay == 0)
+                    {
+                        Tickdelay += 1;
+                        //Tick 1
+                        UpdateLevelcount();
+                        CheckCollision();
+                        RotationLock(startx, starty);
+                        placeblockcheck();
+                        clearblock();
+
+                        drawblock(startx, starty);
+                        UpdateGameBoard();
+
+                        if (starty == BoardHeight - 2)
+                        {
+                            placeblock();
+                        }
+                        RotationLock(startx, starty);
+                    }
+                    else if (Tickdelay == 1)
+                    {
+                        Tickdelay -= 1;
+                        //Tick 2
+                        Tickdelay = 0;
+
+                        UpdateLevelcount();
+                        clearblock();
+
+                        if (starty <= BoardHeight - 1)
+                        {
+                            starty += 1;
+                        }
+                        drawblock(startx, starty);
+                        UpdateGameBoard();
+                        UpdateLevel();
+
+                    }
+                    else
+                    {
+                        Tickdelay = 0;
+                    }
+                    newtimer = +1;
+                    oldtimer = newtimer;
+                }
+                else
+                {
+
+                    RotationLock(startx, starty);
+                    newtimer = +1;
+
+
+
+                }
+            }
+
+        }
+
+        /*
+        private void timer1_Tick(object sender, EventArgs e)
+        {
             
             oldtimer = newtimer;
             if (starty <= BoardHeight - 2)
             {
-                if (newtimer > oldtimer | newtimer == oldtimer)
+                if (newtimer > oldtimer || newtimer == oldtimer)
                 {
-                    UpdateGameBoard();
-                    UpdateLevelcount();
-                    CheckCollision();
                     RotationLock(startx, starty);
-                    placeblockcheck();
-                    clearblock();
+                    if (Tickdelay == 0)
+                    {
+                        Tickdelay += 1;
+                        //Tick 1
+                        UpdateLevelcount();
+                        CheckCollision();
+                        RotationLock(startx, starty);
+                        placeblockcheck();
+                        clearblock();
 
+                        drawblock(startx, starty);
+                        UpdateGameBoard();
+
+                        if (starty == BoardHeight - 2)
+                        {
+                            placeblock();
+                        }
+                        RotationLock(startx, starty);
+                    }
+                    else if (Tickdelay == 1)
+                    {
+                        Tickdelay -= 1;
+                        //Tick 2
+                        Tickdelay = 0;
+
+                        UpdateLevelcount();
+                        clearblock();
+
+                        if (starty <= BoardHeight - 1)
+                        {
+                            starty += 1;
+                        }
+                        drawblock(startx, starty);
+                        UpdateGameBoard();
+                        UpdateLevel();
+
+                    }
+                    else
+                    {
+                        Tickdelay = 0;
+                    }
                     newtimer = +1;
                     oldtimer = newtimer;
-                    if (starty <= BoardHeight - 1)
-                    {
-                        starty += 1;
-                    }
-
-                    drawblock(startx, starty);
-                    UpdateGameBoard();
-
-                    if (starty == BoardHeight - 2)
-                    {
-                        placeblock();
-                    }
-                    RotationLock(startx, starty);
-                    placeblockcheck();
                 }
                 else
                 {
-                    UpdateGameBoard();
-                    UpdateLevelcount();
-                    clearblock();
 
-                    newtimer = +1;
-                    if (starty <= BoardHeight - 1)
-                    {
-                        starty += 1;
-                    }
-
-                    drawblock(startx, starty);
-                    UpdateGameBoard();
                     RotationLock(startx, starty);
-                    placeblockcheck();
-                    UpdateLevel();
+                    newtimer = +1;
+                    
+
+                    
                 }
             }
             
-        }
+        } 
+        */
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {

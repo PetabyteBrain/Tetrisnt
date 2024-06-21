@@ -25,17 +25,17 @@ Tetris is a very recognised game and beloved by Generations, alot of people grew
 #### Top Priority
 - Redo full Game Algorithm (so that it works without problems, True to the Real Tetris)
 - 2 Tick system for Block placement and Movement
+- Balance Level System (Point distribution / Tick Speed)
+- Add **Pause**, **Resume**, **Restart** and**Quit** Menu Button
 
 #### Secondly
 - Add feature so that the **Highscore** System **saves** it's **Value** after closing.
-- Add **Pause**, **Resume**, **Restart** and**Quit** Menu Button
 - Add Feature to give Points per Cell which is Softdropped.
 - Add Feature That the more Lines cleared at the same time give more points (A Tetris)
 
 ### Extra
 - Update **Gui design** (Start / Death Screen, Buttons, Colour Scheme(similar to NES))
 - Maybe **add Animations**
-- Balance Level System (Point distribution / Tick Speed)
 - Add **Harddrop Feature**.
 
 - More Features ...

@@ -34,9 +34,9 @@ namespace WindowsFormsApp1
         {
             this.DoubleBuffered = true;
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            this.SetStyle(ControlStyles.ResizeRedraw, true);
             this.SetStyle(ControlStyles.UserPaint, true);
-            this.UpdateStyles();
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
         }
     }
 
@@ -82,13 +82,19 @@ namespace WindowsFormsApp1
         Label linecount = new Label();
         Label levelcount = new Label();
         bool gameover = false;
+        bool IsPaused = false;
+
+        //Pause Menu
+        Label PauseTitle = new Label();
 
         Label finalhighscorep = new Label();
         Label finalscorep = new Label();
 
+        Button tutorialbutton = new Button();
         Button startbutton = new Button();
         Button quitbutton = new Button();
         Button restartbutton = new Button();
+        Button pausebutton = new Button();
 
         //Level Buttons
         Button level0button = new Button();
@@ -529,11 +535,12 @@ namespace WindowsFormsApp1
         private void gameplay()
         {
             gameover = false;
+            IsPaused = false;
             // Ensure panels are initialized first
             InitializeGameBoard();
             initializenextblock();
             ShowGameBoard();
-
+            InitializePauseButton();
             // Trigger initial updates to display the initial state
             UpdateGameBoard();
             updatenextblock();
@@ -571,6 +578,20 @@ namespace WindowsFormsApp1
             startbutton.MouseEnter += OnMouseEnterButton0;
             startbutton.MouseLeave += OnMouseLeaveButton0;
 
+            //HOW TO BUTTON
+            this.Controls.Add(tutorialbutton);
+            tutorialbutton.Location = new Point(245, 380);
+            tutorialbutton.Size = new Size(150, 75);
+
+            tutorialbutton.Image = Resource1.howtobutton0;
+            tutorialbutton.FlatStyle = FlatStyle.Flat;
+            tutorialbutton.FlatAppearance.BorderSize = 0;
+            tutorialbutton.TabStop = false;
+
+            tutorialbutton.Click += tutorialbutton_Click;
+            tutorialbutton.MouseEnter += OnMouseEnterhowtoButton0;
+            tutorialbutton.MouseLeave += OnMouseLeavehowtoButton0;
+
             //QUIT BUTTON
             QuitButton();
 
@@ -581,6 +602,7 @@ namespace WindowsFormsApp1
             //Background Picture
             BackroundImage();
             startscreenimage.Image = Resource1.TitleScreen;
+            tutorialbutton.BringToFront();
             startbutton.BringToFront();
             quitbutton.BringToFront();
         }
@@ -592,6 +614,14 @@ namespace WindowsFormsApp1
             Controls.Add(startscreenimage);
             startscreenimage.SizeMode = PictureBoxSizeMode.StretchImage;
             startscreenimage.BringToFront();
+        }
+        private void OnMouseEnterhowtoButton0(object sender, EventArgs e)
+        {
+            tutorialbutton.Image = Resource1.howtobutton1;
+        }
+        private void OnMouseLeavehowtoButton0(object sender, EventArgs e)
+        {
+            tutorialbutton.Image = Resource1.howtobutton0;
         }
         private void OnMouseEnterButton0(object sender, EventArgs e)
         {
@@ -606,10 +636,16 @@ namespace WindowsFormsApp1
             this.Controls.Remove(startbutton);
             this.Controls.Remove(quitbutton);
             this.Controls.Remove(restartbutton);
+            this.Controls.Remove(tutorialbutton);
 
             BackroundImage();
             startscreenimage.Image = Resource1.levelselectscreen;
             levelselect();
+        }
+        void tutorialbutton_Click(object sender, EventArgs e)
+        {
+            Form2 f2 = new Form2(); // Instantiate a Form3 object.
+            f2.Show();
         }
         private void OnMouseEnterButton1(object sender, EventArgs e)
         {
@@ -703,14 +739,65 @@ namespace WindowsFormsApp1
             this.Controls.Remove(level9button);
         }
 
+        private void InitializePauseButton()
+        {
+            /*
+            this.Controls.Add(pausebutton);
+            pausebutton.Location = new Point(350, 400);
+            pausebutton.Size = new Size(150, 75);
 
+            pausebutton.Image = Resource1.QuitButton0;
+            pausebutton.FlatStyle = FlatStyle.Flat;
+            pausebutton.FlatAppearance.BorderSize = 0;
+            pausebutton.TabStop = false;
+            pausebutton.BringToFront();
+            pausebutton.Click += pausebutton_Click;
+            */
+        }
+        void pausebutton_Click(object sender, EventArgs e)
+        {
+            PauseGame();
+        }
+
+        private void PauseGame()
+        {
+            Task.Delay(1000);
+            if (IsPaused)
+            {
+                timer1.Start();
+                IsPaused = false;
+                Debug.WriteLine("Game Continues!");
+
+                ShowGameBoard();
+                this.Controls.Remove(PauseTitle);
+            }
+            else if(!IsPaused)
+            {
+                timer1.Stop();
+                IsPaused = true;
+                Debug.WriteLine("Game Paused!");
+
+                InitializePauseMenu();
+            }
+        }
+        private void InitializePauseMenu()
+        {
+            PauseTitle.Text = "Game is Paused";
+
+            PauseTitle.Visible = true;
+            PauseTitle.Location = new Point(50, 120);
+            PauseTitle.AutoSize = true;
+            PauseTitle.Font = new Font("calibri", 20, FontStyle.Regular);
+            PauseTitle.ForeColor = Color.Black;
+            PauseTitle.Padding = new Padding(6);
+            this.Controls.Add(PauseTitle);
+            PauseTitle.Refresh();
+            PauseTitle.BringToFront();
+        }
         private void ShowGameBoard()
         {
             gameBoardPanel.Invalidate();
             nextBlockPanel.Invalidate();
-
-            // Reinitialize game components if necessary
-            //InitializeComponent();
         }
         private void HideGameBoard()
         {
@@ -828,9 +915,7 @@ namespace WindowsFormsApp1
             finalhighscorep.Visible = true;
             finalhighscorep.Location = new Point(150, 120);
             finalhighscorep.AutoSize = true;
-            var pfc = new PrivateFontCollection();
-            pfc.AddFontFile(@"C:\Github\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\fonts\Press_Start_2P\PressStart2P-Regular.ttf");
-            finalhighscorep.Font = new Font(pfc.Families[0], 20, FontStyle.Regular);
+            finalhighscorep.Font = new Font("calibri", 20, FontStyle.Regular);
             finalhighscorep.ForeColor = Color.Black;
             finalhighscorep.Padding = new Padding(6);
             this.Controls.Add(finalhighscorep);
@@ -845,9 +930,7 @@ namespace WindowsFormsApp1
             finalscorep.Visible = true;
             finalscorep.Location = new Point(150, 60);
             finalscorep.AutoSize = true;
-            var pfc = new PrivateFontCollection();
-            pfc.AddFontFile(@"C:\Github\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\fonts\Press_Start_2P\PressStart2P-Regular.ttf");
-            finalscorep.Font = new Font(pfc.Families[0], 20, FontStyle.Regular);
+            finalscorep.Font = new Font("calibri", 20, FontStyle.Regular);
             finalscorep.ForeColor = Color.Black;
             finalscorep.Padding = new Padding(6);
             this.Controls.Add(finalscorep);
@@ -866,7 +949,8 @@ namespace WindowsFormsApp1
             this.Controls.Remove(highscore);
             this.Controls.Remove(linecount);
             this.Controls.Remove(levelcount);
-            if(Highscore >= FinalHighScore)
+            //this.Controls.Remove(pausebutton);
+            if (Highscore >= FinalHighScore)
             {
                 FinalHighScore = Highscore;
             }
@@ -914,9 +998,7 @@ namespace WindowsFormsApp1
 
             scoreboard.Location = new Point(320, 120);
             scoreboard.AutoSize = true;
-            var pfc = new PrivateFontCollection();
-            pfc.AddFontFile(@"C:\Github\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\fonts\Press_Start_2P\PressStart2P-Regular.ttf");
-            scoreboard.Font = new Font(pfc.Families[0], 13, FontStyle.Regular);
+            scoreboard.Font = new Font("calibri", 13, FontStyle.Regular);
             scoreboard.ForeColor = Color.Black;
             scoreboard.Padding = new Padding(6);
             this.Controls.Add(scoreboard);
@@ -936,9 +1018,7 @@ namespace WindowsFormsApp1
         {
             highscore.Location = new Point(320, 50);
             highscore.AutoSize = true;
-            var pfc = new PrivateFontCollection();
-            pfc.AddFontFile(@"C:\Github\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\fonts\Press_Start_2P\PressStart2P-Regular.ttf");
-            highscore.Font = new Font(pfc.Families[0], 13, FontStyle.Regular);
+            highscore.Font = new Font("calibri", 13, FontStyle.Regular);
             highscore.ForeColor = Color.Black;
             highscore.Padding = new Padding(6);
             this.Controls.Add(highscore);
@@ -946,6 +1026,7 @@ namespace WindowsFormsApp1
         }
         private void Updatehighscore()
         {
+            highscore.Font = new Font("calibri", 13, FontStyle.Regular);
             Highscore = Score;
             string finalhighscore = Highscore.ToString();
             highscore.Text = String.Format($"Highscore: {finalhighscore}");
@@ -955,9 +1036,7 @@ namespace WindowsFormsApp1
 
             levelcount.Location = new Point(320, 180);
             levelcount.AutoSize = true;
-            var pfc = new PrivateFontCollection();
-            pfc.AddFontFile(@"C:\Github\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\fonts\Press_Start_2P\PressStart2P-Regular.ttf");
-            levelcount.Font = new Font(pfc.Families[0], 13, FontStyle.Regular);
+            levelcount.Font = new Font("calibri", 13, FontStyle.Regular);
             levelcount.ForeColor = Color.Black;
             levelcount.Padding = new Padding(6);
             this.Controls.Add(levelcount);
@@ -975,9 +1054,7 @@ namespace WindowsFormsApp1
             //completedlines
             linecount.Location = new Point(75, 20);
             linecount.AutoSize = true;
-            var pfc = new PrivateFontCollection();
-            pfc.AddFontFile(@"C:\Github\Tetrisnt\WindowsFormsApp1\WindowsFormsApp1\fonts\Press_Start_2P\PressStart2P-Regular.ttf");
-            linecount.Font = new Font(pfc.Families[0], 15, FontStyle.Regular);
+            linecount.Font = new Font("calibri", 15, FontStyle.Regular);
             linecount.ForeColor = Color.Black;
             linecount.Padding = new Padding(6);
             this.Controls.Add(linecount);
@@ -1078,6 +1155,27 @@ namespace WindowsFormsApp1
                         tempGameBoardOld[x, y] = tempGameBoard[x, y];
                     }
                 }
+                for (int x = 0; x < 2; x++)
+                {
+                    for (int y = 0; y < BoardHeight; y++)
+                    {
+                        permanentGameBoard[x, y] = 11;
+                    }
+                }
+                for (int x = BoardWidth - 2; x < BoardWidth; x++)
+                {
+                    for (int y = 0; y < BoardHeight; y++)
+                    {
+                        permanentGameBoard[x, y] = 11;
+                    }
+                }
+                for (int x = 0; x < BoardWidth; x++)
+                {
+                    for (int y = BoardHeight - 1; y < BoardHeight; y++)
+                    {
+                        permanentGameBoard[x, y] = 11;
+                    }
+                }
             }
             Debug.WriteLine("Updated the Game Board");
         }
@@ -1095,13 +1193,25 @@ namespace WindowsFormsApp1
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
+            if (gameover) return;
+
+            if (IsPaused)
+            {
+                if (e.KeyCode == Keys.P)
+                {
+                    PauseGame();
+                }
+                return; // Ignore other keys if the game is paused
+            }
+
+
             int blockSizeX = 0;
             int blockSizeY = 0;
             // Calculate the maximum x and y values for the current block
             int maxX = BoardWidth - blockSizeX;
             int maxY = BoardHeight - blockSizeY;
             int minX = BoardWidth - blockSizeX;
-            if (gameover == false)
+            if (1 == 1)
             {
                 if (chosenblock == Tblock)
                 {
@@ -2142,29 +2252,58 @@ namespace WindowsFormsApp1
                 switch (e.KeyCode)
                 {
                     case Keys.Y:
-                        if (starty < maxY && AllowRotationLeft == true)
-                        {
-                            clearblock();
-                            rotation += 1;
-                            Rotate();
-                            clearblock();
-                            drawblock(startx, starty);
-                            UpdateGameBoard();
-                            clearblock();
-                        }
-                        break;
-                    case Keys.X:
                         if (starty < maxY && AllowRotationRight == true)
                         {
                             clearblock();
                             rotation -= 1;
                             Rotate();
-                            clearblock();
                             drawblock(startx, starty);
-                            UpdateGameBoard();
+                            RotationLock(startx, starty);
+                            placeblockcheck();
                             clearblock();
                         }
                         break;
+                    case Keys.Z:
+                        if (starty < maxY && AllowRotationRight == true)
+                        {
+                            clearblock();
+                            rotation -= 1;
+                            Rotate();
+                            drawblock(startx, starty);
+                            RotationLock(startx, starty);
+                            placeblockcheck();
+                            clearblock();
+                        }
+                        break;
+                    case Keys.X:
+                        if (starty < maxY && AllowRotationLeft == true)
+                        {
+                            clearblock();
+                            rotation += 1;
+                            Rotate();
+                            drawblock(startx, starty);
+                            RotationLock(startx, starty);
+                            placeblockcheck();
+                            clearblock();
+                        }
+                        break;
+                    case Keys.Up:
+                        if (starty < maxY && AllowRotationRight == true)
+                        {
+                            clearblock();
+                            rotation -= 1;
+                            Rotate();
+                            drawblock(startx, starty);
+                            RotationLock(startx, starty);
+                            placeblockcheck();
+                            clearblock();
+                        }
+                        break;
+                    case Keys.P:
+                        //Pause Menu
+                        PauseGame();
+                        break;
+
                 }
             }
             CheckCollision();
@@ -3517,22 +3656,26 @@ namespace WindowsFormsApp1
         private void GameBoardPanel_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            if (!gameover)
+            if (!gameover && !IsPaused)
             {
                 for (int x = 0; x < BoardWidth; x++)
                 {
                     for (int y = 0; y < BoardHeight; y++)
                     {
                         Image image = GetCombinedColor(x, y);
-                        g.DrawImage(image, x * CellSize, y * CellSize, CellSize, CellSize);
+                        if (image != null && x >= 0 && x < BoardWidth && y >= 0 && y < BoardHeight)
+                        {
+                            g.DrawImage(image, x * CellSize, y * CellSize, CellSize, CellSize);
+                        }
                     }
                 }
             }
         }
+
         private void NextBlockPanel_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            if (!gameover)
+            if (!gameover || IsPaused)
             {
                 for (int x = 0; x < nextblocklimit; x++)
                 {
