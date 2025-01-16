@@ -57,7 +57,7 @@
             this.label1.Font = new System.Drawing.Font("Press Start 2P", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(117, 23);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(428, 47);
+            this.label1.Size = new System.Drawing.Size(416, 45);
             this.label1.TabIndex = 0;
             this.label1.Text = "How to Play!";
             this.label1.Click += new System.EventHandler(this.label1_Click);
