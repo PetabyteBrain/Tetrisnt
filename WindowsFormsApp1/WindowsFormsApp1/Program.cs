@@ -23,7 +23,7 @@ namespace WindowsFormsApp1
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Create an instance of your main form and run it
+
             Form1 mainForm = new Form1();
             Application.Run(mainForm);
         }
